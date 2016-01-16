@@ -1,22 +1,26 @@
 {
 	CoolQ SDK for Pascal
 	Api Version 9.6
+	Compiler : FPC 2.0.4
 	Code By Eric_Lian(505311335@qq.com)
 	Thanke For Coxxs(i@coxxs.com)
 }
 
 library
 	testdll;
+	//DLL 编译
 
 Uses
 	dateutils,sysutils;
+	//库
 	
 Var
 	AuthCode:longint;
+	//AuthCode CoolQ用来识别你是否是合法调用的玩意儿
 	
 //载入一些其他内容
 {$INCLUDE lib\cqh.pas}
-		//CoolQApi
+		//CoolQ Api
 {$INCLUDE lib\sp.pas}
 		//一些基本工具
 
@@ -50,6 +54,7 @@ End;
 * 如非必要，不建议在这里加载窗口。（可以添加菜单，让用户手动打开窗口）
 }
 Function _eventStartup:longint;
+stdcall;
 Begin
 	exit(0);
 End;
@@ -60,6 +65,7 @@ End;
 * 本函数调用完毕后，酷Q将很快关闭，请不要再通过线程等方式执行其他代码。
 }
 Function _eventExit:longint;
+stdcall;
 Begin
 	exit(0);
 End;
@@ -71,6 +77,7 @@ End;
 * 如非必要，不建议在这里加载窗口。（可以添加菜单，让用户手动打开窗口）
 }
 Function _eventEnable:longint;
+stdcall;
 Begin
 	exit(0);
 End;
@@ -82,6 +89,7 @@ End;
 * 无论本应用是否被启用，酷Q关闭前本函数都*不会*被调用。
 }
 Function _eventDisable:longint;
+stdcall;
 Begin
 	exit(0);
 End;
@@ -95,6 +103,7 @@ Function _eventPrivateMsg(
 			fromQQ					:int64;
 			const msg				:Pchar;
 			font					:longint):longint;
+stdcall;
 Begin	
 	CQ_sendPrivateMsg(AuthCode,fromQQ,msg);
 		//私聊复读机
@@ -126,7 +135,8 @@ Function _eventDiscussMsg(
 			subType,sendTime		:longint;
 			fromDiscuss,fromQQ		:longint;
 			msg						:Pchar;
-			font					:longint;):longint;
+			font					:longint):longint;
+stdcall;
 Begin
 	exit(EVENT_IGNORE) //关于返回值说明, 见“_eventPrivateMsg”函数
 End;
@@ -153,10 +163,10 @@ exports
 	//index 后面跟着的数字只是强迫症调整顺序用的←_← 貌似没有什么实际用途
 	AppInfo index 1,
 	Initialize index 2,
-	_eventGroupMsg index 3,
-	_menuA index 4,
-	_menuB index 5
-	;
+	_eventPrivateMsg index 3,
+	_eventGroupMsg index 4,
+	_menuA index 5,
+	_menuB index 6;
 
 Begin
 	//这里不要加东西←_←
