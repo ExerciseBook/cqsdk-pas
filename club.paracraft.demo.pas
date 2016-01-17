@@ -16,15 +16,16 @@ Uses
 	dateutils,sysutils;
 	//库
 	
+//载入一些其他内容
+{$INCLUDE lib\CoolQ_variable.pas}
+{$INCLUDE lib\CoolQ_Function.pas}
+		//CoolQ Api
+{$INCLUDE lib\Tools.pas}
+		//一些基本工具
+		
 Var
 	AuthCode:longint;
 	//AuthCode CoolQ用来识别你是否是合法调用的玩意儿
-	
-//载入一些其他内容
-{$INCLUDE lib\cqh.pas}
-		//CoolQ Api
-{$INCLUDE lib\sp.pas}
-		//一些基本工具
 
 //系统提示框函数
 Function MessageBox(hWnd:LONGINT;lpText:PCHAR;lpCaption:PCHAR;uType:DWORD):LONGINT;
