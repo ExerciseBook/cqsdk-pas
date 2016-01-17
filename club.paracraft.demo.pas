@@ -4,6 +4,8 @@
 	Compiler : FPC 2.0.4
 	Code By Eric_Lian(505311335@qq.com)
 	Thanke For Coxxs(i@coxxs.com)
+===================================================
+	貌似代码要ANSI格式才不会鬼畜
 }
 
 library
@@ -109,8 +111,8 @@ Begin
 		//私聊复读机
 		
 	exit(EVENT_IGNORE);
-		//如果要回复消息，请调用酷Q方法发送，并且这里 return EVENT_BLOCK - 截断本条消息，不再继续处理  注意：应用优先级设置为"最高"(10000)时，不得使用本返回值
-		//如果不回复消息，交由之后的应用/过滤器处理，这里 return EVENT_IGNORE - 忽略本条消息
+		//如果要回复消息，请调用酷Q方法发送，并且这里 exit(EVENT_BLOCK) - 截断本条消息，不再继续处理  注意：应用优先级设置为"最高"(10000)时，不得使用本返回值
+		//如果不回复消息，交由之后的应用/过滤器处理，这里 exit(return EVENT_IGNORE) - 忽略本条消息
 End;
 
 {
@@ -133,13 +135,101 @@ End;
 }
 Function _eventDiscussMsg(
 			subType,sendTime		:longint;
-			fromDiscuss,fromQQ		:longint;
+			fromDiscuss,fromQQ		:int64;
 			msg						:Pchar;
 			font					:longint):longint;
 stdcall;
 Begin
 	exit(EVENT_IGNORE) //关于返回值说明, 见“_eventPrivateMsg”函数
 End;
+
+{
+* Type=101 群事件-管理员变动
+* subType 子类型，1/被取消管理员 2/被设置管理员
+}
+Function _eventSystem_GroupAdmin(
+			subType,sendTime		:longint;
+			fromGroup,
+			fromQQ,
+			beingOperateQQ			:int64):longint;
+stdcall;
+Begin
+	exit(EVENT_IGNORE); //关于返回值说明, 见“_eventPrivateMsg”函数
+End;
+
+{
+* Type=102 群事件-群成员减少
+* subType 子类型，1/群员离开 2/群员被踢 3/自己(即登录号)被踢
+* fromQQ 操作者QQ(仅subType为2、3时存在)
+* beingOperateQQ 被操作QQ
+}
+Function _eventSystem_GroupMemberDecrease(
+			subType,sendTime		:longint;
+			fromGroup,fromQQ,
+			beingOperateQQ			:int64):longint;
+stdcall;
+Begin
+	exit(EVENT_IGNORE); //关于返回值说明, 见“_eventPrivateMsg”函数
+End;
+
+{
+* Type=103 群事件-群成员增加
+* subType 子类型，1/管理员已同意 2/管理员邀请
+* fromQQ 操作者QQ(即管理员QQ)
+* beingOperateQQ 被操作QQ(即加群的QQ)
+}
+Function _eventSystem_GroupMemberIncrease(
+			subType,sendTime		:longint;
+			fromGroup,fromQQ,
+			beingOperateQQ			:int64):longint;
+stdcall;
+Begin
+	exit(EVENT_IGNORE); //关于返回值说明, 见“_eventPrivateMsg”函数
+End;
+
+
+
+{
+* Type=201 好友事件-好友已添加
+}
+Function _eventFriend_Add(
+			subType,sendTime		:longint;
+			fromQQ					:int64):longint;
+stdcall;
+Begin
+	exit(EVENT_IGNORE); //关于返回值说明, 见“_eventPrivateMsg”函数
+End;
+
+{
+* Type=301 请求-好友添加
+* msg 附言
+* responseFlag 反馈标识(处理请求用)
+}
+Function _eventRequest_AddFriend(
+			subType,sendTime			:longint;
+			fromQQ						:int64;
+			const msg,responseFlag		:Pchar):longint;
+stdcall;
+Begin
+	//CQ_setFriendAddRequest(AuthCode, responseFlag, REQUEST_ALLOW, "") 
+	exit(EVENT_IGNORE); //关于返回值说明, 见“_eventPrivateMsg”函数
+End;
+
+{
+* Type=302 请求-群添加
+* subType 子类型，1/他人申请入群 2/自己(即登录号)受邀入群
+* msg 附言
+* responseFlag 反馈标识(处理请求用)
+}
+Function _eventRequest_AddGroup(
+			subType,sendTime			:longint;
+			fromGroup,fromQQ			:int64;
+			msg,responseFlag			:Pchar):longint;
+Begin
+	exit(EVENT_IGNORE); //关于返回值说明, 见“_eventPrivateMsg”函数
+End;
+
+
 
 {
 * 菜单，可在 .json 文件中设置菜单数目、函数名
@@ -163,10 +253,21 @@ exports
 	//index 后面跟着的数字只是强迫症调整顺序用的←_← 貌似没有什么实际用途
 	AppInfo index 1,
 	Initialize index 2,
-	_eventPrivateMsg index 3,
-	_eventGroupMsg index 4,
-	_menuA index 5,
-	_menuB index 6;
+	_eventStartup index 3,
+	_eventExit index 4,
+	_eventEnable index 5,
+	_eventDisable index 6,
+	_eventPrivateMsg index 7,
+	_eventGroupMsg index 8,
+	_eventDiscussMsg index 9,
+	_eventSystem_GroupAdmin index 10,
+	_eventSystem_GroupMemberDecrease index 11,
+	_eventSystem_GroupMemberIncrease index 12,
+	_eventFriend_Add index 13,
+	_eventRequest_AddFriend index 14,
+	_eventRequest_AddGroup index 15,
+	_menuA index 16,
+	_menuB index 17;
 
 Begin
 	//这里不要加东西←_←
