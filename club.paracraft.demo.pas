@@ -1,11 +1,29 @@
 {
 	CoolQ SDK for Pascal
-	Api Version 9.6
-	Compiler : FPC 2.0.4
-	Code By Eric_Lian(505311335@qq.com)
-	Thanke For Coxxs(i@coxxs.com)
+	API版本	：	9.6
+	编译器	：	FPC 2.0.4
 ===================================================
-	貌似代码要ANSI格式才不会鬼畜
+	貌似代码要ANSI格式才不会让字符串鬼畜
+	
+	以下文件内容不要随意改动，SDK的更新会被覆盖
+	
+	当前文件
+		library 	下内容不要修改
+		uses		下内容根据需要自行修改
+		$include	下内容根据需要自行修改
+		Var			下内容不要修改
+					需要定义变量请到 code\main.pas 下
+		exports		下内容根据需要自行修改
+		事件函数	这个我以后会在code\main.pas那边添加一些调用的。可以方便食用。
+					传递到code\main.pas那边的内容我会把pchar给转换成string来食用。
+					
+	lib\CoolQ_variable.pas
+		里面有APPID需要更改。其余的不需要
+		这个文件会后续更新
+		
+	lib\CoolQ_Function.pas
+		这个文件更加不用改了。
+		里面是CoolQ的API
 }
 
 library
@@ -14,15 +32,8 @@ library
 
 Uses
 	dateutils,sysutils;
-	//库
+	//载入库
 	
-//载入一些其他内容
-{$INCLUDE lib\CoolQ_variable.pas}
-{$INCLUDE lib\CoolQ_Function.pas}
-		//CoolQ Api
-{$INCLUDE lib\Tools.pas}
-		//一些基本工具
-		
 Var
 	AuthCode:longint;
 	//AuthCode CoolQ用来识别你是否是合法调用的玩意儿
@@ -30,6 +41,19 @@ Var
 //系统提示框函数
 Function MessageBox(hWnd:LONGINT;lpText:PCHAR;lpCaption:PCHAR;uType:DWORD):LONGINT;
 	stdcall; external 'user32.dll' name 'MessageBoxA';
+	
+//载入其他内容
+{$INCLUDE lib\CoolQ_variable.pas}
+{$INCLUDE lib\CoolQ_Function.pas}
+		//CoolQ Api
+{$INCLUDE lib\Tools.pas}
+		//一些基本工具
+{******************************************************}
+{$INCLUDE code\main.pas}
+		//你的代码就从这个文件开始写吧
+{******************************************************}
+
+
 
 { 
 * 返回应用的ApiVer、Appid，打包后将不会调用
@@ -108,7 +132,7 @@ Function _eventPrivateMsg(
 			font					:longint):longint;
 stdcall;
 Begin	
-	CQ_sendPrivateMsg(AuthCode,fromQQ,msg);
+	//CQ_sendPrivateMsg(AuthCode,fromQQ,msg);
 		//私聊复读机
 		
 	exit(EVENT_IGNORE);
@@ -126,7 +150,7 @@ Function _eventGroupMsg(
 			font					:longint):longint;
 stdcall;
 Begin
-	if fromgroup=311954860 then CQ_sendGroupMsg(AuthCode,fromgroup,msg);
+	//if fromgroup=311954860 then CQ_sendGroupMsg(AuthCode,fromgroup,msg);
 		//复读机	
 	exit(EVENT_IGNORE);	//关于返回值说明, 见“_eventPrivateMsg”函数
 End;
@@ -212,7 +236,7 @@ Function _eventRequest_AddFriend(
 			const msg,responseFlag		:Pchar):longint;
 stdcall;
 Begin
-	//CQ_setFriendAddRequest(AuthCode, responseFlag, REQUEST_ALLOW, "") 
+	//CQ_setFriendAddRequest(AuthCode, responseFlag, REQUEST_ALLOW,'');
 	exit(EVENT_IGNORE); //关于返回值说明, 见“_eventPrivateMsg”函数
 End;
 
@@ -226,27 +250,12 @@ Function _eventRequest_AddGroup(
 			subType,sendTime			:longint;
 			fromGroup,fromQQ			:int64;
 			msg,responseFlag			:Pchar):longint;
+stdcall;
 Begin
+
+	CQ_setGroupAddRequestV2(AuthCode,responseflag,subType,REQUEST_ALLOW,'');
+	
 	exit(EVENT_IGNORE); //关于返回值说明, 见“_eventPrivateMsg”函数
-End;
-
-
-
-{
-* 菜单，可在 .json 文件中设置菜单数目、函数名
-* 如果不使用菜单，请在 .json 及此处删除无用菜单
-}
-Function _menuA():longint;
-stdcall;
-Begin
-	MessageBox(0,StoP('本插件的AuthCode为 : '+NumToChar(AuthCode)),'样例 _ AuthCode查询',36);
-	exit(0);
-End;
-Function _menuB():longint;
-stdcall;
-Begin
-	MessageBox(0,StoP('当前时间 : '+DateTimeToStr(now)),'样例 _ 当前时间',36);
-	exit(0);
 End;
 
 exports
@@ -267,6 +276,8 @@ exports
 	_eventFriend_Add index 13,
 	_eventRequest_AddFriend index 14,
 	_eventRequest_AddGroup index 15,
+	
+	
 	_menuA index 16,
 	_menuB index 17;
 
