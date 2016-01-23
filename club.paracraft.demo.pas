@@ -150,6 +150,7 @@ Function _eventGroupMsg(
 			font					:longint):longint;
 stdcall;
 Begin
+	//if msg='签到' then CQ_sendGroupMsg(AuthCode,fromgroup,'签到并没有成功');
 	//if fromgroup=311954860 then CQ_sendGroupMsg(AuthCode,fromgroup,msg);
 		//复读机	
 	exit(EVENT_IGNORE);	//关于返回值说明, 见“_eventPrivateMsg”函数
@@ -254,7 +255,7 @@ Function _eventRequest_AddGroup(
 stdcall;
 Begin
 
-	CQ_setGroupAddRequestV2(AuthCode,responseflag,subType,REQUEST_ALLOW,'');
+	//if fromGroup<>311954860 then CQ_setGroupAddRequestV2(AuthCode,responseflag,subType,REQUEST_ALLOW,'');
 	
 	exit(EVENT_IGNORE); //关于返回值说明, 见“_eventPrivateMsg”函数
 End;

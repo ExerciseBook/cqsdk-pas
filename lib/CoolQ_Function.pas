@@ -33,19 +33,27 @@ function CQ_setFriendAddRequest(AuthCode:longint;const responseflag:pchar;respon
 	stdcall; external 'CQP.dll' name 'CQ_setFriendAddRequest';
 function CQ_setGroupAddRequestV2(AuthCode:longint;const responseflag:Pchar;requesttype,responseoperation:longint;const reason:Pchar):longint;
 	stdcall; external 'CQP.dll' name 'CQ_setGroupAddRequestV2';
+	
+function CQ_getGroupMemberInfoV2(AuthCode:longint;groupid,QQID:int64;nocache:boolean):Pchar;
+	stdcall; external 'CQP.dll' name 'CQ_getGroupMemberInfoV2';	
+	//待完善
 
-{
-CQAPI(const char *) CQ_getGroupMemberInfoV2(int32_t AuthCode, int64_t groupid, int64_t QQID, CQBOOL nocache);
-CQAPI(const char *) CQ_getStrangerInfo(int32_t AuthCode, int64_t QQID, CQBOOL nocache);
-CQAPI(int32_t) CQ_addLog(int32_t AuthCode, int32_t priority, const char *category, const char *content);
-CQAPI(const char *) CQ_getCookies(int32_t AuthCode);
-CQAPI(int32_t) CQ_getCsrfToken(int32_t AuthCode);
-CQAPI(int64_t) CQ_getLoginQQ(int32_t AuthCode);
-CQAPI(const char *) CQ_getLoginNick(int32_t AuthCode);
-CQAPI(const char *) CQ_getAppDirectory(int32_t AuthCode);
-CQAPI(int32_t) CQ_setFatal(int32_t AuthCode, const char *errorinfo);
-}
-{还有一堆在后面}
+function CQ_getStrangerInfo(AuthCode:longint;QQID:int64;nocache:boolean):Pchar;
+	stdcall; external 'CQP.dll' name 'CQ_getStrangerInfo';	
+function CQ_addLog(AuthCode,priority:longint;const category,content:Pchar):longint;
+	stdcall; external 'CQP.dll' name 'CQ_addLog';
+function CQ_getCookies(AuthCode:longint):Pchar;
+	stdcall; external 'CQP.dll' name 'CQ_getCookies';
+function CQ_getCsrfToken(AuthCode:longint):longint;
+	stdcall; external 'CQP.dll' name 'CQ_getCsrfToken';
+function CQ_getLoginQQ(AuthCode:longint):int64;
+	stdcall; external 'CQP.dll' name 'CQ_getLoginQQ';
+function CQ_getLoginNick(AuthCode:longint):Pchar;
+	stdcall; external 'CQP.dll' name 'CQ_getLoginNick';
+function CQ_getAppDirectory(AuthCode:longint):Pchar;
+	stdcall; external 'CQP.dll' name 'CQ_getAppDirectory';
+function CQ_setFatal(AuthCode:longint;const errorinfo:Pchar):longint;
+	stdcall; external 'CQP.dll' name 'CQ_setFatal';
 	
 {调用简化}
-
+	//等待更新
