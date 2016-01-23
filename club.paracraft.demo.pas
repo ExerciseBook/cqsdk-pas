@@ -24,6 +24,8 @@
 	lib\CoolQ_Function.pas
 		这个文件更加不用改了。
 		里面是CoolQ的API
+		
+	刚刚的git同步版本号错了。。。强迫症不开心。
 }
 
 library
