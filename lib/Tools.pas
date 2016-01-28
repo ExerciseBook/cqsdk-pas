@@ -35,3 +35,10 @@ Function CharToNum(a:string):longint;
 Begin
 	val(a,CharToNum);
 End;
+
+{***********************************************************}
+
+Function String_Choose(expression:boolean;a,b:ansistring):ansistring;
+Begin
+	if expression then exit(a) else exit(b)
+End;

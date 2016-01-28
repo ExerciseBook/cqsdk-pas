@@ -57,4 +57,24 @@ function CQ_setFatal(AuthCode:longint;const errorinfo:Pchar):longint;
 	stdcall; external 'CQP.dll' name 'CQ_setFatal';
 	
 {调用简化}
-	//等待更新
+function CQ_Group_At(QQID:int64):ansistring; //若QQ号为-1 则为At全体成员
+Begin
+	exit('[CQ:at,qq='+String_Choose(QQID=-1,'all',NumToChar(QQID))+']');
+End;
+function CQ_emoji(ID:int64):ansistring;
+Begin
+	exit('[CQ:at,emoji='+NumToChar(ID)+']');
+End;
+function CQ_face(ID:int64):ansistring;
+Begin
+	exit('[CQ:at,face='+NumToChar(ID)+']');
+End;
+function CQ_Shake:ansistring;
+Begin
+	exit('[CQ:shake]');
+End;
+function CQ_anonymous(Force:boolean):ansistring;	
+{	如果 Force 为 false 的话就会出现 如果匿名无法成功发送则转换为普通发送	}
+Begin
+	exit('[CQ:anonymous'+String_Choose(Force,'',',ignore=true')+']');
+End;

@@ -43,11 +43,12 @@ Function MessageBox(hWnd:LONGINT;lpText:PCHAR;lpCaption:PCHAR;uType:DWORD):LONGI
 	stdcall; external 'user32.dll' name 'MessageBoxA';
 	
 //载入其他内容
+{$INCLUDE lib\Tools.pas}
+		//一些基本工具
 {$INCLUDE lib\CoolQ_variable.pas}
 {$INCLUDE lib\CoolQ_Function.pas}
 		//CoolQ Api
-{$INCLUDE lib\Tools.pas}
-		//一些基本工具
+		
 {******************************************************}
 {$INCLUDE code\main.pas}
 		//你的代码就从这个文件开始写吧
@@ -150,7 +151,9 @@ Function _eventGroupMsg(
 			font					:longint):longint;
 stdcall;
 Begin
-	if msg='签到' then CQ_sendGroupMsg(AuthCode,fromgroup,'签到并没有成功[CQ:image,file=funnyface.png]');
+	if msg='签到' then CQ_sendGroupMsg(AuthCode,fromgroup,
+		sTop(CQ_Group_At(fromQQ)+' : 签到并没有成功[CQ:image,file=funnyface.png]')
+		);
 	//if fromgroup=311954860 then CQ_sendGroupMsg(AuthCode,fromgroup,StoP(PtoS(msg)));
 		//复读机	
 	exit(EVENT_IGNORE);	//关于返回值说明, 见“_eventPrivateMsg”函数
