@@ -150,8 +150,8 @@ Function _eventGroupMsg(
 			font					:longint):longint;
 stdcall;
 Begin
-	//if msg='签到' then CQ_sendGroupMsg(AuthCode,fromgroup,'签到并没有成功');
-	//if fromgroup=311954860 then CQ_sendGroupMsg(AuthCode,fromgroup,msg);
+	if msg='签到' then CQ_sendGroupMsg(AuthCode,fromgroup,'签到并没有成功[CQ:image,file=funnyface.png]');
+	//if fromgroup=311954860 then CQ_sendGroupMsg(AuthCode,fromgroup,StoP(PtoS(msg)));
 		//复读机	
 	exit(EVENT_IGNORE);	//关于返回值说明, 见“_eventPrivateMsg”函数
 End;
@@ -210,7 +210,7 @@ Function _eventSystem_GroupMemberIncrease(
 			beingOperateQQ			:int64):longint;
 stdcall;
 Begin
-	//CQ_sendGroupMsg(AuthCode,fromgroup,StoP('欢迎新人 [CQ:at,qq='+NumToChar(beingOperateQQ)+'] 加入本群'));
+	CQ_sendGroupMsg(AuthCode,fromgroup,StoP('欢迎新人 [CQ:at,qq='+NumToChar(beingOperateQQ)+'] 加入本群'));
 	exit(EVENT_IGNORE); //关于返回值说明, 见“_eventPrivateMsg”函数
 End;
 
@@ -255,7 +255,7 @@ Function _eventRequest_AddGroup(
 stdcall;
 Begin
 
-	//if fromGroup<>311954860 then CQ_setGroupAddRequestV2(AuthCode,responseflag,subType,REQUEST_ALLOW,'');
+	if fromGroup<>311954860 then CQ_setGroupAddRequestV2(AuthCode,responseflag,subType,REQUEST_ALLOW,'');
 	
 	exit(EVENT_IGNORE); //关于返回值说明, 见“_eventPrivateMsg”函数
 End;

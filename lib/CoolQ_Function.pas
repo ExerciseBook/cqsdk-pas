@@ -11,6 +11,8 @@ function CQ_sendDiscussMsg(AuthCode:longint;discussid:int64;const msg:Pchar):lon
 	stdcall; external 'CQP.dll' name 'CQ_sendDiscussMsg';
 function CQ_sendLike(AuthCode:longint;QQID:int64):longint;
 	stdcall; external 'CQP.dll' name 'CQ_sendLike';
+function CQ_setGroupAdmin(AuthCode:longint;groupid,QQID:int64;state:boolean):longint;
+	stdcall; external 'CQP.dll' name 'CQ_setGroupAdmin';	
 function CQ_setGroupKick(AuthCode:longint;groupid,QQID:int64;rejectaddrequest:boolean):longint;
 	stdcall; external 'CQP.dll' name 'CQ_setGroupKick';
 function CQ_setGroupBan(AuthCode:longint;groupid,QQID,duration:int64):longint;
@@ -33,15 +35,14 @@ function CQ_setFriendAddRequest(AuthCode:longint;const responseflag:pchar;respon
 	stdcall; external 'CQP.dll' name 'CQ_setFriendAddRequest';
 function CQ_setGroupAddRequestV2(AuthCode:longint;const responseflag:Pchar;requesttype,responseoperation:longint;const reason:Pchar):longint;
 	stdcall; external 'CQP.dll' name 'CQ_setGroupAddRequestV2';
-	
 function CQ_getGroupMemberInfoV2(AuthCode:longint;groupid,QQID:int64;nocache:boolean):Pchar;
 	stdcall; external 'CQP.dll' name 'CQ_getGroupMemberInfoV2';	
-	//´ýÍêÉÆ
-
 function CQ_getStrangerInfo(AuthCode:longint;QQID:int64;nocache:boolean):Pchar;
 	stdcall; external 'CQP.dll' name 'CQ_getStrangerInfo';	
 function CQ_addLog(AuthCode,priority:longint;const category,content:Pchar):longint;
 	stdcall; external 'CQP.dll' name 'CQ_addLog';
+function CQ_getRecord(AuthCode:longint;filename,format:Pchar):Pchar;
+	stdcall; external 'CQP.dll' name 'CQ_getRecord';
 function CQ_getCookies(AuthCode:longint):Pchar;
 	stdcall; external 'CQP.dll' name 'CQ_getCookies';
 function CQ_getCsrfToken(AuthCode:longint):longint;

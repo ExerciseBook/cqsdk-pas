@@ -1,21 +1,48 @@
 Type
+	CQ_Type_QQ=
+		record
+			QQID			: int64;
+			sex,age			: longint;
+			nick			: string;
+		end;
 	CQ_Type_GroupMember=
 		record
 			GroupID,QQID	: longint;
-			username,nick	: Pchar;
+			username,nick	: string;
 			sex,						// 0/男 1/女
 			age				: longint;
 			aera			: text;
 			jointime,
 			lastsent		: longint;
-			level_name		: Pchar;
+			level_name		: string;
 			permission		: longint;	// 0/成员 2/管理员 3/群主
-			title			: Pchar;
+			title			: string;
 			titleExpiretime : longint;
 			unfriendly,
 			nickcanchange	: boolean;
 		end;
-
+	CQ_Type_GroupAnonymous=
+		record
+			AID				: int64;
+			name			: string;
+			Token			: longint;
+		end;
+	CQ_Type_GroupFile=
+		record
+			filename		: string;
+			fileid			: string;
+			busid			: longint;
+			size			: int64;
+		end;
+	CQ_Type_MegType=
+		record
+			key,msg			: ansistring;
+		end;
+	CQ_Type_SuspensionWindow=
+		record
+			data,entity		: longint;
+		end;
+	
 Const
 	CR = #$0d;
 	LF = #$0a;
