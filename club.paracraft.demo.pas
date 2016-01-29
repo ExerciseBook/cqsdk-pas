@@ -179,7 +179,6 @@ End;
 Function _eventSystem_GroupAdmin(
 			subType,sendTime		:longint;
 			fromGroup,
-			fromQQ,
 			beingOperateQQ			:int64):longint;
 stdcall;
 Begin
@@ -194,7 +193,7 @@ End;
 }
 Function _eventSystem_GroupMemberDecrease(
 			subType,sendTime		:longint;
-			fromGroup,
+			fromGroup,fromQQ,
 			beingOperateQQ			:int64):longint;
 stdcall;
 Begin
