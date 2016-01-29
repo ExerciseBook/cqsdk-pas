@@ -194,7 +194,7 @@ End;
 }
 Function _eventSystem_GroupMemberDecrease(
 			subType,sendTime		:longint;
-			fromGroup,fromQQ,
+			fromGroup,
 			beingOperateQQ			:int64):longint;
 stdcall;
 Begin
@@ -241,7 +241,7 @@ Function _eventRequest_AddFriend(
 			const msg,responseFlag		:Pchar):longint;
 stdcall;
 Begin
-	//CQ_setFriendAddRequest(AuthCode, responseFlag, REQUEST_ALLOW,'');
+	CQ_setFriendAddRequest(AuthCode, responseFlag, REQUEST_DENY,'');
 	exit(EVENT_IGNORE); //关于返回值说明, 见“_eventPrivateMsg”函数
 End;
 
