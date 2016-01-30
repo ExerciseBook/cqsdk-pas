@@ -22,7 +22,7 @@ End;
 {
 	数字 转换到 字符串
 }
-Function NumToChar(a:longint):string;
+Function NumToChar(a:int64):string;
 Begin
 	str(a,NumToChar);
 End;
@@ -31,9 +31,26 @@ End;
 {
 	字符串 转换到 数字
 }
-Function CharToNum(a:string):longint;
+Function CharToNum(a:string):int64;
 Begin
 	val(a,CharToNum);
+End;
+
+
+{
+	双精浮点 转换到 字符串
+}
+Function RealToChar(a:real):string;
+Begin
+	str(a,RealToChar)
+End;
+
+{
+	字符串 转换到 双精浮点
+}
+Function CharToReal(a:string):real;
+Begin
+	val(a,CharToReal);
 End;
 
 {***********************************************************}

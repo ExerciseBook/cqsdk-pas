@@ -31,7 +31,7 @@ library
 	//DLL ±‡“Î
 
 Uses
-	dateutils,sysutils;
+	dateutils,sysutils,mysql4;
 	//‘ÿ»Îø‚
 	
 Var
@@ -79,6 +79,7 @@ End;
 Function _eventStartup:longint;
 stdcall;
 Begin
+	randomize;
 	exit(code_eventStartup);
 End;
 
@@ -91,6 +92,7 @@ End;
 Function _eventEnable:longint;
 stdcall;
 Begin
+	randomize;
 	exit(code_eventEnable);
 End;
 

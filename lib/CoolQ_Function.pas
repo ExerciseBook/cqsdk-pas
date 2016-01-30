@@ -78,3 +78,10 @@ function CQ_anonymous(Force:boolean):ansistring;
 Begin
 	exit('[CQ:anonymous'+String_Choose(Force,'',',ignore=true')+']');
 End;
+
+
+{API}
+function CQ_i_sendGroupMsg(groupid:int64;const msg:ansistring):longint;
+Begin
+	exit(CQ_sendGroupMsg(AuthCode,groupid,StoP(msg)));
+End;
