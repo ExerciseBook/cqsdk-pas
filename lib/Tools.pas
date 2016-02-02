@@ -53,9 +53,54 @@ Begin
 	val(a,CharToReal);
 End;
 
+{
+	双精浮点 转换到 能看的字符串
+}
+
+Function RealToDisplay(a:real):string;
+Var
+	display:string;
+Begin
+	if a>=0 
+		then display:=''
+		else
+		begin
+			display:='-';
+			a:=-a;
+		end;
+	
+	display:=NumToChar(trunc(a));
+	a:=(a-trunc(a))*10;
+	
+	while a<>0 do begin
+		display:=display+NumToChar(trunc(a));
+		a:=(a-trunc(a))*10;
+	end;
+	exit(display);
+End;
+
+
 {***********************************************************}
 
 Function String_Choose(expression:boolean;a,b:ansistring):ansistring;
 Begin
 	if expression then exit(a) else exit(b)
+End;
+
+
+Procedure Message_Replace(var a:ansistring;
+							  b,c:ansistring);
+Var
+	i:longint;
+	lenb:longint;
+Begin
+	i:=0;
+	lenb:=length(b);
+	
+	repeat
+		inc(i);
+		if copy(a,i,lenb) = b then begin
+			a:=copy(a,1,i-1)+c+copy(a,i+lenb,length(a));
+		end;
+	until i>=length(a);
 End;

@@ -31,7 +31,7 @@ library
 	//DLL ±àÒë
 
 Uses
-	dateutils,sysutils,mysql4;
+	dateutils,sysutils,mysql4,math;
 	//ÔØÈë¿â
 	
 Var

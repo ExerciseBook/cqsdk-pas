@@ -57,6 +57,25 @@ function CQ_setFatal(AuthCode:longint;const errorinfo:Pchar):longint;
 	stdcall; external 'CQP.dll' name 'CQ_setFatal';
 	
 {调用简化}
+Function CQ_CharEncode(str:ansistring;Comma:boolean):ansistring;
+Begin
+	Message_Replace(str,'&','&amp;');
+	Message_Replace(str,'[','&#91;');
+	Message_Replace(str,']','&#93;');
+	if Comma then begin
+		Message_Replace(str,',','&#44;');
+	end;
+	exit(Str);
+End;
+Function CQ_CharDecode(str:ansistring):ansistring;
+Begin
+	Message_Replace(str,'&amp;','&');
+	Message_Replace(str,'&#91;','[');
+	Message_Replace(str,'&#93;',']');
+	Message_Replace(str,'&#44;',',');
+	exit(str);
+End;
+
 function CQ_Group_At(QQID:int64):ansistring; //若QQ号为-1 则为At全体成员
 Begin
 	exit('[CQ:at,qq='+String_Choose(QQID=-1,'all',NumToChar(QQID))+']');
@@ -78,10 +97,34 @@ function CQ_anonymous(Force:boolean):ansistring;
 Begin
 	exit('[CQ:anonymous'+String_Choose(Force,'',',ignore=true')+']');
 End;
+function CQ_image(url:ansistring):ansistring;
+Begin
+	exit('[CQ:image,file='+CQ_CharEncode(url,true)+']')
+End;
+function CQ_Music(musicid:int64):ansistring;
+Begin
+	exit('[CQ:music,id='+NumToChar(musicid)+']')
+	{返回 (“[CQ:music,id=” ＋ 到文本 (歌曲ID) ＋ “]”)}
+End;
 
 
 {API}
+function CQ_i_sendPrivateMsg(QQID:int64;msg:ansistring):longint;
+Begin
+	exit(CQ_sendPrivateMsg(AuthCode,QQID,StoP(msg)));
+End;
+
 function CQ_i_sendGroupMsg(groupid:int64;const msg:ansistring):longint;
 Begin
 	exit(CQ_sendGroupMsg(AuthCode,groupid,StoP(msg)));
+End;
+
+function CQ_i_addLog(priority:longint;const category,content:ansistring):longint;
+Begin
+	exit(CQ_addLog(AuthCode,priority,StoP(category),StoP(content)));
+End;
+
+function CQ_i_getAppDirectory:ansistring;
+Begin
+	exit(PtoS(CQ_getAppDirectory(AuthCode)));
 End;
