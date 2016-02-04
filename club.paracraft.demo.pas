@@ -44,9 +44,11 @@ Function MessageBox(hWnd:LONGINT;lpText:PCHAR;lpCaption:PCHAR;uType:DWORD):LONGI
 	
 //载入其他内容
 {$INCLUDE lib\Tools.pas}
+{$INCLUDE lib\CoolQ_Tools.pas}
+{$INCLUDE lib\CoolQ_DllFunction.pas}
 		//一些基本工具
 {$INCLUDE lib\CoolQ_variable.pas}
-{$INCLUDE lib\CoolQ_Function.pas}
+{$INCLUDE lib\CoolQ_CQapplication.pas}
 		//CoolQ Api
 		
 {******************************************************}
