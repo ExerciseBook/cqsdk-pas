@@ -157,9 +157,21 @@ Begin
 End;
 
 
-
-
-
+function CQ_Tools_TextToAnonymous(source:string;
+									Var Anonymous:CQ_Type_GroupAnonymous):boolean;
+Var
+	data:string;
+	i	:longint;
+Begin
+	if source='' then exit(false);
+	data:=Base64_Decryption(source);
+	if (data='') or (length(data)<12) then exit(false);
+	i:=1;
+	Anonymous.AID:=CoolQ_Tools_GetNum(i,8,data);
+	Anonymous.name:=CoolQ_Tools_GetStr(i,data);
+	Anonymous.Token:=CoolQ_Tools_GetStr(i,data);
+	exit(true);
+End;
 
 function CQ_i_addLog(priority:longint;const category,content:ansistring):longint;
 Begin

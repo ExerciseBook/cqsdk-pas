@@ -261,7 +261,30 @@ exports
 	_menuA index 16,
 	_menuB index 17;
 
+{Var
+	AnonymousMes	:	CQ_Type_GroupAnonymous;
+	fromAnonymous	:	ansistring;
+	t				:	text;}
 Begin
+
 	//这里不要加东西←_←
 	//这里是Dll初始化内容，我感觉加东西会爆炸。反正我没试过
+	//writeln(Base64_Encryption('123'));
+	{assign(t,'123.txt');rewrite(t);
+	writeln(t,Base64_Decryption('匿名信息'));
+	close(t);}
+	{
+	fromAnonymous:='匿名信息';
+	assign(t,'123.txt');rewrite(t);
+	
+	CQ_Tools_TextToAnonymous(fromAnonymous,AnonymousMes);
+	writeln(fromAnonymous);
+	//writeln(t,Base64_Decryption(fromAnonymous));
+	writeln(t,AnonymousMes.AID);
+	writeln(t,AnonymousMes.NAME);
+	writeln(t,AnonymousMes.TOKEN);
+	
+	
+	close(t);
+	}
 End.

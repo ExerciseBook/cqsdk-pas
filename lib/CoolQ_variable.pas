@@ -25,7 +25,7 @@ Type
 		record
 			AID				: int64;
 			name			: string;
-			Token			: longint;
+			Token			: string;
 		end;
 	CQ_Type_GroupFile=
 		record
