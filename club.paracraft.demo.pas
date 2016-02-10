@@ -33,7 +33,7 @@ library
 Uses
 	dateutils,sysutils,mysql4,math;
 	//载入库
-	
+
 Var
 	AuthCode:longint;
 	//AuthCode CoolQ用来识别你是否是合法调用的玩意儿
@@ -43,13 +43,11 @@ Function MessageBox(hWnd:LONGINT;lpText:PCHAR;lpCaption:PCHAR;uType:DWORD):LONGI
 	stdcall; external 'user32.dll' name 'MessageBoxA';
 	
 //载入其他内容
+{$INCLUDE lib\CoolQ_variable.pas}
+{$INCLUDE lib\CoolQ_DllFunction.pas}
 {$INCLUDE lib\Tools.pas}
 {$INCLUDE lib\CoolQ_Tools.pas}
-{$INCLUDE lib\CoolQ_DllFunction.pas}
-		//一些基本工具
-{$INCLUDE lib\CoolQ_variable.pas}
 {$INCLUDE lib\CoolQ_CQapplication.pas}
-		//CoolQ Api
 		
 {******************************************************}
 {$INCLUDE code\main.pas}
@@ -260,31 +258,7 @@ exports
 	
 	_menuA index 16,
 	_menuB index 17;
-
-{Var
-	AnonymousMes	:	CQ_Type_GroupAnonymous;
-	fromAnonymous	:	ansistring;
-	t				:	text;}
 Begin
-
 	//这里不要加东西←_←
 	//这里是Dll初始化内容，我感觉加东西会爆炸。反正我没试过
-	//writeln(Base64_Encryption('123'));
-	{assign(t,'123.txt');rewrite(t);
-	writeln(t,Base64_Decryption('匿名信息'));
-	close(t);}
-	{
-	fromAnonymous:='匿名信息';
-	assign(t,'123.txt');rewrite(t);
-	
-	CQ_Tools_TextToAnonymous(fromAnonymous,AnonymousMes);
-	writeln(fromAnonymous);
-	//writeln(t,Base64_Decryption(fromAnonymous));
-	writeln(t,AnonymousMes.AID);
-	writeln(t,AnonymousMes.NAME);
-	writeln(t,AnonymousMes.TOKEN);
-	
-	
-	close(t);
-	}
 End.

@@ -172,6 +172,9 @@ Begin
 	Anonymous.Token:=CoolQ_Tools_GetStr(i,data);
 	exit(true);
 End;
+{
+function CQ_Tools_TextToGroupMember(source:string;
+									Var info)}
 
 function CQ_i_addLog(priority:longint;const category,content:ansistring):longint;
 Begin
@@ -182,3 +185,22 @@ function CQ_i_getAppDirectory:ansistring;
 Begin
 	exit(PtoS(CQ_getAppDirectory(AuthCode)));
 End;
+
+
+function CQ_i_setGroupMute(groupid,QQID,duration:int64):longint;
+Begin
+	exit(CQ_setGroupBan(AuthCode,groupid,QQID,duration));
+End;
+
+function CQ_i_setGroupWholeMute(groupid:int64;enableban:boolean):longint;
+Begin
+	exit(CQ_setGroupWholeBan(AuthCode,groupid,enableban));
+End;
+
+function CQ_i_setGroupKick(groupid,QQID:int64;rejectaddrequest:boolean):longint;
+Begin
+	exit(CQ_setGroupKick(AuthCode,Groupid,QQID,rejectaddrequest));
+End;
+
+
+//function CQ_setGroupBan(AuthCode:longint;groupid,QQID,duration:int64):longint;
