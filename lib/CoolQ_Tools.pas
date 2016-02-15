@@ -43,7 +43,7 @@ Begin
 End;
 
 {
-	åè¿›åˆ¶è½¬äºŒè¿›åˆ¶
+	Ê®½øÖÆ×ª¶ş½øÖÆ
 }
 Function Hex_Conversion_10to2(s:longint):string;
 Begin
@@ -57,7 +57,7 @@ Begin
                 Hex_Conversion_10to2:='0'+Hex_Conversion_10to2;
 End;
 {
-	äºŒè¿›åˆ¶è½¬åè¿›åˆ¶
+	¶ş½øÖÆ×ªÊ®½øÖÆ
 }
 Function Hex_Conversion_2to10(s:string):longint;
 Var
@@ -76,10 +76,9 @@ Function Base64_Encryption(s:ansistring):ansistring;
 Var
         st:ansistring;
         i :longint;
-		TheBase64Alphabet : string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'+
-                                     'abcdefghijklmnopqrstuvwxyz'+
-                                     '0123456789' + '+/';
+		TheBase64Alphabet : string;
 Begin
+		TheBase64Alphabet:='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
         Base64_Encryption:='';
         st:='';
         for i:=1 to length(s) do begin
@@ -109,10 +108,9 @@ Var
         st:ansistring;
         len:longint;
         i :longint;
-		TheBase64Alphabet : string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'+
-                                     'abcdefghijklmnopqrstuvwxyz'+
-                                     '0123456789' + '+/';
+		TheBase64Alphabet : string;
 Begin
+		TheBase64Alphabet:='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
         Base64_Decryption:='';
         st:='';
         len:=length(s);
@@ -153,7 +151,7 @@ Begin
 End;
 
 {
-	åè½¬å­—ç¬¦ä¸²
+	·´×ª×Ö·û´®
 }
 Function CoolQ_Tools_Flip(s:ansistring):ansistring;
 Var
@@ -196,7 +194,7 @@ Begin
 End;
 
 {
-	ä¸‹é¢æ˜¯ç¥å¥‡çš„ä¸œè¥¿
+	ÏÂÃæÊÇÉñÆæµÄ¶«Î÷
 }
 Function CoolQ_Tools_GetBin(Var i:longint;
 								len:longint;

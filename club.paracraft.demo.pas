@@ -31,7 +31,7 @@ library
 	//DLL 编译
 
 Uses
-	dateutils,sysutils,mysql4,math;
+	math,dateutils,sysutils,mysql4;
 	//载入库
 
 Var
@@ -258,6 +258,7 @@ exports
 	
 	_menuA index 16,
 	_menuB index 17;
+
 Begin
 	//这里不要加东西←_←
 	//这里是Dll初始化内容，我感觉加东西会爆炸。反正我没试过

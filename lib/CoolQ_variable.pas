@@ -7,19 +7,21 @@ Type
 		end;
 	CQ_Type_GroupMember=
 		record
-			GroupID,QQID	: longint;
-			username,nick	: string;
-			sex,						// 0/男 1/女
-			age				: longint;
-			aera			: text;
-			jointime,
-			lastsent		: longint;
-			level_name		: string;
-			permission		: longint;	// 0/成员 2/管理员 3/群主
-			title			: string;
-			titleExpiretime : longint;
-			unfriendly,
-			nickcanchange	: boolean;
+			GroupID,					// 群号
+			QQID			: int64;	// QQ号
+			username,					// QQ昵称
+			nick			: string;	// 群名片
+			sex,						// 性别 0/男 1/女
+			age				: longint;	// 年龄
+			aera			: string;	// 地区
+			jointime,					// 入群时间
+			lastsent		: longint;	// 上次发言时间
+			level_name		: string;	// 头衔名字
+			permission		: longint;	// 权限等级 1/成员 2/管理员 3/群主
+			unfriendly		: boolean;	// 不良成员记录
+			title			: string;	// 自定义头衔
+			titleExpiretime : longint;	// 头衔过期时间
+			nickcanchange	: boolean;	// 管理员是否能协助改名
 		end;
 	CQ_Type_GroupAnonymous=
 		record
