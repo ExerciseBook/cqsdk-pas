@@ -67,13 +67,13 @@ Var
 	AnonymousMes	:	CQ_Type_GroupAnonymous;
 Begin
 
-	{if (fromQQ=80000000) and (fromAnonymous<>'') then begin
+	if (fromQQ=80000000) and (fromAnonymous<>'') then begin
 		CQ_Tools_TextToAnonymous(fromAnonymous,AnonymousMes);
 		//将匿名用户信息存到 AnonymousMes
-	end;}
+	end;
 
 	if msg='签到' then CQ_sendGroupMsg(AuthCode,fromgroup,
-		sTop(CQ_Group_At(fromQQ)+' : 签到并没有成功[CQ:image,file=funnyface.png]')
+		sTop(CQCode_Group_At(fromQQ)+' : 签到并没有成功[CQ:image,file=funnyface.png]')
 		);
 		
 	exit(EVENT_IGNORE);
