@@ -1,12 +1,12 @@
 {
     "ret":1,
     "apiver":9,
-    "appid":"club.paracraft.demo",
-    "name":"CQ样例应用(PAS)",
+    "appid":"com.binkic.cqdemo",
+    "name":"CQ样例应用(Pascal)",
     "version":"1.0.0",
     "version_id":1,
     "author":"Eric",
-    "description":"酷Q Pro的样例应用",
+    "description":"酷Q V9 API 样例应用",
     "event":[
         {
             "id":1,

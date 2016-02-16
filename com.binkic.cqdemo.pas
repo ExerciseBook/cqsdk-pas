@@ -41,6 +41,10 @@ Var
 //系统提示框函数
 Function MessageBox(hWnd:LONGINT;lpText:PCHAR;lpCaption:PCHAR;uType:DWORD):LONGINT;
 	stdcall; external 'user32.dll' name 'MessageBoxA';
+
+Const
+	CQAPPID='com.binkic.cqdemo';
+		//请修改APPID为你的APPID
 	
 //载入其他内容
 {$INCLUDE lib\CoolQ_variable.pas}
@@ -258,8 +262,30 @@ exports
 	
 	_menuA index 16,
 	_menuB index 17;
-
+	
+{
+Var
+	AnonymousMes	:	CQ_Type_GroupAnonymous;
+	fromAnonymous	:	ansistring;
+	t				:	text;
+}
 Begin
+	
 	//这里不要加东西←_←
 	//这里是Dll初始化内容，我感觉加东西会爆炸。反正我没试过
+
+	{
+	fromAnonymous:='AAAAAAAPQkEABLLLtrkAKLv03qy3g1QxEiuwe+0vqiz7/0gUIek9JS5oJo0HBBMCI05QfVkVrJI=';
+	assign(t,'123.txt');rewrite(t);
+	
+	CQ_Tools_TextToAnonymous(fromAnonymous,AnonymousMes);
+	writeln(fromAnonymous);
+	//writeln(t,Base64_Decryption(AAAAAAAPQkEABLLLtrkAKLv03qy3g1QxEiuwe+0vqiz7/0gUIek9JS5oJo0HBBMCI05QfVkVrJI=));
+	writeln(t,AnonymousMes.AID);
+	writeln(t,AnonymousMes.NAME);
+	writeln(t,AnonymousMes.TOKEN);
+	
+	
+	close(t);
+	}
 End.

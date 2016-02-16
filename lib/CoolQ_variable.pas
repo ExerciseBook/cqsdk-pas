@@ -55,8 +55,6 @@ Const
 	CQAPIVERTEXT='9';
 	// CoolQ API版本
 	
-	CQAPPID='club.paracraft.demo';
-		//请修改APPID为你的APPID
 	CQAPPINFO=CQAPIVERTEXT+','+CQAPPID;
 	
 	EVENT_IGNORE=0;        //事件_忽略
