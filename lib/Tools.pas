@@ -10,11 +10,8 @@ End;
 	字符串 转换到 Char*
 }
 Function StoP(a:ansistring):Pchar;
-Var
-	s:array [0..65535] of char;
 Begin
-	s:=a;
-	StoP:=pchar(@s);
+	StoP:=pchar(@a[1]);
 End;
 
 {***********************************************************}
