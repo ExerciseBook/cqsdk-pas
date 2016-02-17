@@ -2,28 +2,6 @@
 	CoolQ SDK for Pascal
 	API版本	：	9.6
 	编译器	：	FPC 2.0.4
-===================================================
-	貌似代码要ANSI格式才不会让字符串鬼畜
-	
-	以下文件内容不要随意改动，SDK的更新会被覆盖
-	
-	当前文件
-		library 	下内容不要修改
-		uses		下内容根据需要自行修改
-		$include	下内容根据需要自行修改
-		Var			下内容不要修改
-					需要定义变量请到 code\main.pas 下
-		exports		下内容根据需要自行修改
-		事件函数	这个我以后会在code\main.pas那边添加一些调用的。可以方便食用。
-					传递到code\main.pas那边的内容我会把pchar给转换成string来食用。
-					
-	lib\CoolQ_variable.pas
-		里面有APPID需要更改。其余的不需要
-		这个文件会后续更新
-		
-	lib\CoolQ_Function.pas
-		这个文件更加不用改了。
-		里面是CoolQ的API
 }
 
 library
@@ -263,29 +241,7 @@ exports
 	_menuA index 16,
 	_menuB index 17;
 	
-{
-Var
-	AnonymousMes	:	CQ_Type_GroupAnonymous;
-	fromAnonymous	:	ansistring;
-	t				:	text;
-}
 Begin
-	
 	//这里不要加东西←_←
 	//这里是Dll初始化内容，我感觉加东西会爆炸。反正我没试过
-
-	{
-	fromAnonymous:='AAAAAAAPQkEABLLLtrkAKLv03qy3g1QxEiuwe+0vqiz7/0gUIek9JS5oJo0HBBMCI05QfVkVrJI=';
-	assign(t,'123.txt');rewrite(t);
-	
-	CQ_Tools_TextToAnonymous(fromAnonymous,AnonymousMes);
-	writeln(fromAnonymous);
-	//writeln(t,Base64_Decryption(AAAAAAAPQkEABLLLtrkAKLv03qy3g1QxEiuwe+0vqiz7/0gUIek9JS5oJo0HBBMCI05QfVkVrJI=));
-	writeln(t,AnonymousMes.AID);
-	writeln(t,AnonymousMes.NAME);
-	writeln(t,AnonymousMes.TOKEN);
-	
-	
-	close(t);
-	}
 End.
