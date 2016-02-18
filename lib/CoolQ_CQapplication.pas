@@ -123,7 +123,6 @@ End;
 
 {
 [CQ:share,url=” ＋ CQ码_转义 (url地址, 真) ＋ “,title=” ＋ CQ码_转义 (卡片标题, 真) ＋ “,content=” ＋ CQ码_转义 (卡片内容, 真) ＋ “,image=” ＋ CQ码_转义 (卡片图片url, 真) ＋ “]
-
 }
 function CQCode_share(url,title,Content,image:ansistring):ansistring;
 Begin
@@ -232,7 +231,7 @@ Begin
 	exit(CQ_GetCookies(AuthCode));
 End;
 
-//获取CQ_i_getCsrfToken Auth=20 即QQ网页用到的bkn/g_tk等 慎用,此接口需要严格授权 //getCsrfToken
+//获取CsrfToken Auth=20 即QQ网页用到的bkn/g_tk等 慎用,此接口需要严格授权 //getCsrfToken
 Function CQ_i_getCsrfToken():longint;
 Begin
 	exit(CQ_GetCsrfToken(AuthCode));
@@ -286,8 +285,8 @@ End;
 
 {成功返回日志ID //addlog
 	priority 数值请看常量列表 CQLOG_*
-	category是类型
-	content是日志内容
+	category 是类型
+	content 是日志内容
 }
 function CQ_i_addLog(priority:longint;const category,content:ansistring):longint;
 Begin
