@@ -54,9 +54,10 @@ End;
 	双精浮点 转换到 能看的字符串
 }
 
-Function RealToDisplay(a:real):string;
+Function RealToDisplay(a:real;b:longint):string;
 Var
 	display:string;
+	i:longint;
 Begin
 	if a>=0 
 		then display:=''
@@ -66,13 +67,18 @@ Begin
 			a:=-a;
 		end;
 	
-	display:=NumToChar(trunc(a));
+	display:=display+NumToChar(trunc(a));
 	a:=(a-trunc(a))*10;
 	
-	while a<>0 do begin
+	if b<0 then b:=16;
+	b:=min(b,16);
+	if b<>0 then display:=display+'.';
+	
+	for i:=1 to b do begin
 		display:=display+NumToChar(trunc(a));
 		a:=(a-trunc(a))*10;
 	end;
+	
 	exit(display);
 End;
 
