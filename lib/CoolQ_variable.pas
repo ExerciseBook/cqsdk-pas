@@ -1,9 +1,10 @@
 Type
 	CQ_Type_QQ=
 		record
-			QQID			: int64;
-			sex,age			: longint;
-			nick			: string;
+			QQID			: int64;	//QQ号
+			nick			: string;	//昵称
+			sex,						//性别
+			age				: longint;	//年龄
 		end;
 	CQ_Type_GroupMember=
 		record
@@ -31,10 +32,10 @@ Type
 		end;
 	CQ_Type_GroupFile=
 		record
-			filename		: string;
-			fileid			: string;
-			busid			: longint;
-			size			: int64;
+			fileid			: string;	//文件ID
+			filename		: string;	//文件名
+			size			: int64;	//文件大小
+			busid			: longint;	//busid
 		end;
 	CQ_Type_MegType=
 		record

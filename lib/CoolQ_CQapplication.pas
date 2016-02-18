@@ -131,26 +131,27 @@ Begin
 End;
 
 {API}
+//发送私聊 Auth=106 //sendPrivateMsg
 function CQ_i_sendPrivateMsg(QQID:int64;msg:ansistring):longint;		//Auth=106 //sendPrivateMsg
 Begin
 	exit(CQ_sendPrivateMsg(AuthCode,QQID,StoP(msg)));
 End;
-
+//发送群聊 Auth=101 //sendGroupMsg
 function CQ_i_sendGroupMsg(groupid:int64;const msg:ansistring):longint;	//Auth=101 //sendGroupMsg
 Begin
 	exit(CQ_sendGroupMsg(AuthCode,groupid,StoP(msg)));
 End;
-
+//发送讨论组 Auth=103 //sendDiscussMsg
 function CQ_i_sendDiscussMsg(DiscussID:int64;msg:ansistring):longint;	//Auth=103 //sendDiscussMsg
 Begin
 	exit(CQ_sendDiscussMsg(AuthCode,DiscussID,StoP(msg)));
 End;
-
+//发送赞 Auth=110 //sendLike
 function CQ_i_sendLike(QQID:int64):longint;								//Auth=110 //sendLike
 Begin
 	exit(CQ_sendLike(AuthCode,QQID));
 End;
-
+//接受语音 Auth=30 接收消息中的语音(record),返回保存在 \data\record\ 目录下的文件名 //getRecord
 function CQ_i_getRecord(filename,format:ansistring):ansistring;			//Auth=30 接收消息中的语音(record),返回保存在 \data\record\ 目录下的文件名 //getRecord
 {
 filename 收到消息中的语音文件名(file)
@@ -163,8 +164,7 @@ Begin
 		)
 	)
 End;
-
-
+//文本到匿名
 function CQ_Tools_TextToAnonymous(source:ansistring;
 									Var Anonymous:CQ_Type_GroupAnonymous):boolean;
 Var
@@ -181,7 +181,7 @@ Begin
 	
 	exit(true);
 End;
-
+//文本到群员
 function CQ_Tools_TextToGroupMember(source:ansistring;
 									Var info:CQ_Type_GroupMember):boolean;
 Var
@@ -209,7 +209,63 @@ Begin
 	info.nickcanchange:=CoolQ_Tools_GetNum(i,4,data)=1;
 	exit(true);
 End;
+//文本到群文件
+Function CQ_Tools_TextToFile(source:string;info:CQ_Type_GroupFile):boolean;
+Var
+	data:ansistring;
+	i:longint;
+Begin
+	if source='' then exit(false);
+	data:=Base64_Decryption(source);
+	if length(data)<20 then exit(false);
+	i:=1;
+	info.FileID:=CoolQ_Tools_GetStr(i,data);
+	info.FileName:=CoolQ_Tools_GetStr(i,data);
+	info.Size:=CoolQ_Tools_GetNum(i,8,data);
+	info.busid:=CoolQ_Tools_GetNum(i,8,data);
+	exit(true);
+End;
 
+//获取Cookies Auth=20 慎用,此接口需要严格授权 //getCookies
+Function CQ_i_GetCookies():ansistring;
+Begin
+	exit(CQ_GetCookies(AuthCode));
+End;
+
+//获取CQ_i_getCsrfToken Auth=20 即QQ网页用到的bkn/g_tk等 慎用,此接口需要严格授权 //getCsrfToken
+Function CQ_i_getCsrfToken():longint;
+Begin
+	exit(CQ_GetCsrfToken(AuthCode));
+End;
+
+//取登陆QQ getLoginQQ
+Function CQ_i_GetLoginQQ():int64;
+Begin
+	exit(CQ_GetLoginQQ(authcode));
+End;
+
+//取登陆QQ昵称　getLoginNick
+Function CQ_i_getLoginNick():string;
+Begin
+	exit(CQ_GetLoginNick(AuthCode));
+End;
+
+//取陌生人信息 Auth=131 //CQ_getStrangerInfo
+Function CQ_i_GetStrangerInfo(QQ:int64;Var info:CQ_Type_QQ;nocache:boolean):longint;
+Var
+	data:string;
+	i:longint;
+Begin
+	data:=CQ_GetStrangerInfo(AuthCode,QQ,Nocache);
+	if data='' then exit(-1000);
+	i:=1;
+	info.QQID:=CoolQ_Tools_GetNum(i,8,data);
+	info.nick:=CoolQ_Tools_GetStr(i,data);
+	info.sex:=CoolQ_Tools_GetNum(i,4,data);
+	info.age:=CoolQ_Tools_GetNum(i,4,data);
+End;
+
+//取群成员信息 Auth=130 //getGroupMemberInfoV2
 function CQ_i_getGroupMemberInfo(groupid,qqid:int64;
 								Var info:CQ_Type_GroupMember;
 								nocache:boolean):longint;
@@ -222,28 +278,132 @@ Begin
 	exit(0);
 End;
 
-
-function CQ_i_addLog(priority:longint;const category,content:ansistring):longint;
-Begin
-	exit(CQ_addLog(AuthCode,priority,StoP(category),StoP(content)));
-End;
-
+//返回的路径末尾带"\" //getAppDirectory
 function CQ_i_getAppDirectory:ansistring;
 Begin
 	exit(PtoS(CQ_getAppDirectory(AuthCode)));
 End;
 
-function CQ_i_setGroupMute(groupid,QQID,duration:int64):longint;
+{成功返回日志ID //addlog
+	priority 数值请看常量列表 CQLOG_*
+	category是类型
+	content是日志内容
+}
+function CQ_i_addLog(priority:longint;const category,content:ansistring):longint;
 Begin
-	exit(CQ_setGroupBan(AuthCode,groupid,QQID,duration));
+	exit(CQ_addLog(AuthCode,priority,StoP(category),StoP(content)));
 End;
 
+//添加好友请求回复 Auth=150 //setFriendAddRequest
+function CQ_i_setFriendAddRequest(const responseflag:pchar;responseoperation:longint;const remark:string):longint;
+Begin
+	exit(CQ_setFriendAddRequest(authcode,
+								responseflag,			//通过事件函数传递获得
+								responseoperation,		//通过常量表获得
+								StoP(remark)));			//添加后好友备注
+End;
+
+//置匿名群员禁言 Auth=124 //setGroupAnonymousBan
+function CQ_i_setGroupAnonymousMute(group:int64;fromAnonymous:string;duration:int64):longint;
+Begin
+	exit(CQ_setGroupAnonymousBan(authcode,
+								group,
+								StoP(fromAnonymous),		//通过事件函数传递获得
+								duration));					//禁言时长 单位秒 不支持解禁
+End;
+
+//置全群禁言 Auth=123 //setGroupWholeBan
 function CQ_i_setGroupWholeMute(groupid:int64;enableban:boolean):longint;
 Begin
 	exit(CQ_setGroupWholeBan(AuthCode,groupid,enableban));
 End;
 
+//置群成员名片 Auth=126 //setGroupCard
+function CQ_i_setGroupCard(group,qq:int64;nick:string):longint;
+Begin
+	exit(CQ_setGroupCard(authcode,
+						group,
+						qq,
+						StoP(nick)))
+End;
+
+//置群员专属头衔 Auth=128 需群主权限 //setGroupSpecialTitle
+Function CQ_i_setGroupSpecialTitle(Group,ID:int64;Title:string;duration:int64):longint;
+Begin
+	exit(CQ_setGroupSpecialTitle(authcode,
+								group,				//目标群
+								id,					//目标QQ
+								StoP(title),		//若要删除头衔，则留空
+								duration));			//专属头衔有效期，单位为秒。如果永久有效，这里填写-1
+End;
+
+
+{
+	置群管理员 Auth=122 //setGroupAdmin
+	operation true设置成管理员 false取消管理员
+}
+Function CQ_i_setGroupAdmin(group,qq:int64;operation:boolean):longint;
+Begin
+	exit(CQ_SetGroupAdmin(authcode,group,qq,operation));
+End;
+
+{
+	置群匿名设置 Auth=125 //setGroupAnonymous
+	operation true开启匿名 false关闭匿名
+}
+Function CQ_i_setGroupAnonymous(group:int64;operation:boolean):longint;
+Begin
+	exit(CQ_setGroupAnonymous(AuthCode,group,operation));
+End;
+
+
+//置群添加请求 Auth=151 //setGroupAddRequest
+Function CQ_i_setGroupAddRequest(responseflag:string;	//请求事件收到的“responseflag”参数
+								subtype		:longint;	//根据请求事件的子类型区分 #请求_群添加 或 #请求_群邀请
+								responseoperation:longint;	//#请求_通过 或 #请求_拒绝
+								reason		:string 	//操作理由，仅 #请求_群添加 且 #请求_拒绝 时可用
+								):longint;
+Begin
+	exit(
+		CQ_setGroupAddRequestV2(
+			AuthCode,
+			StoP(responseflag),
+			subtype,
+			responseoperation,
+			StoP(reason)
+		)
+	);
+End;
+
+{
+置群退出 Auth=127 慎用,此接口需要严格授权 //setGroupLeave
+Disband true解散本群[群主] false退出本群[群管/群员]
+}
+Function CQ_i_setGroupLeave(group:int64;isdisband:boolean):longint;
+Begin
+	exit(CQ_setGroupLeave(Authcode,Group,IsDisband));
+End;
+
+//置群员禁言 Auth=121 //setGroupBan
+function CQ_i_setGroupMute(groupid,QQID,duration:int64):longint;
+Begin
+	exit(CQ_setGroupBan(AuthCode,groupid,QQID,duration));
+End;
+
+//置群员移除 Auth=120 //setGroupKick
 function CQ_i_setGroupKick(groupid,QQID:int64;rejectaddrequest:boolean):longint;
 Begin
 	exit(CQ_setGroupKick(AuthCode,Groupid,QQID,rejectaddrequest));
+End;
+
+//置讨论组退出 Auth=140 //setDiscussLeave
+function CQ_i_setDiscussLeave(DiscussID:int64):longint;
+Begin
+	exit(CQ_setDiscussLeave(authcode,DiscussID));
+End;
+
+//置致命错误提示 //setFatal
+function CQ_i_setFatal(msg:ansistring):longint;
+Begin
+	exit(CQ_setFatal(authcode,StoP(msg)));
 End;
