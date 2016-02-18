@@ -37,14 +37,14 @@ Type
 			size			: int64;	//文件大小
 			busid			: longint;	//busid
 		end;
-	CQ_Type_MegType=
+	{CQ_Type_MsgType=
 		record
 			key,msg			: ansistring;
 		end;
 	CQ_Type_SuspensionWindow=
 		record
 			data,entity		: longint;
-		end;
+		end;}
 	
 Const
 	CR = #$0d;
