@@ -18,7 +18,7 @@ Begin
 End;
 
 {
-QQID为被@的群成员QQ。该参数为all，则@全体成员，若次数用尽或权限不足则会转换为文本。
+QQID为被@的群成员QQ。该参数为-1，则@全体成员，若次数用尽或权限不足则会转换为文本。
 举例：[CQ:at,qq=123456]
 }
 function CQCode_Group_At(QQID:int64):ansistring;
@@ -97,7 +97,7 @@ End;
 2为是否为变声，若该参数为true则显示变声标记。该参数可被忽略。
 举例：[CQ:record,file=1.silk，magic=true]（发送data\record\1.silk，并标记为变声）
 }
-function CQCode_image(url:ansistring;magic:boolean):ansistring;
+function CQCode_record(url:ansistring;magic:boolean):ansistring;
 Begin
 	exit('[CQ:record,file='+CQ_CharEncode(url,true)+String_Choose(magic,',magic=true','')+']');
 End;
