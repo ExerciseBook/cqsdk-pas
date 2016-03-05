@@ -256,7 +256,8 @@ Var
 	i:longint;
 Begin
 	data:=CQ_GetStrangerInfo(AuthCode,QQ,Nocache);
-	if data='' then exit(-1000);
+	data:=Base64_Decryption(data);
+	if length(data)<16 then exit(-1000);
 	i:=1;
 	info.QQID:=CoolQ_Tools_GetNum(i,8,data);
 	info.nick:=CoolQ_Tools_GetStr(i,data);
