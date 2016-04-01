@@ -263,6 +263,7 @@ Begin
 	info.nick:=CoolQ_Tools_GetStr(i,data);
 	info.sex:=CoolQ_Tools_GetNum(i,4,data);
 	info.age:=CoolQ_Tools_GetNum(i,4,data);
+	exit(0);
 End;
 
 //取群成员信息 Auth=130 //getGroupMemberInfoV2
