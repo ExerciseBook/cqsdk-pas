@@ -1,7 +1,7 @@
 {
 	CoolQ SDK for Pascal
 	API∞Ê±æ	£∫	9.6
-	±‡“Î∆˜	£∫	FPC 2.0.4
+	±‡“Î∆˜	£∫	FPC 3.0.0
 }
 
 library
@@ -9,7 +9,7 @@ library
 	//DLL ±‡“Î
 
 Uses
-	math,dateutils,sysutils,mysql4;
+	math,dateutils,sysutils;
 	//‘ÿ»Îø‚
 
 Var
@@ -30,6 +30,9 @@ Const
 {$INCLUDE lib\Tools.pas}
 {$INCLUDE lib\CoolQ_Tools.pas}
 {$INCLUDE lib\CoolQ_CQapplication.pas}
+
+// GroupManager API ≤ª”√ø…◊¢ ÕµÙ
+{$INCLUDE lib\ESSGM_DllFunction.pas}
 		
 {******************************************************}
 {$INCLUDE code\main.pas}
