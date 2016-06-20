@@ -6,6 +6,8 @@ function CQ_sendDiscussMsg(AuthCode:longint;discussid:int64;const msg:Pchar):lon
 	stdcall; external 'CQP.dll' name 'CQ_sendDiscussMsg';
 function CQ_sendLike(AuthCode:longint;QQID:int64):longint;
 	stdcall; external 'CQP.dll' name 'CQ_sendLike';
+function CQ_sendLikeV2(AuthCode:longint;QQID:int64;times:longint):longint;
+	stdcall; external 'CQP.dll' name 'CQ_sendLikeV2';
 function CQ_setGroupAdmin(AuthCode:longint;groupid,QQID:int64;state:boolean):longint;
 	stdcall; external 'CQP.dll' name 'CQ_setGroupAdmin';	
 function CQ_setGroupKick(AuthCode:longint;groupid,QQID:int64;rejectaddrequest:boolean):longint;

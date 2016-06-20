@@ -150,6 +150,11 @@ function CQ_i_sendLike(QQID:int64):longint;								//Auth=110 //sendLike
 Begin
 	exit(CQ_sendLike(AuthCode,QQID));
 End;
+function CQ_i_sendLikeV2(QQID:int64;times:longint):longint;								//Auth=110 //sendLike
+Begin
+	exit(CQ_sendLikeV2(AuthCode,QQID,min(times,10)));
+End;
+
 //接受语音 Auth=30 接收消息中的语音(record),返回保存在 \data\record\ 目录下的文件名 //getRecord
 function CQ_i_getRecord(filename,format:ansistring):ansistring;			//Auth=30 接收消息中的语音(record),返回保存在 \data\record\ 目录下的文件名 //getRecord
 {
