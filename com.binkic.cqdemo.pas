@@ -145,6 +145,7 @@ Function _eventGroupUpload(
 			subType,sendTime	:longint;
 			fromGroup,fromQQ	:int64;
 			fileinfo			:Pchar):longint;
+stdcall;
 Begin
 	exit(code_eventGroupUpload(
 			subType,sendTime,
