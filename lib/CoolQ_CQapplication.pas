@@ -179,9 +179,9 @@ Begin
 	data:=Base64_Decryption(source);
 	if length(data)<12 then exit(false);
 	i:=1;
-	Anonymous.AID:=CoolQ_Tools_GetNum(i,8,data);
-	Anonymous.name:=CoolQ_Tools_GetStr(i,data);
-	Anonymous.Token:=CoolQ_Tools_GetStr(i,data);
+	Anonymous.AID:=CoolQ_Tools_Unpack_GetNum(i,8,data);
+	Anonymous.name:=CoolQ_Tools_Unpack_GetStr(i,data);
+	Anonymous.Token:=CoolQ_Tools_Unpack_GetStr(i,data);
 	
 	exit(true);
 End;
@@ -196,25 +196,25 @@ Begin
 	data:=Base64_Decryption(source);
 	if length(data)<60 then exit(false);
 	i:=1;
-	info.groupid:=CoolQ_Tools_GetNum(i,8,data);
-	info.QQID:=CoolQ_Tools_GetNum(i,8,data);
-	info.username:=CoolQ_Tools_GetStr(i,data);
-	info.nick:=CoolQ_Tools_GetStr(i,data);
-	info.sex:=CoolQ_Tools_GetNum(i,4,data);
-	info.age:=CoolQ_Tools_GetNum(i,4,data);
-	info.aera:=CoolQ_Tools_GetStr(i,data);
-	info.jointime:=CoolQ_Tools_GetNum(i,4,data);
-	info.lastsent:=CoolQ_Tools_GetNum(i,4,data);
-	info.level_name:=CoolQ_Tools_GetStr(i,data);
-	info.permission:=CoolQ_Tools_GetNum(i,4,data);
-	info.unfriendly:=CoolQ_Tools_GetNum(i,4,data)=1;
-	info.title:=CoolQ_Tools_GetStr(i,data);
-	info.titleExpiretime:=CoolQ_Tools_GetNum(i,4,data);
-	info.nickcanchange:=CoolQ_Tools_GetNum(i,4,data)=1;
+	info.groupid:=CoolQ_Tools_Unpack_GetNum(i,8,data);
+	info.QQID:=CoolQ_Tools_Unpack_GetNum(i,8,data);
+	info.username:=CoolQ_Tools_Unpack_GetStr(i,data);
+	info.nick:=CoolQ_Tools_Unpack_GetStr(i,data);
+	info.sex:=CoolQ_Tools_Unpack_GetNum(i,4,data);
+	info.age:=CoolQ_Tools_Unpack_GetNum(i,4,data);
+	info.aera:=CoolQ_Tools_Unpack_GetStr(i,data);
+	info.jointime:=CoolQ_Tools_Unpack_GetNum(i,4,data);
+	info.lastsent:=CoolQ_Tools_Unpack_GetNum(i,4,data);
+	info.level_name:=CoolQ_Tools_Unpack_GetStr(i,data);
+	info.permission:=CoolQ_Tools_Unpack_GetNum(i,4,data);
+	info.unfriendly:=CoolQ_Tools_Unpack_GetNum(i,4,data)=1;
+	info.title:=CoolQ_Tools_Unpack_GetStr(i,data);
+	info.titleExpiretime:=CoolQ_Tools_Unpack_GetNum(i,4,data);
+	info.nickcanchange:=CoolQ_Tools_Unpack_GetNum(i,4,data)=1;
 	exit(true);
 End;
 //文本到群文件
-Function CQ_Tools_TextToFile(source:string;info:CQ_Type_GroupFile):boolean;
+Function CQ_Tools_TextToFile(source:string;Var info:CQ_Type_GroupFile):boolean;
 Var
 	data:ansistring;
 	i:longint;
@@ -223,10 +223,10 @@ Begin
 	data:=Base64_Decryption(source);
 	if length(data)<20 then exit(false);
 	i:=1;
-	info.FileID:=CoolQ_Tools_GetStr(i,data);
-	info.FileName:=CoolQ_Tools_GetStr(i,data);
-	info.Size:=CoolQ_Tools_GetNum(i,8,data);
-	info.busid:=CoolQ_Tools_GetNum(i,8,data);
+	info.FileID:=CoolQ_Tools_Unpack_GetStr(i,data);
+	info.FileName:=CoolQ_Tools_Unpack_GetStr(i,data);
+	info.Size:=CoolQ_Tools_Unpack_GetNum(i,8,data);
+	info.busid:=CoolQ_Tools_Unpack_GetNum(i,8,data);
 	exit(true);
 End;
 
@@ -264,10 +264,10 @@ Begin
 	data:=Base64_Decryption(data);
 	if length(data)<16 then exit(-1000);
 	i:=1;
-	info.QQID:=CoolQ_Tools_GetNum(i,8,data);
-	info.nick:=CoolQ_Tools_GetStr(i,data);
-	info.sex:=CoolQ_Tools_GetNum(i,4,data);
-	info.age:=CoolQ_Tools_GetNum(i,4,data);
+	info.QQID:=CoolQ_Tools_Unpack_GetNum(i,8,data);
+	info.nick:=CoolQ_Tools_Unpack_GetStr(i,data);
+	info.sex:=CoolQ_Tools_Unpack_GetNum(i,4,data);
+	info.age:=CoolQ_Tools_Unpack_GetNum(i,4,data);
 	exit(0);
 End;
 

@@ -1,37 +1,41 @@
 {
 	CoolQ SDK for Pascal
-	API版本	：	9.6
-	编译器	：	FPC 3.0.0
+	API版本	：	9.9
+	编译器	：	FPC 2.0.4
+	
+	注意 Free Pascal
+		里的时间库是以当前系统时间的 1970-1-1 00:00:00 作为Unix时间戳起点
+		然而腾讯传递的信息是以 标准时间的1970-1-1 00:00:00 作为时间戳起点
 }
-
 library
 	testdll;
 	//DLL 编译
 
+{$APPTYPE GUI}
+	
 Uses
-	math,dateutils,sysutils;
+	math,dateutils,sysutils,Classes;
 	//载入库
 
 Var
 	AuthCode:longint;
-	//AuthCode CoolQ用来识别你是否是合法调用的玩意儿
+	//AuthCode CoolQ用来识别你是否是合法\调用的玩意儿
 
 //系统提示框函数
 Function MessageBox(hWnd:LONGINT;lpText:PCHAR;lpCaption:PCHAR;uType:DWORD):LONGINT;
 	stdcall; external 'user32.dll' name 'MessageBoxA';
 
+	
 Const
 	CQAPPID='com.binkic.cqdemo';
 		//请修改APPID为你的APPID
 	
 //载入其他内容
+{$INCLUDE lib\Tools.pas}
 {$INCLUDE lib\CoolQ_variable.pas}
 {$INCLUDE lib\CoolQ_DllFunction.pas}
-{$INCLUDE lib\Tools.pas}
 {$INCLUDE lib\CoolQ_Tools.pas}
 {$INCLUDE lib\CoolQ_CQapplication.pas}
-
-// GroupManager API 不用可注释掉
 {$INCLUDE lib\ESSGM_DllFunction.pas}
 		
 {******************************************************}
@@ -45,7 +49,7 @@ Const
 * 返回应用的ApiVer、Appid，打包后将不会调用
 }
 Function AppInfo:pChar;
-stdcall;
+stdcall; 
 Begin
 	exit(StoP(CQAPPINFO));
 End;
@@ -135,6 +139,17 @@ Begin
 		font
 		)
 	);
+End;
+
+Function _eventGroupUpload(
+			subType,sendTime	:longint;
+			fromGroup,fromQQ	:int64;
+			fileinfo			:Pchar):longint;
+Begin
+	exit(code_eventGroupUpload(
+			subType,sendTime,
+			fromGroup,fromQQ,
+			PtoS(fileinfo)));
 End;
 
 Function _eventSystem_GroupAdmin(
@@ -233,18 +248,17 @@ exports
 	_eventPrivateMsg index 7,
 	_eventGroupMsg index 8,
 	_eventDiscussMsg index 9,
-	_eventSystem_GroupAdmin index 10,
-	_eventSystem_GroupMemberDecrease index 11,
-	_eventSystem_GroupMemberIncrease index 12,
-	_eventFriend_Add index 13,
-	_eventRequest_AddFriend index 14,
-	_eventRequest_AddGroup index 15,
+	_eventGroupUpload index 10,
+	_eventSystem_GroupAdmin index 11,
+	_eventSystem_GroupMemberDecrease index 12,
+	_eventSystem_GroupMemberIncrease index 13,
+	_eventFriend_Add index 14,
+	_eventRequest_AddFriend index 15,
+	_eventRequest_AddGroup index 16,
 	
 	
-	_menuA index 16,
-	_menuB index 17;
+	_menuA index 17,
+	_menuB index 18;
 	
 Begin
-	//这里不要加东西←_←
-	//这里是Dll初始化内容，我感觉加东西会爆炸。反正我没试过
 End.

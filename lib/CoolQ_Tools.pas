@@ -76,6 +76,7 @@ Begin
         end;
 End;
 
+
 {
 	反转字符串
 }
@@ -120,30 +121,30 @@ Begin
 End;
 
 {
-	下面是神奇的东西
+	解包
 }
-Function CoolQ_Tools_GetBin(Var i:longint;
+Function CoolQ_Tools_Unpack_GetStr(Var i:longint;
 								len:longint;
 								s:ansistring):ansistring;
 Begin
 	if len<=0 then exit('');
-	CoolQ_Tools_GetBin:=copy(s,i,len);
+	CoolQ_Tools_Unpack_GetStr:=copy(s,i,len);
 	i:=i+len;
 End;
 
-Function CoolQ_Tools_GetNum(Var i:longint;
+Function CoolQ_Tools_Unpack_GetNum(Var i:longint;
 								len:longint;
 								s:ansistring):int64;
 Begin
-	CoolQ_Tools_GetNum:=BinToNum(copy(S,i,len));
+	CoolQ_Tools_Unpack_GetNum:=BinToNum(copy(S,i,len));
 	i:=i+len;
 End;
 
-Function CoolQ_Tools_GetStr(Var i:longint;
+Function CoolQ_Tools_Unpack_GetStr(Var i:longint;
 								s:ansistring):ansistring;
 Var
 	len:longint;
 Begin
-	len:=CoolQ_Tools_GetNum(i,2,s);
-	exit(CoolQ_Tools_GetBin(i,len,s));
+	len:=CoolQ_Tools_Unpack_GetNum(i,2,s);
+	exit(CoolQ_Tools_Unpack_GetStr(i,len,s));
 End;
