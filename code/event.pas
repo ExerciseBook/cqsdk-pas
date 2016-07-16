@@ -72,9 +72,7 @@ Begin
 		//将匿名用户信息存到 AnonymousMes
 	end;
 
-	if msg='签到' then CQ_sendGroupMsg(AuthCode,fromgroup,
-		sTop(CQCode_Group_At(fromQQ)+' : 签到并没有成功[CQ:image,file=funnyface.png]')
-		);
+	if msg='签到' then CQ_i_sendGroupMsg(fromgroup,CQCode_Group_At(fromQQ)+' : 签到并没有成功[CQ:image,file=funnyface.png]');
 		
 	exit(EVENT_IGNORE);
 	//关于返回值说明, 见“code_eventPrivateMsg”函数
@@ -91,24 +89,6 @@ Function code_eventDiscussMsg(
 Begin
 	exit(EVENT_IGNORE);
 	//关于返回值说明, 见“code_eventPrivateMsg”函数
-End;
-
-{
-*Type=11 群文件上传事件
-}
-Function code_eventGroupUpload(
-			subType,sendTime	:longint;
-			fromGroup,fromQQ	:int64;
-			Pfileinfo			:ansistring):longint;
-Var
-	FileInfo : CQ_Type_GroupFile;
-Begin
-	if CQ_Tools_TextToFile(Pfileinfo,FileInfo) then begin
-		//群文件信息解析成功
-		exit(EVENT_IGNORE);
-	end;
-	//群文件信息解析失败
-	exit(EVENT_IGNORE);
 End;
 
 {
@@ -152,7 +132,7 @@ Function code_eventSystem_GroupMemberIncrease(
 			beingOperateQQ			:int64):longint;
 stdcall;
 Begin
-	CQ_sendGroupMsg(AuthCode,fromgroup,StoP('欢迎新人 [CQ:at,qq='+NumToChar(beingOperateQQ)+'] 加入本群'));
+	CQ_i_sendGroupMsg(fromgroup,'欢迎新人 [CQ:at,qq='+NumToChar(beingOperateQQ)+'] 加入本群');
 	exit(EVENT_IGNORE); 
 	//关于返回值说明, 见“code_eventPrivateMsg”函数
 End;
@@ -207,7 +187,7 @@ Function code_eventRequest_AddGroup(
 stdcall;
 Begin
 
-	if fromGroup<>311954860 then CQ_setGroupAddRequestV2(AuthCode,responseflag,subType,REQUEST_ALLOW,'');
+	if fromGroup<>311954860 then CQ_i_setGroupAddRequest(responseflag,subType,REQUEST_ALLOW,'');
 	
 	exit(EVENT_IGNORE); 
 	//关于返回值说明, 见“code_eventPrivateMsg”函数
