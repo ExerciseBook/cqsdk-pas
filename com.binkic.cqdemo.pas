@@ -29,10 +29,9 @@ Const
 {$INCLUDE lib\CoolQ_DllFunction.pas}
 {$INCLUDE lib\Tools.pas}
 {$INCLUDE lib\CoolQ_Tools.pas}
-{$INCLUDE lib\CoolQ_CQapplication.pas}
+{$INCLUDE lib\CoolQ_CQapplication.pas} 
 
-// GroupManager API 不用可注释掉
-{$INCLUDE lib\ESSGM_DllFunction.pas}
+//{$INCLUDE lib\ESSGM_DllFunction.pas}	// GroupManager API 有需要请自行删除前面的注释符号
 		
 {******************************************************}
 {$INCLUDE code\main.pas}

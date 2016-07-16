@@ -1,77 +1,3 @@
-Function SDECtoHEX(a:integer):char;
-Begin
-	case a of
-		0 : exit('0');
-		1 : exit('1');
-		2 : exit('2');
-		3 : exit('3');
-		4 : exit('4');
-		5 : exit('5');
-		6 : exit('6');
-		7 : exit('7');
-		8 : exit('8');
-		9 : exit('9');
-		10 : exit('A');
-		11 : exit('B');
-		12 : exit('C');
-		13 : exit('D');
-		14 : exit('E');
-		15 : exit('F');
-	end;
-End;
-
-Function SHEXtoDec(a:char):integer;
-Begin
-	case upcase(a) of
-		'0' : exit(0);
-		'1' : exit(1);
-		'2' : exit(2);
-		'3' : exit(3);
-		'4' : exit(4);
-		'5' : exit(5);
-		'6' : exit(6);
-		'7' : exit(7);
-		'8' : exit(8);
-		'9' : exit(9);
-		'A' : exit(10);
-		'B' : exit(11);
-		'C' : exit(12);
-		'D' : exit(13);
-		'E' : exit(14);
-		'F' : exit(15);
-	end;
-End;
-
-{
-	十进制转二进制
-}
-Function Hex_Conversion_10to2(s:longint):string;
-Begin
-        Hex_Conversion_10to2:='';
-        while s>0 do begin
-                Hex_Conversion_10to2:=numtochar(s mod 2)+
-                                      Hex_Conversion_10to2;
-                s:=s div 2;
-        end;
-        while length(Hex_Conversion_10to2)<8 do
-                Hex_Conversion_10to2:='0'+Hex_Conversion_10to2;
-End;
-{
-	二进制转十进制
-}
-Function Hex_Conversion_2to10(s:string):longint;
-Var
-        i:longint;
-Begin
-        Hex_Conversion_2to10:=0;
-        for i:=length(s) downto 1 do begin
-                if s[i]='1' then
-                Hex_Conversion_2to10:=Hex_Conversion_2to10+
-                                      2 **
-                                      (length(s)-i)
-        end;
-End;
-
 Function Base64_Encryption(s:ansistring):ansistring;
 Var
         st:ansistring;
@@ -150,6 +76,7 @@ Begin
         end;
 End;
 
+
 {
 	反转字符串
 }
@@ -194,30 +121,30 @@ Begin
 End;
 
 {
-	下面是神奇的东西
+	解包
 }
-Function CoolQ_Tools_GetBin(Var i:longint;
+Function CoolQ_Tools_Unpack_GetStr(Var i:longint;
 								len:longint;
 								s:ansistring):ansistring;
 Begin
 	if len<=0 then exit('');
-	CoolQ_Tools_GetBin:=copy(s,i,len);
+	CoolQ_Tools_Unpack_GetStr:=copy(s,i,len);
 	i:=i+len;
 End;
 
-Function CoolQ_Tools_GetNum(Var i:longint;
+Function CoolQ_Tools_Unpack_GetNum(Var i:longint;
 								len:longint;
 								s:ansistring):int64;
 Begin
-	CoolQ_Tools_GetNum:=BinToNum(copy(S,i,len));
+	CoolQ_Tools_Unpack_GetNum:=BinToNum(copy(S,i,len));
 	i:=i+len;
 End;
 
-Function CoolQ_Tools_GetStr(Var i:longint;
+Function CoolQ_Tools_Unpack_GetStr(Var i:longint;
 								s:ansistring):ansistring;
 Var
 	len:longint;
 Begin
-	len:=CoolQ_Tools_GetNum(i,2,s);
-	exit(CoolQ_Tools_GetBin(i,len,s));
+	len:=CoolQ_Tools_Unpack_GetNum(i,2,s);
+	exit(CoolQ_Tools_Unpack_GetStr(i,len,s));
 End;

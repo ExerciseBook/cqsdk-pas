@@ -62,6 +62,7 @@ Const
 	EVENT_BLOCK=1;         //事件_拦截
 
 	REQUEST_ALLOW=1;       //请求_通过
+	REQUEST_ACCEPT=1;       //请求_通过
 	REQUEST_DENY=2;        //请求_拒绝
 
 	REQUEST_GROUPADD=1;    //请求_群添加
@@ -83,3 +84,4 @@ Const
 	CQSuspensionWindow_DarkRed=4;
 	CQSuspensionWindow_Black=5;
 	CQSuspensionWindow_grey=6;
+	
