@@ -42,37 +42,43 @@ Begin
         len:=length(s);
         i:=1;
         while i<=len do begin
-                if s[i]<>'=' then begin
-                        st:=st+copy(
-                             Hex_Conversion_10to2(
-                                        pos(s[i],TheBase64Alphabet)-1
-                            ),3,8);
-                        while length(st)>=8 do begin
-                                Base64_Decryption:=Base64_Decryption+
-                                                   char(Hex_Conversion_2to10(
-                                                   copy(st,1,8)));
-                                delete(st,1,8);
-                        end;
+				if (s[i]=CR) or (s[i]=LF) then begin
+					inc(i);
+				end
+				else
+				begin
+					if s[i]<>'=' then begin
+							st:=st+copy(
+								 Hex_Conversion_10to2(
+											pos(s[i],TheBase64Alphabet)-1
+								),3,8);
+							while length(st)>=8 do begin
+									Base64_Decryption:=Base64_Decryption+
+													   char(Hex_Conversion_2to10(
+													   copy(st,1,8)));
+									delete(st,1,8);
+							end;
 
-                end
-                else
-                begin
-                        if i=len then begin
-                                Base64_Decryption:=Base64_Decryption+
-                                                   char(Hex_Conversion_2to10(
-                                                   copy(st,1,6)));
-                        end;
-                        if i=len-1 then begin
-                                Base64_Decryption:=Base64_Decryption+
-                                                   char(Hex_Conversion_2to10(
-                                                   copy(st,1,4)));
-                                i:=i+1;
-                        end;
-                        if i<len-1 then begin
-                                exit('FALSE');
-                        end;
-                end;
-                inc(i);
+					end
+					else
+					begin
+							if i=len then begin
+									Base64_Decryption:=Base64_Decryption+
+													   char(Hex_Conversion_2to10(
+													   copy(st,1,6)));
+							end;
+							if i=len-1 then begin
+									Base64_Decryption:=Base64_Decryption+
+													   char(Hex_Conversion_2to10(
+													   copy(st,1,4)));
+									i:=i+1;
+							end;
+							if i<len-1 then begin
+									exit('FALSE');
+							end;
+					end;
+					inc(i);
+					end;
         end;
 End;
 
