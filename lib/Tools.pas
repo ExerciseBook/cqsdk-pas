@@ -193,7 +193,7 @@ Begin
 	a:='';
 
 	for i:=1 to length(s) do
-		if (integer(s[i])>=32) and (integer(s[i])<=128)
+		if (integer(s[i])>32) and (integer(s[i])<128)
 			and (s[i]<>'"') and (s[i]<>'''')
 			and (s[i]<>'/') and (s[i]<>'\')
 			and (s[i]<>':') and (s[i]<>'%')
