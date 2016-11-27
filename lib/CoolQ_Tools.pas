@@ -102,7 +102,7 @@ Begin
 	BinToNum:=0;
 	bin:=CoolQ_Tools_Flip(bin);
 	for i:=1 to length(bin) do begin
-		BinToNum:=BinToNum+256**(i-1)*integer(bin[i]);
+		BinToNum:=BinToNum+256**int64((i-1)*integer(bin[i]));
 	end;
 End;
 
