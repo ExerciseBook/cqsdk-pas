@@ -180,13 +180,8 @@ Begin
                 if s[i]='1' then
                 Hex_Conversion_2to10:=Hex_Conversion_2to10+
                                       2 **
-                                      int64((length(s)-i))
+                                      (length(s)-i)
         end;
-End;
-
-Function GB2312ASCtoChar(a,b:char):char;
-Begin
-	exit(char(SHEXtoDec(a)*16+SHEXtoDec(b)));
 End;
 
 Function UrlEncode(s:ansistring):ansistring;
@@ -207,6 +202,11 @@ Begin
 		else a:=a+'%'+SDECtoHEX(integer(s[i])div 16)+SDECtoHEX(integer(s[i])mod 16);
 
 	exit(a);
+End;
+
+Function GB2312ASCtoChar(a,b:char):char;
+Begin
+	exit(char(SHEXtoDec(a)*16+SHEXtoDec(b)));
 End;
 
 Function UrlDecode(s:ansistring):ansistring;
