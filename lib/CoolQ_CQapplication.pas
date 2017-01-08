@@ -129,6 +129,15 @@ Begin
 	exit('[CQ:share,url='+CQ_CharEncode(url,true)+',title='+CQ_CharEncode(title,true)+',content='+CQ_CharEncode(content,true)+',image='+CQ_CharEncode(image,true)+']');
 End;
 
+{
+[CQ:contact,type=qq/group,id=QºÅ/ÈººÅ]
+}
+function CQCode_contact(t:ansistring;id:int64):ansistring;
+Begin
+	exit('[CQ:contact,type=,'+t+'id='+NumToChar(id)+']');
+End;
+
+
 {API}
 //·¢ËÍË½ÁÄ Auth=106 //sendPrivateMsg
 function CQ_i_sendPrivateMsg(QQID:int64;msg:ansistring):longint;		//Auth=106 //sendPrivateMsg
