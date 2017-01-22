@@ -134,7 +134,7 @@ End;
 }
 function CQCode_contact(t:ansistring;id:int64):ansistring;
 Begin
-	exit('[CQ:contact,type=,'+t+'id='+NumToChar(id)+']');
+	exit('[CQ:contact,type='+t+',id='+NumToChar(id)+']');
 End;
 
 
