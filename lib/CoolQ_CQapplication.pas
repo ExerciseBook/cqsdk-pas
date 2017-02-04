@@ -32,7 +32,7 @@ IDÎªemoji×Ö·ûµÄunicode±àºÅ
 }
 function CQCode_emoji(ID:int64):ansistring;
 Begin
-	exit('[CQ:at,emoji='+NumToChar(ID)+']');
+	exit('[CQ:emoji,id='+NumToChar(ID)+']');
 End;
 
 {
