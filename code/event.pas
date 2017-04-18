@@ -92,6 +92,26 @@ Begin
 End;
 
 {
+*Type=11 群文件上传事件
+}
+Function code_eventGroupUpload(
+			subType,sendTime	:longint;
+			fromGroup,fromQQ	:int64;
+			Pfileinfo			:ansistring):longint;
+Var
+	FileInfo	:CQ_Type_GroupFile;
+Begin
+	if CQ_Tools_TextToFile(Pfileinfo,FileInfo) then begin
+		//群文件信息解析成功
+		{收到文件上传信息}
+		exit(EVENT_IGNORE);
+	end;
+	//群文件信息解析失败
+	exit(EVENT_IGNORE);
+End;
+
+
+{
 * Type=101 群事件-管理员变动
 * subType 子类型，1/被取消管理员 2/被设置管理员
 }

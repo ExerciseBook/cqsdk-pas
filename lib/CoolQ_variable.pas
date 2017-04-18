@@ -10,8 +10,8 @@ Type
 		record
 			GroupID,					// 群号
 			QQID			: int64;	// QQ号
-			username,					// QQ昵称
-			nick			: string;	// 群名片
+			nick,						// QQ昵称
+			card			: string;	// 群名片
 			sex,						// 性别 0/男 1/女
 			age				: longint;	// 年龄
 			aera			: string;	// 地区
@@ -23,6 +23,12 @@ Type
 			title			: string;	// 自定义头衔
 			titleExpiretime : longint;	// 头衔过期时间
 			nickcanchange	: boolean;	// 管理员是否能协助改名
+		end;
+	CQ_Type_GroupMember_List=
+		record
+			l : longint; 						//数组长度
+			s :	Array Of CQ_Type_GroupMember;	//群成员列表
+			//上面的这个定义叫做动态数组，数组编号是从第0位到第l-1位。一共是l位。
 		end;
 	CQ_Type_GroupAnonymous=
 		record
