@@ -302,6 +302,40 @@ Begin
 	exit(true);
 End;
 
+//其他_转换_ansihex到群信息
+Function CQ_Tools_TextToGroupInfo(source:ansistring;Var GroupInfo:CQ_Type_GroupInfo):boolean;
+Var
+	i:longint;
+Begin
+	if length(source)<10 then exit(false);
+	i:=1;
+	GroupInfo.GroupID:=CoolQ_Tools_Unpack_GetNum(i,8,source);
+	GroupInfo.name:=CoolQ_Tools_Unpack_GetStr(i,source);
+	exit(true);
+End;
+
+//其他_转换_文本到群列表信息a
+Function CQ_Tools_TextToGroupListInfo(source:ansistring;Var GroupList:CQ_Type_GroupList):boolean;
+Var
+	data:ansistring;
+	i,j:longint;
+Begin
+	if source='' then exit(false);
+	data:=Base64_Decryption(source);
+	if length(data)<4 then exit(false);
+	i:=1;
+	GroupList.l:=CoolQ_Tools_Unpack_GetNum(i,4,data);
+	SetLength(GroupList.s,GroupList.l);
+	for j:=0 to GroupList.l-1 do begin
+		if CoolQ_Tools_Unpack_GetLenRemain(i,data)<=0
+			then exit(false)
+			else
+			begin
+				if CQ_Tools_TextToGroupInfo(CoolQ_Tools_Unpack_GetStr(i,data),GroupList.s[j])=false then exit(false);
+			end;
+	end;
+End;
+
 //获取Cookies Auth=20 慎用,此接口需要严格授权 //getCookies
 Function CQ_i_GetCookies():ansistring;
 Begin
@@ -495,4 +529,17 @@ Begin
 	if return='' then exit(-1000)
 	else
 	if CQ_Tools_TextToGroupMemberList(return,GroupMemberList)=false then exit(-1000)
+End;
+
+
+
+//取群列表 Auth=161  //getGroupList
+function CQ_i_getGroupList(Var GroupList:CQ_Type_GroupList):longint;
+Var
+	return	:	ansistring;
+Begin
+	return:=PtoS(CQ_getGroupList(AuthCode));
+	if return='' then exit(-1000)
+	else
+	if CQ_Tools_TextToGroupListInfo(return,GroupList)=false then exit(-1000)
 End;

@@ -54,3 +54,5 @@ function CQ_setFatal(AuthCode:longint;const errorinfo:Pchar):longint;
 	stdcall; external 'CQP.dll' name 'CQ_setFatal';
 function CQ_getGroupMemberList(AuthCode:longint;GroupID:int64):Pchar;
 	stdcall; external 'CQP.dll' name 'CQ_getGroupMemberList';
+function CQ_getGroupList(AuthCode:longint):Pchar;
+	stdcall; external 'CQP.dll' name 'CQ_getGroupList';

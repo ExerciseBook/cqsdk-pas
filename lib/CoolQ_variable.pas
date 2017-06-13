@@ -43,6 +43,16 @@ Type
 			size			: int64;	//文件大小
 			busid			: longint;	//busid
 		end;
+	CQ_Type_GroupInfo=
+		record
+			GroupID			: int64;
+			name			: ansistring;
+		end;
+	CQ_Type_GroupList=
+		record
+			l : longint;					//数组长度
+			s : Array Of CQ_Type_GroupInfo;	//群列表
+		end;
 	{CQ_Type_MsgType=
 		record
 			key,msg			: ansistring;
