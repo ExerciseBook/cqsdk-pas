@@ -185,7 +185,7 @@ Function code_eventRequest_AddFriend(
 			responseFlag				:Pchar):longint;
 stdcall;
 Begin
-	CQ_setFriendAddRequest(AuthCode, responseFlag, REQUEST_DENY,'');
+	CQ_i_setFriendAddRequest(responseFlag, REQUEST_DENY,'');
 	
 	exit(EVENT_IGNORE); 
 	//关于返回值说明, 见“code_eventPrivateMsg”函数

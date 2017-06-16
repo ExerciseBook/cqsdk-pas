@@ -16,28 +16,16 @@ library
 {$h+}
 
 Uses
+	CoolQSDK,		//酷QSDK单元
 	math,dateutils,sysutils,Classes;
 	//载入库
-
-Var
-	AuthCode:longint;
-	//AuthCode CoolQ用来识别你是否是合法\调用的玩意儿
 
 //系统提示框函数
 Function MessageBox(hWnd:LONGINT;lpText:PCHAR;lpCaption:PCHAR;uType:DWORD):LONGINT;
 	stdcall; external 'user32.dll' name 'MessageBoxA';
 
 	
-Const
-	CQAPPID='com.binkic.cqdemo';
-		//请修改APPID为你的APPID
-	
 //载入其他内容
-{$INCLUDE lib\Tools.pas}
-{$INCLUDE lib\CoolQ_variable.pas}
-{$INCLUDE lib\CoolQ_DllFunction.pas}
-{$INCLUDE lib\CoolQ_Tools.pas}
-{$INCLUDE lib\CoolQ_CQapplication.pas}
 {$INCLUDE lib\ESSGM_DllFunction.pas}
 		
 {******************************************************}
@@ -53,6 +41,11 @@ Const
 Function AppInfo:pChar;
 stdcall; 
 Begin
+	CQAPPID:='com.binkic.cqdemo';
+	//请修改APPID为你的APPID
+	
+	//下面两行不用修改
+	CQAPPINFO:=CQAPIVERTEXT+','+CQAPPID;
 	exit(StoP(CQAPPINFO));
 End;
 

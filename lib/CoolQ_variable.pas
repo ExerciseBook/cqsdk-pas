@@ -72,8 +72,6 @@ Const
 	CQAPIVERTEXT='9';
 	// CoolQ API版本
 	
-	CQAPPINFO=CQAPIVERTEXT+','+CQAPPID;
-	
 	EVENT_IGNORE=0;        //事件_忽略
 	EVENT_BLOCK=1;         //事件_拦截
 
