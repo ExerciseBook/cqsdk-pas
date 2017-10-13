@@ -5,4 +5,4 @@
 说明文档见上方wiki
 
 
-社区帖 : https://cqp.cc/t-24183-1-1
+社区帖 : https://cqp.cc/t/24183
