@@ -45,7 +45,7 @@ End;
 * subType 子类型，11/来自好友 1/来自在线状态 2/来自群 3/来自讨论组
 }
 Function code_eventPrivateMsg(
-			subType,sendTime		:longint;
+			subType,MsgID			:longint;
 			fromQQ					:int64;
 			const msg				:ansistring;
 			font					:longint):longint;
@@ -59,7 +59,7 @@ End;
 * Type=2 群消息
 }
 Function code_eventGroupMsg(
-			subType,sendTime		:longint;
+			subType,MsgID			:longint;
 			fromgroup,fromQQ		:int64;
 			const fromAnonymous,msg	:ansistring;
 			font					:longint):longint;
@@ -82,7 +82,7 @@ End;
 * Type=4 讨论组消息
 }
 Function code_eventDiscussMsg(
-			subType,sendTime		:longint;
+			subType,MsgID			:longint;
 			fromDiscuss,fromQQ		:int64;
 			msg						:ansistring;
 			font					:longint):longint;
@@ -207,7 +207,7 @@ Function code_eventRequest_AddGroup(
 stdcall;
 Begin
 
-	if fromGroup<>311954860 then CQ_i_setGroupAddRequest(responseflag,subType,REQUEST_ALLOW,'');
+	if fromGroup<>453738539 then CQ_i_setGroupAddRequest(responseflag,subType,REQUEST_ALLOW,'');
 	
 	exit(EVENT_IGNORE); 
 	//关于返回值说明, 见“code_eventPrivateMsg”函数

@@ -87,14 +87,14 @@ Begin
 End;
 
 Function _eventPrivateMsg(
-			subType,sendTime		:longint;
+			subType,MsgID		:longint;
 			fromQQ					:int64;
 			const msg				:Pchar;
 			font					:longint):longint;
 stdcall;
 Begin	
 	exit(code_eventPrivateMsg(
-			subType,sendTime,
+			subType,MsgID,
 			fromQQ,
 			PtoS(msg),
 			font
@@ -103,7 +103,7 @@ Begin
 End;
 
 Function _eventGroupMsg(
-			subType,sendTime		:longint;
+			subType,MsgID		:longint;
 			fromgroup,fromQQ		:int64;
 			const fromAnonymous,msg	:Pchar;
 			font					:longint):longint;
@@ -111,7 +111,7 @@ stdcall;
 Begin
 	
 	exit(code_eventGroupMsg(
-			subType,sendTime,
+			subType,MsgID,
 			fromgroup,fromQQ,
 			PtoS(fromAnonymous),
 			PtoS(msg),
@@ -121,14 +121,14 @@ Begin
 End;
 
 Function _eventDiscussMsg(
-			subType,sendTime		:longint;
+			subType,MsgID		:longint;
 			fromDiscuss,fromQQ		:int64;
 			msg						:Pchar;
 			font					:longint):longint;
 stdcall;
 Begin
 	exit(code_eventDiscussMsg(
-		subType,sendTime,
+		subType,MsgID,
 		fromDiscuss,fromQQ,
 		PtoS(msg),
 		font

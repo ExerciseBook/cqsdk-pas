@@ -151,6 +151,7 @@ Begin
 		'D' : exit(13);
 		'E' : exit(14);
 		'F' : exit(15);
+		else exit(-1);
 	end;
 End;
 
@@ -219,9 +220,18 @@ Begin
 	i:=1;
 	while i<=length(s) do begin
 		if s[i]='%' then begin
-			//需要转义
-			outs:=outs+GB2312ASCtoChar(s[i+1],s[i+2]);
-			i:=i+3;
+			//也许需要转义
+			if (SHEXtoDec(s[i+1])<>-1) and (SHEXtoDec(s[i+2])<>-1) then begin
+				//需要转义
+				outs:=outs+GB2312ASCtoChar(s[i+1],s[i+2]);
+				i:=i+3;
+			end
+			else
+			begin
+				//依然不需要转义
+				outs:=outs+s[i];
+				i:=i+1;
+			end;
 		end
 		else
 		begin

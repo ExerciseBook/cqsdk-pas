@@ -543,3 +543,10 @@ Begin
 	else
 	if CQ_Tools_TextToGroupListInfo(return,GroupList)=false then exit(-1000)
 End;
+
+
+//³·»ØÏûÏ¢ Auth=180 //deleteMsg
+function CQ_i_deleteMsg(msgID:int64):longint;
+Begin
+	exit(CQ_deleteMsg(AuthCode,msgID));
+End;

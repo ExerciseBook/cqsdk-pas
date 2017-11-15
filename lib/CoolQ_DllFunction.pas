@@ -56,3 +56,5 @@ function CQ_getGroupMemberList(AuthCode:longint;GroupID:int64):Pchar;
 	stdcall; external 'CQP.dll' name 'CQ_getGroupMemberList';
 function CQ_getGroupList(AuthCode:longint):Pchar;
 	stdcall; external 'CQP.dll' name 'CQ_getGroupList';
+function CQ_deleteMsg(AuthCode:longint;MsgId:int64):longint;
+	stdcall; external 'CQP.dll' name 'CQ_deleteMsg';
