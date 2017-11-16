@@ -85,7 +85,8 @@ interface
 	function CQ_i_setFatal(msg:ansistring):longint;
 	function CQ_i_getGroupMemberList(GroupID:int64;Var GroupMemberList:CQ_Type_GroupMember_List):longint;
 	function CQ_i_getGroupList(Var GroupList:CQ_Type_GroupList):longint;
-	
+	function CQ_i_deleteMsg(msgID:int64):longint;
+
 Var
 	AuthCode:longint;
 	//AuthCode CoolQ用来识别你是否是合法\调用的玩意儿
