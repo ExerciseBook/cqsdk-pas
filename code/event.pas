@@ -100,11 +100,57 @@ Function code_eventGroupUpload(
 			Pfileinfo			:ansistring):longint;
 Var
 	FileInfo	:CQ_Type_GroupFile;
+	Back		:ansistring;
 Begin
+	code_eventGroupUpload:=0;
 	if CQ_Tools_TextToFile(Pfileinfo,FileInfo) then begin
 		//群文件信息解析成功
+		
+		Back:='[CQ:at,qq=%FROMQQ%] 上传了一个文件，信息如下：'+CRLF+
+				'----------------'+CRLF+
+				'文件名    : %FILENAME%'+CRLF+
+				'文件大小  : %SIZE%'+CRLF+
+				'----------------'+CRLF+
+				'文件编号  : %FILEID%'+CRLF+
+				'busID   : %BUSID%';
+		Message_Replace(Back,'%FROMQQ%',numtochar(fromQQ));
+		Message_Replace(Back,'%FILEID%',FileInfo.fileID);
+		Message_Replace(Back,'%FILENAME%',FileInfo.Filename);
+		if FileInfo.Size<10240 then begin
+			Message_Replace(Back,'%SIZE%',numtochar(FileInfo.Size)+'Byte(s)');
+		end
+		else
+		begin
+			if FileInfo.Size<10485760 then begin
+				Message_Replace(Back,'%SIZE%',RealToDisplay(FileInfo.Size/1024,2)+'Kb');
+			end
+			else
+			begin
+				if FileInfo.Size<536870912 then begin
+					Message_Replace(Back,'%SIZE%',RealToDisplay(FileInfo.Size/(1024*1024),2)+'Mb');
+				end
+				else
+				begin
+					Message_Replace(Back,'%SIZE%',RealToDisplay(FileInfo.Size/(1024*1024*1024),2)+'Gb');
+				end;
+			end;
+		end;
+		Message_Replace(Back,'%SIZE.B%',numtochar(FileInfo.Size)+'Byte(s)');
+		Message_Replace(Back,'%SIZE.KB%',RealToDisplay(FileInfo.Size/1024,2)+'Kb');
+		Message_Replace(Back,'%SIZE.MB%',RealToDisplay(FileInfo.Size/(1024*1024),2)+'Mb');
+		Message_Replace(Back,'%SIZE.GB%',RealToDisplay(FileInfo.Size/(1024*1024*1024),2)+'Gb');
+		Message_Replace(Back,'%BUSID%',NumToChar(FileInfo.busid));
+		
+		CQ_i_sendGroupMsg(fromGroup,Back);
+		
 		{收到文件上传信息}
+		
+		
 		exit(EVENT_IGNORE);
+	end
+	else
+	begin
+		CQ_i_addLog(CQLOG_DEBUG,'code_eventGroupUpload','解析失败 '+Pfileinfo);
 	end;
 	//群文件信息解析失败
 	exit(EVENT_IGNORE);
