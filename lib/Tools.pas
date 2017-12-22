@@ -3,7 +3,7 @@
 }
 Function PtoS(a:pchar):ansistring;
 Begin
-	PtoS:=strPas(a)
+	result:=strPas(a)
 End;
 
 {
@@ -11,7 +11,7 @@ End;
 }
 Function StoP(a:ansistring):Pchar;
 Begin
-	StoP:=pchar(@a[1]);
+	result:=pchar(@a[1]);
 End;
 
 {***********************************************************}
@@ -21,7 +21,7 @@ End;
 }
 Function NumToChar(a:int64):string;
 Begin
-	str(a,NumToChar);
+	str(a,result);
 End;
 
 
@@ -30,7 +30,7 @@ End;
 }
 Function CharToNum(a:string):int64;
 Begin
-	val(a,CharToNum);
+	val(a,result);
 End;
 
 
@@ -39,7 +39,7 @@ End;
 }
 Function RealToChar(a:real):string;
 Begin
-	str(a,RealToChar)
+	str(a,result)
 End;
 
 {
@@ -47,7 +47,7 @@ End;
 }
 Function CharToReal(a:string):real;
 Begin
-	val(a,CharToReal);
+	val(a,result);
 End;
 
 {
@@ -79,7 +79,8 @@ Begin
 		a:=(a-trunc(a))*10;
 	end;
 	
-	exit(display);
+	result:=display;
+	exit();
 End;
 
 
@@ -87,7 +88,7 @@ End;
 
 Function String_Choose(expression:boolean;a,b:ansistring):ansistring;
 Begin
-	if expression then exit(a) else exit(b)
+	if expression then result:=a else result:=b;
 End;
 
 
@@ -113,45 +114,45 @@ End;
 Function SDECtoHEX(a:integer):char;
 Begin
 	case a of
-		0 : exit('0');
-		1 : exit('1');
-		2 : exit('2');
-		3 : exit('3');
-		4 : exit('4');
-		5 : exit('5');
-		6 : exit('6');
-		7 : exit('7');
-		8 : exit('8');
-		9 : exit('9');
-		10 : exit('A');
-		11 : exit('B');
-		12 : exit('C');
-		13 : exit('D');
-		14 : exit('E');
-		15 : exit('F');
+		0 : result:=('0');
+		1 : result:=('1');
+		2 : result:=('2');
+		3 : result:=('3');
+		4 : result:=('4');
+		5 : result:=('5');
+		6 : result:=('6');
+		7 : result:=('7');
+		8 : result:=('8');
+		9 : result:=('9');
+		10 : result:=('A');
+		11 : result:=('B');
+		12 : result:=('C');
+		13 : result:=('D');
+		14 : result:=('E');
+		15 : result:=('F');
 	end;
 End;
 
 Function SHEXtoDec(a:char):integer;
 Begin
 	case upcase(a) of
-		'0' : exit(0);
-		'1' : exit(1);
-		'2' : exit(2);
-		'3' : exit(3);
-		'4' : exit(4);
-		'5' : exit(5);
-		'6' : exit(6);
-		'7' : exit(7);
-		'8' : exit(8);
-		'9' : exit(9);
-		'A' : exit(10);
-		'B' : exit(11);
-		'C' : exit(12);
-		'D' : exit(13);
-		'E' : exit(14);
-		'F' : exit(15);
-		else exit(-1);
+		'0' : result:=(0);
+		'1' : result:=(1);
+		'2' : result:=(2);
+		'3' : result:=(3);
+		'4' : result:=(4);
+		'5' : result:=(5);
+		'6' : result:=(6);
+		'7' : result:=(7);
+		'8' : result:=(8);
+		'9' : result:=(9);
+		'A' : result:=(10);
+		'B' : result:=(11);
+		'C' : result:=(12);
+		'D' : result:=(13);
+		'E' : result:=(14);
+		'F' : result:=(15);
+		else result:=(-1);
 	end;
 End;
 
@@ -160,14 +161,12 @@ End;
 }
 Function Hex_Conversion_10to2(s:longint):string;
 Begin
-        Hex_Conversion_10to2:='';
+        result:='';
         while s>0 do begin
-                Hex_Conversion_10to2:=numtochar(s mod 2)+
-                                      Hex_Conversion_10to2;
-                s:=s div 2;
+			result:=numtochar(s mod 2)+result;
+			s:=s div 2;
         end;
-        while length(Hex_Conversion_10to2)<8 do
-                Hex_Conversion_10to2:='0'+Hex_Conversion_10to2;
+        while length(result)<8 do result:='0'+result;
 End;
 {
 	二进制转十进制
@@ -176,12 +175,10 @@ Function Hex_Conversion_2to10(s:string):longint;
 Var
         i:longint;
 Begin
-        Hex_Conversion_2to10:=0;
+        result:=0;
         for i:=length(s) downto 1 do begin
                 if s[i]='1' then
-                Hex_Conversion_2to10:=Hex_Conversion_2to10+
-                                      2 **
-                                      (length(s)-i)
+                result:=result+2 ** (length(s)-i);
         end;
 End;
 
@@ -202,12 +199,12 @@ Begin
 			and (s[i]<>',') then a:=a+s[i]
 		else a:=a+'%'+SDECtoHEX(integer(s[i])div 16)+SDECtoHEX(integer(s[i])mod 16);
 
-	exit(a);
+	result:=(a);
 End;
 
 Function GB2312ASCtoChar(a,b:char):char;
 Begin
-	exit(char(SHEXtoDec(a)*16+SHEXtoDec(b)));
+	result:=(char(SHEXtoDec(a)*16+SHEXtoDec(b)));
 End;
 
 Function UrlDecode(s:ansistring):ansistring;
@@ -240,5 +237,5 @@ Begin
 			i:=i+1;
 		end;
 	end;
-        exit(outs);
+        result:=(outs);
 End;

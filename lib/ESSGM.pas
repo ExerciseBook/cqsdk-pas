@@ -1,4 +1,7 @@
 unit ESSGM;
+{$IFDEF FPC}
+	{$MODE DELPHI}
+{$ENDIF}
 {$UNITPATH ..\}
 
 interface

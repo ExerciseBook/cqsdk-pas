@@ -13,6 +13,10 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
  **********************************************************************}
+{$IFDEF FPC}
+	{$MODE DELPHI}
+{$ENDIF}
+
 unit CoolQSDK;
 
 interface
@@ -92,15 +96,24 @@ Var
 	//AuthCode CoolQ用来识别你是否是合法\调用的玩意儿
 	CQAPPID		:string='com.binkic.cqdemo';
 	CQAPPINFO	:string;
-	//请修改APPID为你的APPID
+	//请在应用主程序中修改APPID为你的APPID
 
 implementation
 
 uses math,dateutils,sysutils,Classes;
 
+const
+	Base64Chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+	Base64Table:array[0..63] of ansichar='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+var
+	Base64DecoderTable:array[ansichar] of byte;
+
 {$INCLUDE lib\Tools.pas}
 {$INCLUDE lib\CoolQ_DllFunction.pas}
 {$INCLUDE lib\CoolQ_Tools.pas}
 {$INCLUDE lib\CoolQ_CQapplication.pas}
+
+initialization
+	InitBase64;
 
 end.

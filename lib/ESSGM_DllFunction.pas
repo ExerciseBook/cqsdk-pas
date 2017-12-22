@@ -8,9 +8,9 @@ function GM_GetPermissionValue_(Group,QQ:int64;Permission:Pchar):Pchar;
 	
 function GM_GetPermissionStatus(Group,QQ:int64;Permission:Ansistring):longint;
 Begin
-	exit(GM_GetPermissionStatus_(Group,QQ,StoP(Permission)));
+	result:=(GM_GetPermissionStatus_(Group,QQ,StoP(Permission)));
 End;
 function GM_GetPermissionValue(Group,QQ:int64;Permission:Ansistring):Ansistring;
 Begin
-	exit(PtoS(GM_GetPermissionValue_(Group,QQ,StoP(Permission))));
+	result:=(PtoS(GM_GetPermissionValue_(Group,QQ,StoP(Permission))));
 End;

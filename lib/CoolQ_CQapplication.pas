@@ -6,7 +6,7 @@ Begin
 	if Comma then begin
 		Message_Replace(str,',','&#44;');
 	end;
-	exit(Str);
+	result:=(Str);
 End;
 Function CQ_CharDecode(str:ansistring):ansistring;
 Begin
@@ -14,7 +14,7 @@ Begin
 	Message_Replace(str,'&#91;','[');
 	Message_Replace(str,'&#44;',',');
 	Message_Replace(str,'&amp;','&');
-	exit(str);
+	result:=(str);
 End;
 
 {
@@ -23,7 +23,7 @@ QQID为被@的群成员QQ。该参数为-1，则@全体成员，若次数用尽或权限不足则会转换为文本
 }
 function CQCode_Group_At(QQID:int64):ansistring;
 Begin
-	exit('[CQ:at,qq='+String_Choose(QQID=-1,'all',NumToChar(QQID))+']');
+	result:=('[CQ:at,qq='+String_Choose(QQID=-1,'all',NumToChar(QQID))+']');
 End;
 
 {
@@ -32,7 +32,7 @@ ID为emoji字符的unicode编号
 }
 function CQCode_emoji(ID:int64):ansistring;
 Begin
-	exit('[CQ:emoji,id='+NumToChar(ID)+']');
+	result:=('[CQ:emoji,id='+NumToChar(ID)+']');
 End;
 
 {
@@ -41,13 +41,13 @@ ID为0-170的数字
 }
 function CQCode_face(ID:int64):ansistring;
 Begin
-	exit('[CQ:at,face='+NumToChar(ID)+']');
+	result:=('[CQ:at,face='+NumToChar(ID)+']');
 End;
 
 //窗口抖动（仅支持好友消息使用）
 function CQCode_Shake:ansistring;
 Begin
-	exit('[CQ:shake]');
+	result:=('[CQ:shake]');
 End;
 
 {
@@ -58,7 +58,7 @@ End;
 }
 function CQCode_anonymous(Force:boolean):ansistring;	
 Begin
-	exit('[CQ:anonymous'+String_Choose(Force,'',',ignore=true')+']');
+	result:=('[CQ:anonymous'+String_Choose(Force,'',',ignore=true')+']');
 End;
 
 {
@@ -67,7 +67,7 @@ url为图片文件名称，图片存放在酷Q目录的data\image\下
 }
 function CQCode_image(url:ansistring):ansistring;
 Begin
-	exit('[CQ:image,file='+CQ_CharEncode(url,true)+']')
+	result:=('[CQ:image,file='+CQ_CharEncode(url,true)+']')
 End;
 
 {
@@ -80,7 +80,7 @@ musicid为对应音乐平台的数字音乐id
 }
 function CQCode_Music(source:string;musicid:int64;isnew:boolean):ansistring;
 Begin
-	exit('[CQ:music,type='+source+',id='+NumToChar(musicid)+String_Choose(isnew,',style=1','')+']')
+	result:=('[CQ:music,type='+source+',id='+NumToChar(musicid)+String_Choose(isnew,',style=1','')+']')
 	{返回 (“[CQ:music,id=” ＋ 到文本 (歌曲ID) ＋ “]”)}
 End;
 
@@ -94,7 +94,7 @@ image 音乐的封面图片链接，留空则为默认图片
 }
 function CQCode_Music_Custom(url,audio,title,content,image:ansistring):ansistring;
 Begin
-	CQCode_Music_Custom:='[CQ:music,type=custom,url='+CQ_CharEncode(url,true)
+	result:='[CQ:music,type=custom,url='+CQ_CharEncode(url,true)
 						+',audio='+CQ_CharEncode(audio,true)
 						+String_Choose(title='','',',title='+CQ_CharEncode(title,true))
 						+String_Choose(content='','',',content='+CQ_CharEncode(content,true))
@@ -108,9 +108,9 @@ End;
 }
 function CQCode_Location(latitude,longitude:real;Zoom:longint;Name,Address:ansistring):ansistring;
 Begin
-	CQCode_Location:='[CQ:location,lat='+RealToDisplay(latitude,6)+',lon='+RealToDisplay(longitude,6);
-	if zoom>0 then CQCode_Location:=CQCode_Location+',zoom='+NumToChar(zoom);
-	CQCode_Location:=CQCode_Location+',title='+CQ_CharEncode(Name,true)+',content'+CQ_CharEncode(Address,true)+']';
+	result:='[CQ:location,lat='+RealToDisplay(latitude,6)+',lon='+RealToDisplay(longitude,6);
+	if zoom>0 then result:=result+',zoom='+NumToChar(zoom);
+	result:=result+',title='+CQ_CharEncode(Name,true)+',content'+CQ_CharEncode(Address,true)+']';
 ENd;
 
 {
@@ -118,7 +118,7 @@ id为该原创表情的ID，存放在酷Q目录的data\bface\下
 }
 function CQCode_bface(ID:int64):ansistring;
 Begin
-	exit('[CQ:bface,id='+NumToChar(ID)+']');
+	result:=('[CQ:bface,id='+NumToChar(ID)+']');
 End;
 
 {
@@ -128,7 +128,7 @@ End;
 }
 function CQCode_record(url:ansistring;magic:boolean):ansistring;
 Begin
-	exit('[CQ:record,file='+CQ_CharEncode(url,true)+String_Choose(magic,',magic=true','')+']');
+	result:=('[CQ:record,file='+CQ_CharEncode(url,true)+String_Choose(magic,',magic=true','')+']');
 End;
 
 {
@@ -139,7 +139,7 @@ id为猜拳结果的类型，暂不支持发送时自定义。该参数可被忽略。
 }
 function CQCode_rps(ID:int64):ansistring;
 Begin
-	exit('[CQ:rps,id='+NumToChar(ID)+']');
+	result:=('[CQ:rps,id='+NumToChar(ID)+']');
 End;
 
 {
@@ -147,7 +147,7 @@ id对应掷出的点数，暂不支持发送时自定义。该参数可被忽略。
 }
 function CQCode_dice(ID:int64):ansistring;
 Begin
-	exit('[CQ:dice,id='+NumToChar(ID)+']');
+	result:=('[CQ:dice,id='+NumToChar(ID)+']');
 End;
 
 {
@@ -155,7 +155,7 @@ End;
 }
 function CQCode_share(url,title,Content,image:ansistring):ansistring;
 Begin
-	exit('[CQ:share,url='+CQ_CharEncode(url,true)+',title='+CQ_CharEncode(title,true)+',content='+CQ_CharEncode(content,true)+',image='+CQ_CharEncode(image,true)+']');
+	result:=('[CQ:share,url='+CQ_CharEncode(url,true)+',title='+CQ_CharEncode(title,true)+',content='+CQ_CharEncode(content,true)+',image='+CQ_CharEncode(image,true)+']');
 End;
 
 {
@@ -163,7 +163,7 @@ End;
 }
 function CQCode_contact(t:ansistring;id:int64):ansistring;
 Begin
-	exit('[CQ:contact,type='+t+',id='+NumToChar(id)+']');
+	result:=('[CQ:contact,type='+t+',id='+NumToChar(id)+']');
 End;
 
 
@@ -171,26 +171,26 @@ End;
 //发送私聊 Auth=106 //sendPrivateMsg
 function CQ_i_sendPrivateMsg(QQID:int64;msg:ansistring):longint;		//Auth=106 //sendPrivateMsg
 Begin
-	exit(CQ_sendPrivateMsg(AuthCode,QQID,StoP(msg)));
+	result:=(CQ_sendPrivateMsg(AuthCode,QQID,StoP(msg)));
 End;
 //发送群聊 Auth=101 //sendGroupMsg
 function CQ_i_sendGroupMsg(groupid:int64;const msg:ansistring):longint;	//Auth=101 //sendGroupMsg
 Begin
-	exit(CQ_sendGroupMsg(AuthCode,groupid,StoP(msg)));
+	result:=(CQ_sendGroupMsg(AuthCode,groupid,StoP(msg)));
 End;
 //发送讨论组 Auth=103 //sendDiscussMsg
 function CQ_i_sendDiscussMsg(DiscussID:int64;msg:ansistring):longint;	//Auth=103 //sendDiscussMsg
 Begin
-	exit(CQ_sendDiscussMsg(AuthCode,DiscussID,StoP(msg)));
+	result:=(CQ_sendDiscussMsg(AuthCode,DiscussID,StoP(msg)));
 End;
 //发送赞 Auth=110 //sendLike
 function CQ_i_sendLike(QQID:int64):longint;								//Auth=110 //sendLike
 Begin
-	exit(CQ_sendLike(AuthCode,QQID));
+	result:=(CQ_sendLike(AuthCode,QQID));
 End;
 function CQ_i_sendLikeV2(QQID:int64;times:longint):longint;								//Auth=110 //sendLike
 Begin
-	exit(CQ_sendLikeV2(AuthCode,QQID,min(times,10)));
+	result:=(CQ_sendLikeV2(AuthCode,QQID,min(times,10)));
 End;
 
 //接受语音 Auth=30 接收消息中的语音(record),返回保存在 \data\record\ 目录下的文件名 //getRecord
@@ -200,7 +200,7 @@ filename 收到消息中的语音文件名(file)
 format 应用所需的语音文件格式，目前支持 mp3,amr,wma,m4a,spx,ogg,wav,flac
 }
 Begin
-	exit(
+	result:=(
 		PtoS(
 			CQ_getRecord(AuthCode,StoP(filename),StoP(format))
 		)
@@ -214,15 +214,21 @@ Var
 	data:ansistring;
 	i	:longint;
 Begin
-	if source='' then exit(false);	
+	if source='' then begin
+		result:=false;
+		exit();
+	end;
 	data:=Base64_Decryption(source);
-	if length(data)<12 then exit(false);
+	if length(data)<12 then begin
+		result:=false;
+		exit();
+	end;
 	i:=1;
 	Anonymous.AID:=CoolQ_Tools_Unpack_GetNum(i,8,data);
 	Anonymous.name:=CoolQ_Tools_Unpack_GetStr(i,data);
 	Anonymous.Token:=CoolQ_Tools_Unpack_GetStr(i,data);
 	
-	exit(true);
+	result:=true;
 End;
 
 //文本到群员 -- 传递的data内容是已Base64解码后的内容
@@ -231,7 +237,10 @@ function CQ_Tools_TextToGroupMember_Main(data:ansistring;
 Var
 	i:longint;
 Begin
-	if length(data)<40 then exit(false);
+	if length(data)<40 then begin
+		result:=false;
+		exit();
+	end;
 	i:=1;
 	info.groupid:=CoolQ_Tools_Unpack_GetNum(i,8,data);
 	info.QQID:=CoolQ_Tools_Unpack_GetNum(i,8,data);
@@ -248,7 +257,7 @@ Begin
 	info.title:=CoolQ_Tools_Unpack_GetStr(i,data);
 	info.titleExpiretime:=CoolQ_Tools_Unpack_GetNum(i,4,data);
 	info.nickcanchange:=CoolQ_Tools_Unpack_GetNum(i,4,data)=1;
-	exit(true);
+	result:=(true);
 End;
 
 //文本到群成员 -- 传递的scource内容是未Base64解码后的内容
@@ -257,9 +266,12 @@ function CQ_Tools_TextToGroupMember(source:ansistring;
 Var
 	data:ansistring;
 Begin
-	if source='' then exit(false);
+	if source='' then begin
+		result:=false;
+		exit();
+	end;
 	data:=Base64_Decryption(source);
-	exit(CQ_Tools_TextToGroupMember_Main(data,info));
+	result:=(CQ_Tools_TextToGroupMember_Main(data,info));
 End;
 
 
@@ -269,20 +281,34 @@ Var
 	data	:	ansistring;
 	i,j		:	longint;
 Begin
-	if source='' then exit(false);
+	if source='' then begin
+		result:=false;
+		exit();
+	end;
 	data:=Base64_Decryption(source);
-	if length(data)<10 then exit(false);
+	if length(data)<10 then begin
+		result:=false;
+		exit();
+	end;
 	i:=1;
 	GroupMemberList.l:=CoolQ_Tools_Unpack_GetNum(i,4,data);
 	SetLength(GroupMemberList.s,GroupMemberList.l);
 	for j:=0 to GroupMemberList.l-1 do begin
 		if CoolQ_Tools_Unpack_GetLenRemain(i,data)<=0
-			then exit(false)
+			then
+			begin
+				result:=false;
+				exit();
+			end
 			else
 			begin
-				if CQ_Tools_TextToGroupMember_Main(CoolQ_Tools_Unpack_GetStr(i,data),GroupMemberList.s[j])=false then exit(false);
+				if CQ_Tools_TextToGroupMember_Main(CoolQ_Tools_Unpack_GetStr(i,data),GroupMemberList.s[j])=false then begin
+					result:=false;
+					exit();
+				end;
 			end;
 	end;
+	result:=true;
 End;
 
 //文本到群文件
@@ -291,15 +317,21 @@ Var
 	data:ansistring;
 	i:longint;
 Begin
-	if source='' then exit(false);
+	if source='' then begin
+		result:=false;
+		exit();
+	end;
 	data:=Base64_Decryption(source);
-	if length(data)<20 then exit(false);
+	if length(data)<20 then begin
+		result:=false;
+		exit();
+	end;
 	i:=1;
 	info.FileID:=CoolQ_Tools_Unpack_GetStr(i,data);
 	info.FileName:=CoolQ_Tools_Unpack_GetStr(i,data);
 	info.Size:=CoolQ_Tools_Unpack_GetNum(i,8,data);
 	info.busid:=CoolQ_Tools_Unpack_GetNum(i,8,data);
-	exit(true);
+	result:=true;
 End;
 
 //其他_转换_ansihex到群信息
@@ -307,11 +339,14 @@ Function CQ_Tools_TextToGroupInfo(source:ansistring;Var GroupInfo:CQ_Type_GroupI
 Var
 	i:longint;
 Begin
-	if length(source)<10 then exit(false);
+	if length(source)<10 then begin
+		result:=false;
+		exit();
+	end;
 	i:=1;
 	GroupInfo.GroupID:=CoolQ_Tools_Unpack_GetNum(i,8,source);
 	GroupInfo.name:=CoolQ_Tools_Unpack_GetStr(i,source);
-	exit(true);
+	result:=true;
 End;
 
 //其他_转换_文本到群列表信息a
@@ -320,44 +355,58 @@ Var
 	data:ansistring;
 	i,j:longint;
 Begin
-	if source='' then exit(false);
+	if source='' then begin
+		result:=false;
+		exit();
+	end;
 	data:=Base64_Decryption(source);
-	if length(data)<4 then exit(false);
+	if length(data)<4 then begin
+		result:=false;
+		exit();
+	end;
 	i:=1;
 	GroupList.l:=CoolQ_Tools_Unpack_GetNum(i,4,data);
 	SetLength(GroupList.s,GroupList.l);
 	for j:=0 to GroupList.l-1 do begin
 		if CoolQ_Tools_Unpack_GetLenRemain(i,data)<=0
-			then exit(false)
+			then
+			begin
+				result:=false;
+				exit();
+			end
 			else
 			begin
-				if CQ_Tools_TextToGroupInfo(CoolQ_Tools_Unpack_GetStr(i,data),GroupList.s[j])=false then exit(false);
+				if CQ_Tools_TextToGroupInfo(CoolQ_Tools_Unpack_GetStr(i,data),GroupList.s[j])=false then begin
+					result:=false;
+					exit();
+				end;
 			end;
 	end;
+	result:=true;
 End;
 
 //获取Cookies Auth=20 慎用,此接口需要严格授权 //getCookies
 Function CQ_i_GetCookies():ansistring;
 Begin
-	exit(CQ_GetCookies(AuthCode));
+	result:=(CQ_GetCookies(AuthCode));
 End;
 
 //获取CsrfToken Auth=20 即QQ网页用到的bkn/g_tk等 慎用,此接口需要严格授权 //getCsrfToken
 Function CQ_i_getCsrfToken():longint;
 Begin
-	exit(CQ_GetCsrfToken(AuthCode));
+	result:=(CQ_GetCsrfToken(AuthCode));
 End;
 
 //取登陆QQ getLoginQQ
 Function CQ_i_GetLoginQQ():int64;
 Begin
-	exit(CQ_GetLoginQQ(authcode));
+	result:=(CQ_GetLoginQQ(authcode));
 End;
 
 //取登陆QQ昵称　getLoginNick
 Function CQ_i_getLoginNick():string;
 Begin
-	exit(CQ_GetLoginNick(AuthCode));
+	result:=(CQ_GetLoginNick(AuthCode));
 End;
 
 //取陌生人信息 Auth=131 //CQ_getStrangerInfo
@@ -368,13 +417,16 @@ Var
 Begin
 	data:=CQ_GetStrangerInfo(AuthCode,QQ,Nocache);
 	data:=Base64_Decryption(data);
-	if length(data)<16 then exit(-1000);
+	if length(data)<16 then begin
+		result:=-1000;
+		exit();
+	end;
 	i:=1;
 	info.QQID:=CoolQ_Tools_Unpack_GetNum(i,8,data);
 	info.nick:=CoolQ_Tools_Unpack_GetStr(i,data);
 	info.sex:=CoolQ_Tools_Unpack_GetNum(i,4,data);
 	info.age:=CoolQ_Tools_Unpack_GetNum(i,4,data);
-	exit(0);
+	result:=0;
 End;
 
 //取群成员信息 Auth=130 //getGroupMemberInfoV2
@@ -385,15 +437,21 @@ Var
 	return:ansistring;
 Begin
 	return:=CQ_getGroupMemberInfoV2(AuthCode,groupid,QQID,nocache);
-	if return='' then exit(-1000);
-	if CQ_Tools_TextToGroupMember(return,info)=false then exit(-1000);
-	exit(0);
+	if return='' then begin
+		result:=-1000;
+		exit();
+	end;
+	if CQ_Tools_TextToGroupMember(return,info)=false then begin
+		result:=-1000;
+		exit();
+	end;
+	result:=0;
 End;
 
 //返回的路径末尾带"\" //getAppDirectory
 function CQ_i_getAppDirectory:ansistring;
 Begin
-	exit(PtoS(CQ_getAppDirectory(AuthCode)));
+	result:=(PtoS(CQ_getAppDirectory(AuthCode)));
 End;
 
 {成功返回日志ID //addlog
@@ -403,13 +461,13 @@ End;
 }
 function CQ_i_addLog(priority:longint;const category,content:ansistring):longint;
 Begin
-	exit(CQ_addLog(AuthCode,priority,StoP(category),StoP(content)));
+	result:=(CQ_addLog(AuthCode,priority,StoP(category),StoP(content)));
 End;
 
 //添加好友请求回复 Auth=150 //setFriendAddRequest
 function CQ_i_setFriendAddRequest(const responseflag:pchar;responseoperation:longint;const remark:string):longint;
 Begin
-	exit(CQ_setFriendAddRequest(authcode,
+	result:=(CQ_setFriendAddRequest(authcode,
 								responseflag,			//通过事件函数传递获得
 								responseoperation,		//通过常量表获得
 								StoP(remark)));			//添加后好友备注
@@ -418,7 +476,7 @@ End;
 //置匿名群员禁言 Auth=124 //setGroupAnonymousBan
 function CQ_i_setGroupAnonymousMute(group:int64;fromAnonymous:string;duration:int64):longint;
 Begin
-	exit(CQ_setGroupAnonymousBan(authcode,
+	result:=(CQ_setGroupAnonymousBan(authcode,
 								group,
 								StoP(fromAnonymous),		//通过事件函数传递获得
 								duration));					//禁言时长 单位秒 不支持解禁
@@ -427,13 +485,13 @@ End;
 //置全群禁言 Auth=123 //setGroupWholeBan
 function CQ_i_setGroupWholeMute(groupid:int64;enableban:boolean):longint;
 Begin
-	exit(CQ_setGroupWholeBan(AuthCode,groupid,enableban));
+	result:=(CQ_setGroupWholeBan(AuthCode,groupid,enableban));
 End;
 
 //置群成员名片 Auth=126 //setGroupCard
 function CQ_i_setGroupCard(group,qq:int64;nick:string):longint;
 Begin
-	exit(CQ_setGroupCard(authcode,
+	result:=(CQ_setGroupCard(authcode,
 						group,
 						qq,
 						StoP(nick)))
@@ -442,7 +500,7 @@ End;
 //置群员专属头衔 Auth=128 需群主权限 //setGroupSpecialTitle
 Function CQ_i_setGroupSpecialTitle(Group,ID:int64;Title:string;duration:int64):longint;
 Begin
-	exit(CQ_setGroupSpecialTitle(authcode,
+	result:=(CQ_setGroupSpecialTitle(authcode,
 								group,				//目标群
 								id,					//目标QQ
 								StoP(title),		//若要删除头衔，则留空
@@ -456,7 +514,7 @@ End;
 }
 Function CQ_i_setGroupAdmin(group,qq:int64;operation:boolean):longint;
 Begin
-	exit(CQ_SetGroupAdmin(authcode,group,qq,operation));
+	result:=(CQ_SetGroupAdmin(authcode,group,qq,operation));
 End;
 
 {
@@ -465,7 +523,7 @@ End;
 }
 Function CQ_i_setGroupAnonymous(group:int64;operation:boolean):longint;
 Begin
-	exit(CQ_setGroupAnonymous(AuthCode,group,operation));
+	result:=(CQ_setGroupAnonymous(AuthCode,group,operation));
 End;
 
 
@@ -476,7 +534,7 @@ Function CQ_i_setGroupAddRequest(responseflag:string;	//请求事件收到的“response
 								reason		:string 	//操作理由，仅 #请求_群添加 且 #请求_拒绝 时可用
 								):longint;
 Begin
-	exit(
+	result:=(
 		CQ_setGroupAddRequestV2(
 			AuthCode,
 			StoP(responseflag),
@@ -493,31 +551,31 @@ Disband true解散本群[群主] false退出本群[群管/群员]
 }
 Function CQ_i_setGroupLeave(group:int64;isdisband:boolean):longint;
 Begin
-	exit(CQ_setGroupLeave(Authcode,Group,IsDisband));
+	result:=(CQ_setGroupLeave(Authcode,Group,IsDisband));
 End;
 
 //置群员禁言 Auth=121 //setGroupBan
 function CQ_i_setGroupMute(groupid,QQID,duration:int64):longint;
 Begin
-	exit(CQ_setGroupBan(AuthCode,groupid,QQID,duration));
+	result:=(CQ_setGroupBan(AuthCode,groupid,QQID,duration));
 End;
 
 //置群员移除 Auth=120 //setGroupKick
 function CQ_i_setGroupKick(groupid,QQID:int64;rejectaddrequest:boolean):longint;
 Begin
-	exit(CQ_setGroupKick(AuthCode,Groupid,QQID,rejectaddrequest));
+	result:=(CQ_setGroupKick(AuthCode,Groupid,QQID,rejectaddrequest));
 End;
 
 //置讨论组退出 Auth=140 //setDiscussLeave
 function CQ_i_setDiscussLeave(DiscussID:int64):longint;
 Begin
-	exit(CQ_setDiscussLeave(authcode,DiscussID));
+	result:=(CQ_setDiscussLeave(authcode,DiscussID));
 End;
 
 //置致命错误提示 //setFatal
 function CQ_i_setFatal(msg:ansistring):longint;
 Begin
-	exit(CQ_setFatal(authcode,StoP(msg)));
+	result:=(CQ_setFatal(authcode,StoP(msg)));
 End;
 
 //取群成员列表 Auth=160 //getGroupMemberList
@@ -526,9 +584,16 @@ Var
 	return	:	ansistring;
 Begin
 	return:=PtoS(CQ_getGroupMemberList(AuthCode,GroupID));
-	if return='' then exit(-1000)
+	if return='' then begin
+		result:=-1000;
+		exit();
+	end
 	else
-	if CQ_Tools_TextToGroupMemberList(return,GroupMemberList)=false then exit(-1000)
+	if CQ_Tools_TextToGroupMemberList(return,GroupMemberList)=false then begin
+		result:=-1000;
+		exit();
+	end;
+	result:=0;
 End;
 
 
@@ -539,14 +604,21 @@ Var
 	return	:	ansistring;
 Begin
 	return:=PtoS(CQ_getGroupList(AuthCode));
-	if return='' then exit(-1000)
+	if return='' then begin
+		result:=-1000;
+		exit();
+	end
 	else
-	if CQ_Tools_TextToGroupListInfo(return,GroupList)=false then exit(-1000)
+	if CQ_Tools_TextToGroupListInfo(return,GroupList)=false then begin
+		result:=-1000;
+		exit();
+	end;
+	result:=0;
 End;
 
 
 //撤回消息 Auth=180 //deleteMsg
 function CQ_i_deleteMsg(msgID:int64):longint;
 Begin
-	exit(CQ_deleteMsg(AuthCode,msgID));
+	result:=(CQ_deleteMsg(AuthCode,msgID));
 End;
