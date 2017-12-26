@@ -10,7 +10,9 @@
 library
 	testdll;
 	//DLL 编译
-
+{$IFDEF FPC}
+	{$MODE DELPHI}
+{$ENDIF}
 {$APPTYPE GUI}
 {$I-}
 {$h+}
@@ -26,8 +28,8 @@ Function MessageBox(hWnd:LONGINT;lpText:PCHAR;lpCaption:PCHAR;uType:DWORD):LONGI
 
 	
 //载入其他内容
-{$INCLUDE lib\ESSGM_DllFunction.pas}
-		
+
+//{$INCLUDE lib\ESSGM_DllFunction.pas} //权限插件支持 https://cqp.cc/t/25690 ， 单元格式的支持请见 lib\ESSGM_pas		
 {******************************************************}
 {$INCLUDE code\main.pas}
 		//你的代码就从这个文件开始写吧
@@ -44,9 +46,13 @@ Begin
 	CQAPPID:='com.binkic.cqdemo';
 	//请修改APPID为你的APPID
 	
-	//下面两行不用修改
+	//下面两行不用修改 //没毛病，的确是两行。 #滑稽
 	CQAPPINFO:=CQAPIVERTEXT+','+CQAPPID;
+{$IFDEF FPC}
 	exit(StoP(CQAPPINFO));
+{$ELSE}
+	Result:=(StoP(CQAPPINFO));
+{$ENDIF}
 End;
 
 {
@@ -57,33 +63,53 @@ Function Initialize(ac:longint):longint;
 stdcall;
 Begin
 	AuthCode:=ac;
+{$IFDEF FPC}
 	exit(0);
+{$ELSE}
+	Result:=0;
+{$ENDIF}
 End;
 
 Function _eventStartup:longint;
 stdcall;
 Begin
 	randomize;
+{$IFDEF FPC}
 	exit(code_eventStartup);
+{$ELSE}
+	result:=code_eventStartup;
+{$ENDIF}
 End;
 
 Function _eventExit:longint;
 stdcall;
 Begin
+{$IFDEF FPC}
 	exit(code_eventExit);
+{$ELSE}
+	result:=code_eventExit;
+{$ENDIF}
 End;
 
 Function _eventEnable:longint;
 stdcall;
 Begin
 	randomize;
+{$IFDEF FPC}
 	exit(code_eventEnable);
+{$ELSE}
+	result:=code_eventEnable;
+{$ENDIF}
 End;
 
 Function _eventDisable:longint;
 stdcall;
 Begin
+{$IFDEF FPC}
 	exit(code_eventDisable);
+{$ELSE}
+	result:=code_eventDisable;
+{$ENDIF}
 End;
 
 Function _eventPrivateMsg(
@@ -92,7 +118,8 @@ Function _eventPrivateMsg(
 			const msg				:Pchar;
 			font					:longint):longint;
 stdcall;
-Begin	
+Begin
+{$IFDEF FPC}
 	exit(code_eventPrivateMsg(
 			subType,MsgID,
 			fromQQ,
@@ -100,6 +127,14 @@ Begin
 			font
 		)
 	);
+{$ELSE}
+	result:=code_eventPrivateMsg(
+			subType,MsgID,
+			fromQQ,
+			PtoS(msg),
+			font
+		);
+{$ENDIF}
 End;
 
 Function _eventGroupMsg(
@@ -109,7 +144,7 @@ Function _eventGroupMsg(
 			font					:longint):longint;
 stdcall;
 Begin
-	
+{$IFDEF FPC}
 	exit(code_eventGroupMsg(
 			subType,MsgID,
 			fromgroup,fromQQ,
@@ -117,7 +152,16 @@ Begin
 			PtoS(msg),
 			font
 		)
-	);	
+	);
+{$ELSE}
+	result:=code_eventGroupMsg(
+			subType,MsgID,
+			fromgroup,fromQQ,
+			PtoS(fromAnonymous),
+			PtoS(msg),
+			font
+		);
+{$ENDIF}
 End;
 
 Function _eventDiscussMsg(
@@ -127,6 +171,7 @@ Function _eventDiscussMsg(
 			font					:longint):longint;
 stdcall;
 Begin
+{$IFDEF FPC}
 	exit(code_eventDiscussMsg(
 		subType,MsgID,
 		fromDiscuss,fromQQ,
@@ -134,6 +179,14 @@ Begin
 		font
 		)
 	);
+{$ELSE}
+	result:=(code_eventDiscussMsg(
+		subType,MsgID,
+		fromDiscuss,fromQQ,
+		PtoS(msg),
+		font
+		);
+{$ENDIF}
 End;
 
 Function _eventGroupUpload(
@@ -142,10 +195,17 @@ Function _eventGroupUpload(
 			fileinfo			:Pchar):longint;
 stdcall;
 Begin
+{$IFDEF FPC}
 	exit(code_eventGroupUpload(
 			subType,sendTime,
 			fromGroup,fromQQ,
 			PtoS(fileinfo)));
+{$ELSE}
+	result:=code_eventGroupUpload(
+			subType,sendTime,
+			fromGroup,fromQQ,
+			PtoS(fileinfo));
+{$ENDIF}
 End;
 
 Function _eventSystem_GroupAdmin(
@@ -154,12 +214,20 @@ Function _eventSystem_GroupAdmin(
 			beingOperateQQ			:int64):longint;
 stdcall;
 Begin
+{$IFDEF FPC}
 	exit(code_eventSystem_GroupAdmin(
 		subType,sendTime,
 		fromGroup,
 		beingOperateQQ
 		)
 	); 
+{$ELSE}
+	result:=(code_eventSystem_GroupAdmin(
+		subType,sendTime,
+		fromGroup,
+		beingOperateQQ
+		);
+{$ENDIF}
 End;
 
 Function _eventSystem_GroupMemberDecrease(
@@ -168,12 +236,20 @@ Function _eventSystem_GroupMemberDecrease(
 			beingOperateQQ			:int64):longint;
 stdcall;
 Begin
+{$IFDEF FPC}
 	exit(code_eventSystem_GroupMemberDecrease(
 			subType,sendTime,
 			fromGroup,fromQQ,
 			beingOperateQQ
 		)
 	);
+{$ELSE}
+	result:=code_eventSystem_GroupMemberDecrease(
+			subType,sendTime,
+			fromGroup,fromQQ,
+			beingOperateQQ
+		);
+{$ENDIF}
 End;
 
 Function _eventSystem_GroupMemberIncrease(
@@ -182,12 +258,20 @@ Function _eventSystem_GroupMemberIncrease(
 			beingOperateQQ			:int64):longint;
 stdcall;
 Begin
+{$IFDEF FPC}
 	exit(code_eventSystem_GroupMemberIncrease(
 			subType,sendTime,
 			fromGroup,fromQQ,
 			beingOperateQQ	
 		)
 	); 
+{$ELSE}
+	result:=code_eventSystem_GroupMemberIncrease(
+			subType,sendTime,
+			fromGroup,fromQQ,
+			beingOperateQQ	
+		);
+{$ENDIF}
 End;
 
 Function _eventFriend_Add(
@@ -195,10 +279,16 @@ Function _eventFriend_Add(
 			fromQQ					:int64):longint;
 stdcall;
 Begin
+{$IFDEF FPC}
 	exit(code_eventFriend_Add(
 			subType,sendTime,fromQQ
 		)
 	);
+{$ELSE}
+	result:=code_eventFriend_Add(
+			subType,sendTime,fromQQ
+		);
+{$ENDIF}
 End;
 
 Function _eventRequest_AddFriend(
@@ -207,6 +297,7 @@ Function _eventRequest_AddFriend(
 			const msg,responseFlag		:Pchar):longint;
 stdcall;
 Begin
+{$IFDEF FPC}
 	exit(code_eventRequest_AddFriend(
 			subType,sendTime,
 			fromQQ,
@@ -214,6 +305,14 @@ Begin
 			responseFlag
 		)
 	);
+{$ELSE}
+	result:=code_eventRequest_AddFriend(
+			subType,sendTime,
+			fromQQ,
+			PtoS(msg),
+			responseFlag
+		);
+{$ENDIF}
 End;
 
 Function _eventRequest_AddGroup(
@@ -222,14 +321,22 @@ Function _eventRequest_AddGroup(
 			msg,responseFlag			:Pchar):longint;
 stdcall;
 Begin
-
+{$IFDEF FPC}
 	exit(code_eventRequest_AddGroup(
 			subType,sendTime,
 			fromGroup,fromQQ,
 			PtoS(msg),
 			responseFlag
 		)
-	); 
+	);
+{$ELSE}
+	result:=code_eventRequest_AddGroup(
+			subType,sendTime,
+			fromGroup,fromQQ,
+			PtoS(msg),
+			responseFlag
+		);
+{$ENDIF}
 End;
 
 exports

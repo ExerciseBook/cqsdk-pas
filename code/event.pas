@@ -5,7 +5,11 @@
 }
 Function code_eventStartup:longint;
 Begin
-	exit(0)
+{$IFDEF FPC}
+	exit(0);
+{$ELSE}
+	result:=0;
+{$ENDIF}
 End;
 
 {
@@ -15,7 +19,11 @@ End;
 }
 Function code_eventExit:longint;
 Begin
+{$IFDEF FPC}
 	exit(0);
+{$ELSE}
+	result:=0;
+{$ENDIF}
 End;
 
 {
@@ -26,7 +34,11 @@ End;
 }
 Function code_eventEnable:longint;
 Begin
+{$IFDEF FPC}
 	exit(0)
+{$ELSE}
+	result:=0;
+{$ENDIF}
 End;
 
 {
@@ -37,7 +49,11 @@ End;
 }
 Function code_eventDisable:longint;
 Begin
+{$IFDEF FPC}
 	exit(0);
+{$ELSE}
+	result:=0;
+{$ENDIF}
 End;
 
 {
@@ -50,9 +66,13 @@ Function code_eventPrivateMsg(
 			const msg				:ansistring;
 			font					:longint):longint;
 Begin
+{$IFDEF FPC}
 	exit(EVENT_IGNORE);
 		//如果要回复消息，请调用酷Q方法发送，并且这里 exit(EVENT_BLOCK) - 截断本条消息，不再继续处理  注意：应用优先级设置为"最高"(10000)时，不得使用本返回值
 		//如果不回复消息，交由之后的应用/过滤器处理，这里 exit(return EVENT_IGNORE) - 忽略本条消息
+{$ELSE}
+	result:=EVENT_IGNORE;
+{$ENDIF}
 End;
 
 {
@@ -74,7 +94,11 @@ Begin
 
 	if msg='签到' then CQ_i_sendGroupMsg(fromgroup,CQCode_Group_At(fromQQ)+' : 签到并没有成功[CQ:image,file=funnyface.png]');
 		
+{$IFDEF FPC}
 	exit(EVENT_IGNORE);
+{$ELSE}
+	result:=EVENT_IGNORE;
+{$ENDIF}
 	//关于返回值说明, 见“code_eventPrivateMsg”函数
 End;
 
@@ -87,7 +111,11 @@ Function code_eventDiscussMsg(
 			msg						:ansistring;
 			font					:longint):longint;
 Begin
+{$IFDEF FPC}
 	exit(EVENT_IGNORE);
+{$ELSE}
+	result:=EVENT_IGNORE;
+{$ENDIF}
 	//关于返回值说明, 见“code_eventPrivateMsg”函数
 End;
 
@@ -103,6 +131,7 @@ Var
 	Back		:ansistring;
 Begin
 	code_eventGroupUpload:=0;
+	//收到文件上传信息 并尝试解析
 	if CQ_Tools_TextToFile(Pfileinfo,FileInfo) then begin
 		//群文件信息解析成功
 		
@@ -141,19 +170,20 @@ Begin
 		Message_Replace(Back,'%SIZE.GB%',RealToDisplay(FileInfo.Size/(1024*1024*1024),2)+'Gb');
 		Message_Replace(Back,'%BUSID%',NumToChar(FileInfo.busid));
 		
-		CQ_i_sendGroupMsg(fromGroup,Back);
-		
-		{收到文件上传信息}
-		
-		
-		exit(EVENT_IGNORE);
+		CQ_i_sendGroupMsg(fromGroup,Back);		
 	end
 	else
 	begin
 		CQ_i_addLog(CQLOG_DEBUG,'code_eventGroupUpload','解析失败 '+Pfileinfo);
+		//群文件信息解析失败
 	end;
-	//群文件信息解析失败
+	
+{$IFDEF FPC}
 	exit(EVENT_IGNORE);
+{$ELSE}
+	result:=EVENT_IGNORE;
+{$ENDIF}
+	//关于返回值说明, 见“code_eventPrivateMsg”函数
 End;
 
 
@@ -166,7 +196,11 @@ Function code_eventSystem_GroupAdmin(
 			fromGroup,
 			beingOperateQQ			:int64):longint;
 Begin
+{$IFDEF FPC}
 	exit(EVENT_IGNORE); 
+{$ELSE}
+	result:=EVENT_IGNORE;
+{$ENDIF}
 	//关于返回值说明, 见“code_eventPrivateMsg”函数
 End;
 
@@ -182,7 +216,11 @@ Function code_eventSystem_GroupMemberDecrease(
 			beingOperateQQ			:int64):longint;
 stdcall;
 Begin
+{$IFDEF FPC}
 	exit(EVENT_IGNORE); 
+{$ELSE}
+	result:=EVENT_IGNORE
+{$ENDIF}
 	//关于返回值说明, 见“code_eventPrivateMsg”函数
 End;
 
@@ -199,7 +237,11 @@ Function code_eventSystem_GroupMemberIncrease(
 stdcall;
 Begin
 	CQ_i_sendGroupMsg(fromgroup,'欢迎新人 [CQ:at,qq='+NumToChar(beingOperateQQ)+'] 加入本群');
+{$IFDEF FPC}
 	exit(EVENT_IGNORE); 
+{$ELSE}
+	result:=EVENT_IGNORE;
+{$ENDIF}
 	//关于返回值说明, 见“code_eventPrivateMsg”函数
 End;
 
@@ -212,7 +254,11 @@ Function code_eventFriend_Add(
 			fromQQ					:int64):longint;
 stdcall;
 Begin
+{$IFDEF FPC}
 	exit(EVENT_IGNORE); 
+{$ELSE}
+	result:=EVENT_IGNORE;
+{$ENDIF}
 	//关于返回值说明, 见“code_eventPrivateMsg”函数
 End;
 
@@ -231,9 +277,13 @@ Function code_eventRequest_AddFriend(
 			responseFlag				:Pchar):longint;
 stdcall;
 Begin
-	CQ_i_setFriendAddRequest(responseFlag, REQUEST_DENY,'');
+	CQ_i_setFriendAddRequest(responseFlag, REQUEST_DENY,''); //拒绝好友添加请求
 	
+{$IFDEF FPC}
 	exit(EVENT_IGNORE); 
+{$ELSE}
+	result:=EVENT_IGNORE;
+{$ENDIF}
 	//关于返回值说明, 见“code_eventPrivateMsg”函数
 End;
 
@@ -251,10 +301,11 @@ Function code_eventRequest_AddGroup(
 			msg							:ansistring;
 			responseFlag				:Pchar):longint;
 stdcall;
-Begin
-
-	if fromGroup<>453738539 then CQ_i_setGroupAddRequest(responseflag,subType,REQUEST_ALLOW,'');
-	
+Begin	
+{$IFDEF FPC}
 	exit(EVENT_IGNORE); 
+{$ELSE}
+	result:=EVENT_IGNORE;
+{$ENDIF}
 	//关于返回值说明, 见“code_eventPrivateMsg”函数
 End;
