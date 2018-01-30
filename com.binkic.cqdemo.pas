@@ -45,7 +45,7 @@ Begin
 	//请修改APPID为你的APPID
 	
 	
-	//GlobalUTF8Mode:=true //是否开启全局UTF8模式
+	//GlobalUTF8Mode:=true; //是否开启全局UTF8模式
 	{
 		酷Q的所有api现在使用的是gb18030作为unicode支持。
 		开启这个功能后插件内的所有api将会由这个sdk内置的功能自动做gb18030与utf8的转换
