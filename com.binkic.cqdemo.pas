@@ -10,15 +10,13 @@
 library
 	testdll;
 	//DLL 编译
-{$IFDEF FPC}
-	{$MODE DELPHI}
-{$ENDIF}
 {$APPTYPE GUI}
 {$I-}
 {$h+}
+{$UNITPATH lib\}
 
 Uses
-	CoolQSDK,		//酷QSDK单元
+	iconv,CoolQSDK,		//酷QSDK单元
 	math,dateutils,sysutils,Classes;
 	//载入库
 
@@ -45,6 +43,13 @@ stdcall;
 Begin
 	CQAPPID:='com.binkic.cqdemo';
 	//请修改APPID为你的APPID
+	
+	
+	//GlobalUTF8Mode:=true //是否开启全局UTF8模式
+	{
+		酷Q的所有api现在使用的是gb18030作为unicode支持。
+		开启这个功能后插件内的所有api将会由这个sdk内置的功能自动做gb18030与utf8的转换
+	}
 	
 	//下面两行不用修改 //没毛病，的确是两行。 #滑稽
 	CQAPPINFO:=CQAPIVERTEXT+','+CQAPPID;
@@ -120,20 +125,39 @@ Function _eventPrivateMsg(
 stdcall;
 Begin
 {$IFDEF FPC}
-	exit(code_eventPrivateMsg(
-			subType,MsgID,
-			fromQQ,
-			PtoS(msg),
-			font
+	if GlobalUTF8Mode
+	then
+		exit(code_eventPrivateMsg(
+				subType,MsgID,
+				fromQQ,
+				CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+				font
+			)
 		)
-	);
-{$ELSE}
-	result:=code_eventPrivateMsg(
-			subType,MsgID,
-			fromQQ,
-			PtoS(msg),
-			font
+	else
+		exit(code_eventPrivateMsg(
+				subType,MsgID,
+				fromQQ,
+				PtoS(msg),
+				font
+			)
 		);
+{$ELSE}
+	if GlobalUTF8Mode
+	then
+		result:=code_eventPrivateMsg(
+				subType,MsgID,
+				fromQQ,
+				CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+				font
+			)
+	else
+		result:=code_eventPrivateMsg(
+				subType,MsgID,
+				fromQQ,
+				PtoS(msg),
+				font
+			);
 {$ENDIF}
 End;
 
@@ -145,22 +169,43 @@ Function _eventGroupMsg(
 stdcall;
 Begin
 {$IFDEF FPC}
-	exit(code_eventGroupMsg(
-			subType,MsgID,
-			fromgroup,fromQQ,
-			PtoS(fromAnonymous),
-			PtoS(msg),
-			font
+	if GlobalUTF8Mode
+	then
+		exit(code_eventGroupMsg(
+				subType,MsgID,
+				fromgroup,fromQQ,
+				PtoS(fromAnonymous),
+				CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+				font
+			)
 		)
-	);
-{$ELSE}
-	result:=code_eventGroupMsg(
-			subType,MsgID,
-			fromgroup,fromQQ,
-			PtoS(fromAnonymous),
-			PtoS(msg),
-			font
+	else
+		exit(code_eventGroupMsg(
+				subType,MsgID,
+				fromgroup,fromQQ,
+				PtoS(fromAnonymous),
+				PtoS(msg),
+				font
+			)
 		);
+{$ELSE}
+	if GlobalUTF8Mode
+	then
+		result:=code_eventGroupMsg(
+				subType,MsgID,
+				fromgroup,fromQQ,
+				PtoS(fromAnonymous),
+				CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+				font
+			)
+	else
+		result:=code_eventGroupMsg(
+				subType,MsgID,
+				fromgroup,fromQQ,
+				PtoS(fromAnonymous),
+				PtoS(msg),
+				font
+			);
 {$ENDIF}
 End;
 
@@ -172,20 +217,39 @@ Function _eventDiscussMsg(
 stdcall;
 Begin
 {$IFDEF FPC}
-	exit(code_eventDiscussMsg(
-		subType,MsgID,
-		fromDiscuss,fromQQ,
-		PtoS(msg),
-		font
+	if GlobalUTF8Mode
+	then
+		exit(code_eventDiscussMsg(
+			subType,MsgID,
+			fromDiscuss,fromQQ,
+			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+			font
+			)
 		)
-	);
+	else
+		exit(code_eventDiscussMsg(
+			subType,MsgID,
+			fromDiscuss,fromQQ,
+			PtoS(msg),
+			font
+			)
+		)
 {$ELSE}
-	result:=(code_eventDiscussMsg(
-		subType,MsgID,
-		fromDiscuss,fromQQ,
-		PtoS(msg),
-		font
-		);
+	if GlobalUTF8Mode
+	then
+		result:=(code_eventDiscussMsg(
+			subType,MsgID,
+			fromDiscuss,fromQQ,
+			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+			font
+			)
+	else
+		result:=(code_eventDiscussMsg(
+			subType,MsgID,
+			fromDiscuss,fromQQ,
+			PtoS(msg),
+			font
+			)
 {$ENDIF}
 End;
 
@@ -298,20 +362,39 @@ Function _eventRequest_AddFriend(
 stdcall;
 Begin
 {$IFDEF FPC}
-	exit(code_eventRequest_AddFriend(
-			subType,sendTime,
-			fromQQ,
-			PtoS(msg),
-			responseFlag
+	if GlobalUTF8Mode
+	then
+		exit(code_eventRequest_AddFriend(
+				subType,sendTime,
+				fromQQ,
+				CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+				responseFlag
+			)
 		)
-	);
-{$ELSE}
-	result:=code_eventRequest_AddFriend(
-			subType,sendTime,
-			fromQQ,
-			PtoS(msg),
-			responseFlag
+	else
+		exit(code_eventRequest_AddFriend(
+				subType,sendTime,
+				fromQQ,
+				PtoS(msg),
+				responseFlag
+			)
 		);
+{$ELSE}
+	if GlobalUTF8Mode
+	then
+		result:=code_eventRequest_AddFriend(
+				subType,sendTime,
+				fromQQ,
+				CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+				responseFlag
+			)
+	else
+		result:=code_eventRequest_AddFriend(
+				subType,sendTime,
+				fromQQ,
+				PtoS(msg),
+				responseFlag
+			);
 {$ENDIF}
 End;
 
@@ -322,20 +405,39 @@ Function _eventRequest_AddGroup(
 stdcall;
 Begin
 {$IFDEF FPC}
-	exit(code_eventRequest_AddGroup(
-			subType,sendTime,
-			fromGroup,fromQQ,
-			PtoS(msg),
-			responseFlag
+	if GlobalUTF8Mode
+	then
+		exit(code_eventRequest_AddGroup(
+				subType,sendTime,
+				fromGroup,fromQQ,
+				CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+				responseFlag
+			)
 		)
-	);
-{$ELSE}
-	result:=code_eventRequest_AddGroup(
-			subType,sendTime,
-			fromGroup,fromQQ,
-			PtoS(msg),
-			responseFlag
+	else
+		exit(code_eventRequest_AddGroup(
+				subType,sendTime,
+				fromGroup,fromQQ,
+				PtoS(msg),
+				responseFlag
+			)
 		);
+{$ELSE}
+	if GlobalUTF8Mode
+	then
+		result:=code_eventRequest_AddGroup(
+				subType,sendTime,
+				fromGroup,fromQQ,
+				CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+				responseFlag
+			)
+	else
+		result:=code_eventRequest_AddGroup(
+				subType,sendTime,
+				fromGroup,fromQQ,
+				PtoS(msg),
+				responseFlag
+			);
 {$ENDIF}
 End;
 

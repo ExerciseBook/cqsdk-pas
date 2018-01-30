@@ -181,3 +181,42 @@ Function CoolQ_Tools_Unpack_GetLenRemain(Var i:longint;
 Begin
 	result:=length(s)-i+1;
 End;
+
+
+Function iconvConvert(fromCode,toCode:PChar;srcBuf:Pchar;srcLen:longint;destBuf:Pchar;destLen:longint):longint;
+Var
+	cd	:	iconv_t;
+	srcLen1,destLen1,status	:	longint;
+Begin
+	cd := libiconv_open(toCode,fromCode);
+	srcLen1:=srcLen;
+	destLen1:=destLen;
+	status:=libiconv(cd,@srcBuf,@srcLen1,@destBuf,@destLen1);
+	libiconv_close(cd);
+	result:=status;
+End;
+
+Function CoolQ_Tools_UTF8ToAnsi(Sstr:ansistring):ansistring;
+Var
+	str:PChar;
+	sResult:Array [0..262143] of char;
+Begin
+	str:=StoP(Sstr);
+	fillchar(sResult,sizeof(sResult),0);
+	if iconvConvert('UTF-8//TRANSLIT//IGNORE','GB18030',Str,StrLen(Str),@sResult,StrLen(Str)*4)<>0
+		then result:=''
+		else result:=sResult;
+End;
+
+Function CoolQ_Tools_AnsiToUTF8(Sstr:ansistring):ansistring;
+Var
+	str:PChar;
+	sResult:Array [0..262143] of char;
+Begin
+	str:=StoP(Sstr);
+	fillchar(sResult,sizeof(sResult),0);
+	if iconvConvert('GB18030//IGNORE','UTF-8',Str,StrLen(Str),@sResult,StrLen(Str)*4)<>0
+		then result:=''
+		else result:=sResult;
+End;
+

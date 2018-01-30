@@ -17,6 +17,10 @@
 	{$MODE DELPHI}
 {$ENDIF}
 
+{$UNITPATH lib}
+{$I-}
+{$h+}
+
 unit CoolQSDK;
 
 interface
@@ -61,7 +65,8 @@ interface
 	function CQ_i_sendPrivateMsg(QQID:int64;msg:ansistring):longint;		
 	function CQ_i_sendGroupMsg(groupid:int64;const msg:ansistring):longint;	
 	function CQ_i_sendDiscussMsg(DiscussID:int64;msg:ansistring):longint;	
-	function CQ_i_sendLike(QQID:int64):longint;								
+	function CQ_i_sendLike(QQID:int64):longint;overload;								
+	function CQ_i_sendLike(QQID:int64;times:longint):longint;overload;						//加料的一个函数
 	function CQ_i_sendLikeV2(QQID:int64;times:longint):longint;				
 	function CQ_i_getRecord(filename,format:ansistring):ansistring;			
 	function CQ_Tools_TextToAnonymous(source:ansistring;Var Anonymous:CQ_Type_GroupAnonymous):boolean;
@@ -90,17 +95,21 @@ interface
 	function CQ_i_getGroupMemberList(GroupID:int64;Var GroupMemberList:CQ_Type_GroupMember_List):longint;
 	function CQ_i_getGroupList(Var GroupList:CQ_Type_GroupList):longint;
 	function CQ_i_deleteMsg(msgID:int64):longint;
-
+		// 编码转换
+	Function CoolQ_Tools_UTF8ToAnsi(Sstr:ansistring):ansistring;
+	Function CoolQ_Tools_AnsiToUTF8(Sstr:ansistring):ansistring;
 Var
 	AuthCode:longint;
 	//AuthCode CoolQ用来识别你是否是合法\调用的玩意儿
 	CQAPPID		:string='com.binkic.cqdemo';
 	CQAPPINFO	:string;
+	
+	GlobalUTF8Mode	:boolean;
 	//请在应用主程序中修改APPID为你的APPID
 
 implementation
 
-uses math,dateutils,sysutils,Classes;
+uses math,dateutils,sysutils,Classes,iconv; 
 
 const
 	Base64Chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
@@ -115,5 +124,5 @@ var
 
 initialization
 	InitBase64;
-
+	GlobalUTF8Mode:=false;
 end.

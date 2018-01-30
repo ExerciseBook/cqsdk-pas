@@ -171,22 +171,32 @@ End;
 //发送私聊 Auth=106 //sendPrivateMsg
 function CQ_i_sendPrivateMsg(QQID:int64;msg:ansistring):longint;		//Auth=106 //sendPrivateMsg
 Begin
-	result:=(CQ_sendPrivateMsg(AuthCode,QQID,StoP(msg)));
+	if GlobalUTF8Mode
+		then result:=(CQ_sendPrivateMsg(AuthCode,QQID,StoP(CoolQ_Tools_UTF8ToANSI(msg))))
+		else result:=(CQ_sendPrivateMsg(AuthCode,QQID,StoP(msg)));
 End;
 //发送群聊 Auth=101 //sendGroupMsg
 function CQ_i_sendGroupMsg(groupid:int64;const msg:ansistring):longint;	//Auth=101 //sendGroupMsg
 Begin
-	result:=(CQ_sendGroupMsg(AuthCode,groupid,StoP(msg)));
+	if GlobalUTF8Mode
+		then result:=(CQ_sendGroupMsg(AuthCode,groupid,StoP(CoolQ_Tools_UTF8ToANSI(msg))))
+		else result:=(CQ_sendGroupMsg(AuthCode,groupid,StoP(msg)));
 End;
 //发送讨论组 Auth=103 //sendDiscussMsg
 function CQ_i_sendDiscussMsg(DiscussID:int64;msg:ansistring):longint;	//Auth=103 //sendDiscussMsg
 Begin
-	result:=(CQ_sendDiscussMsg(AuthCode,DiscussID,StoP(msg)));
+	if GlobalUTF8Mode
+		then result:=(CQ_sendDiscussMsg(AuthCode,DiscussID,StoP(CoolQ_Tools_UTF8ToANSI(msg))))
+		else result:=(CQ_sendDiscussMsg(AuthCode,DiscussID,StoP(msg)));
 End;
 //发送赞 Auth=110 //sendLike
-function CQ_i_sendLike(QQID:int64):longint;								//Auth=110 //sendLike
+function CQ_i_sendLike(QQID:int64):longint;overload;								//Auth=110 //sendLike
 Begin
 	result:=(CQ_sendLike(AuthCode,QQID));
+End;
+function CQ_i_sendLike(QQID:int64;times:longint):longint;overload;								//Auth=110 //sendLike
+Begin
+	result:=(CQ_sendLikeV2(AuthCode,QQID,min(times,10)));
 End;
 function CQ_i_sendLikeV2(QQID:int64;times:longint):longint;								//Auth=110 //sendLike
 Begin
@@ -202,7 +212,7 @@ format 应用所需的语音文件格式，目前支持 mp3,amr,wma,m4a,spx,ogg,wav,flac
 Begin
 	result:=(
 		PtoS(
-			CQ_getRecord(AuthCode,StoP(filename),StoP(format))
+			CQ_getRecord(AuthCode,StoP(CoolQ_Tools_UTF8ToANSI(filename)),StoP(format))
 		)
 	)
 End;
@@ -227,6 +237,11 @@ Begin
 	Anonymous.AID:=CoolQ_Tools_Unpack_GetNum(i,8,data);
 	Anonymous.name:=CoolQ_Tools_Unpack_GetStr(i,data);
 	Anonymous.Token:=CoolQ_Tools_Unpack_GetStr(i,data);
+	
+	if GlobalUTF8Mode then begin
+		Anonymous.name:=CoolQ_Tools_AnsiToUTF8(Anonymous.name);
+		Anonymous.Token:=CoolQ_Tools_AnsiToUTF8(Anonymous.Token);
+	end;
 	
 	result:=true;
 End;
@@ -257,6 +272,15 @@ Begin
 	info.title:=CoolQ_Tools_Unpack_GetStr(i,data);
 	info.titleExpiretime:=CoolQ_Tools_Unpack_GetNum(i,4,data);
 	info.nickcanchange:=CoolQ_Tools_Unpack_GetNum(i,4,data)=1;
+	
+	if GlobalUTF8Mode then begin
+		info.nick:=CoolQ_Tools_AnsiToUTF8(info.nick);
+		info.card:=CoolQ_Tools_AnsiToUTF8(info.card);
+		info.aera:=CoolQ_Tools_AnsiToUTF8(info.aera);
+		info.level_name:=CoolQ_Tools_AnsiToUTF8(info.level_name);
+		info.title:=CoolQ_Tools_AnsiToUTF8(info.title);
+	end;
+	
 	result:=(true);
 End;
 
@@ -331,6 +355,12 @@ Begin
 	info.FileName:=CoolQ_Tools_Unpack_GetStr(i,data);
 	info.Size:=CoolQ_Tools_Unpack_GetNum(i,8,data);
 	info.busid:=CoolQ_Tools_Unpack_GetNum(i,8,data);
+	
+	if GlobalUTF8Mode then begin
+		info.FileID:=CoolQ_Tools_AnsiToUTF8(info.FileID);
+		info.FileName:=CoolQ_Tools_AnsiToUTF8(info.FileName)
+	end;
+	
 	result:=true;
 End;
 
@@ -346,6 +376,11 @@ Begin
 	i:=1;
 	GroupInfo.GroupID:=CoolQ_Tools_Unpack_GetNum(i,8,source);
 	GroupInfo.name:=CoolQ_Tools_Unpack_GetStr(i,source);
+	
+	if GlobalUTF8Mode then begin
+		GroupInfo.name:=CoolQ_Tools_AnsiToUTF8(GroupInfo.name);
+	end;
+	
 	result:=true;
 End;
 
@@ -406,7 +441,9 @@ End;
 //取登陆QQ昵称　getLoginNick
 Function CQ_i_getLoginNick():string;
 Begin
-	result:=(CQ_GetLoginNick(AuthCode));
+	if GlobalUTF8Mode
+		then result:=CoolQ_Tools_AnsiToUTF8(CQ_GetLoginNick(AuthCode))
+		else result:=(CQ_GetLoginNick(AuthCode));
 End;
 
 //取陌生人信息 Auth=131 //CQ_getStrangerInfo
@@ -426,6 +463,11 @@ Begin
 	info.nick:=CoolQ_Tools_Unpack_GetStr(i,data);
 	info.sex:=CoolQ_Tools_Unpack_GetNum(i,4,data);
 	info.age:=CoolQ_Tools_Unpack_GetNum(i,4,data);
+	
+	if GlobalUTF8Mode then begin
+		info.nick:=CoolQ_Tools_AnsiToUTF8(info.nick);
+	end;
+	
 	result:=0;
 End;
 
@@ -461,16 +503,26 @@ End;
 }
 function CQ_i_addLog(priority:longint;const category,content:ansistring):longint;
 Begin
-	result:=(CQ_addLog(AuthCode,priority,StoP(category),StoP(content)));
+	if GlobalUTF8Mode
+		then result:=(CQ_addLog(AuthCode,priority,StoP(CoolQ_Tools_UTF8ToANSI(category)),StoP(CoolQ_Tools_UTF8ToANSI(content))))
+		else result:=(CQ_addLog(AuthCode,priority,StoP(category),StoP(content)));
 End;
 
 //添加好友请求回复 Auth=150 //setFriendAddRequest
 function CQ_i_setFriendAddRequest(const responseflag:pchar;responseoperation:longint;const remark:string):longint;
 Begin
-	result:=(CQ_setFriendAddRequest(authcode,
-								responseflag,			//通过事件函数传递获得
-								responseoperation,		//通过常量表获得
-								StoP(remark)));			//添加后好友备注
+	if GlobalUTF8Mode
+		then
+			result:=(CQ_setFriendAddRequest(authcode,
+										responseflag,			//通过事件函数传递获得
+										responseoperation,		//通过常量表获得
+										StoP(CoolQ_Tools_UTF8ToANSI(remark))))			//添加后好友备注
+		else
+			result:=(CQ_setFriendAddRequest(authcode,
+										responseflag,			//通过事件函数传递获得
+										responseoperation,		//通过常量表获得
+										StoP(remark)))			//添加后好友备注
+
 End;
 
 //置匿名群员禁言 Auth=124 //setGroupAnonymousBan
@@ -491,20 +543,35 @@ End;
 //置群成员名片 Auth=126 //setGroupCard
 function CQ_i_setGroupCard(group,qq:int64;nick:string):longint;
 Begin
-	result:=(CQ_setGroupCard(authcode,
-						group,
-						qq,
-						StoP(nick)))
+	if GlobalUTF8Mode
+		then
+			result:=(CQ_setGroupCard(authcode,
+								group,
+								qq,
+								StoP(CoolQ_Tools_UTF8ToANSI(nick))))
+		else
+			result:=(CQ_setGroupCard(authcode,
+								group,
+								qq,
+								StoP(nick)))
 End;
 
 //置群员专属头衔 Auth=128 需群主权限 //setGroupSpecialTitle
 Function CQ_i_setGroupSpecialTitle(Group,ID:int64;Title:string;duration:int64):longint;
 Begin
-	result:=(CQ_setGroupSpecialTitle(authcode,
-								group,				//目标群
-								id,					//目标QQ
-								StoP(title),		//若要删除头衔，则留空
-								duration));			//专属头衔有效期，单位为秒。如果永久有效，这里填写-1
+	if GlobalUTF8Mode
+		then
+			result:=(CQ_setGroupSpecialTitle(authcode,
+										group,				//目标群
+										id,					//目标QQ
+										StoP(CoolQ_Tools_UTF8ToANSI(title)),		//若要删除头衔，则留空
+										duration))			//专属头衔有效期，单位为秒。如果永久有效，这里填写-1
+		else
+			result:=(CQ_setGroupSpecialTitle(authcode,
+										group,				//目标群
+										id,					//目标QQ
+										StoP(title),		//若要删除头衔，则留空
+										duration));			//专属头衔有效期，单位为秒。如果永久有效，这里填写-1
 End;
 
 
@@ -534,15 +601,27 @@ Function CQ_i_setGroupAddRequest(responseflag:string;	//请求事件收到的“response
 								reason		:string 	//操作理由，仅 #请求_群添加 且 #请求_拒绝 时可用
 								):longint;
 Begin
-	result:=(
-		CQ_setGroupAddRequestV2(
-			AuthCode,
-			StoP(responseflag),
-			subtype,
-			responseoperation,
-			StoP(reason)
+	if GlobalUTF8Mode
+	then
+		result:=(
+			CQ_setGroupAddRequestV2(
+				AuthCode,
+				StoP(responseflag),
+				subtype,
+				responseoperation,
+				StoP(CoolQ_Tools_UTF8ToANSI(reason))
+			)
 		)
-	);
+	else
+		result:=(
+			CQ_setGroupAddRequestV2(
+				AuthCode,
+				StoP(responseflag),
+				subtype,
+				responseoperation,
+				StoP(reason)
+			)
+		);
 End;
 
 {
@@ -575,7 +654,9 @@ End;
 //置致命错误提示 //setFatal
 function CQ_i_setFatal(msg:ansistring):longint;
 Begin
-	result:=(CQ_setFatal(authcode,StoP(msg)));
+	if GlobalUTF8Mode
+		then result:=(CQ_setFatal(authcode,StoP(CoolQ_Tools_UTF8ToANSI(msg))))
+		else result:=(CQ_setFatal(authcode,StoP(msg)));
 End;
 
 //取群成员列表 Auth=160 //getGroupMemberList
