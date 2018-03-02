@@ -1,6 +1,20 @@
-function GM_Initialize(AuthCode:longint):longint;
-	stdcall; external 'ESSGM.dll' name 'Initialize';
-	
+unit ESSGM;
+{$IFDEF FPC}
+	{$MODE DELPHI}
+{$ENDIF}
+{$UNITPATH ..\}
+
+interface
+//function GM_Initialize(AuthCode:longint):longint;
+function GM_GetPermissionStatus(Group,QQ:int64;Permission:Ansistring):longint;
+function GM_GetPermissionValue(Group,QQ:int64;Permission:Ansistring):Ansistring;
+
+implementation
+
+uses CoolQSDK;
+
+//function GM_Initialize(AuthCode:longint):longint;
+//	stdcall; external 'ESSGM.dll' name 'Initialize';	
 function GM_GetPermissionStatus_(Group,QQ:int64;Permission:Pchar):longint;
 	stdcall; external 'ESSGM.dll' name 'GM_GetPermissionStatus';
 function GM_GetPermissionValue_(Group,QQ:int64;Permission:Pchar):Pchar;
@@ -14,3 +28,5 @@ function GM_GetPermissionValue(Group,QQ:int64;Permission:Ansistring):Ansistring;
 Begin
 	result:=(PtoS(GM_GetPermissionValue_(Group,QQ,StoP(Permission))));
 End;
+
+end.
