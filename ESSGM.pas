@@ -1,3 +1,8 @@
+{
+     本文件为 伪Essentials_仿GroupManager 的SDK
+	 社区地址 https://cqp.cc/t/25690
+}
+
 unit ESSGM;
 {$IFDEF FPC}
 	{$MODE DELPHI}
