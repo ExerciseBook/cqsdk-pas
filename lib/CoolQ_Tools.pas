@@ -118,7 +118,7 @@ Begin
 	result:=0;
 	bin:=CoolQ_Tools_Flip(bin);
 	for i:=1 to length(bin) do begin
-		result:=result+256**(i-1)*integer(bin[i]);
+		result:=result+PowerInt(256,(i-1))*integer(bin[i]);
 	end;
 End;
 
@@ -153,7 +153,7 @@ Function CoolQ_Tools_Unpack_GetStr_GivenLength(Var i:longint;
 Begin
 	if len<=0 then begin
 		result:='';
-		exit();
+		exit;
 	end;
 	result:=copy(s,i,len);
 	i:=i+len;

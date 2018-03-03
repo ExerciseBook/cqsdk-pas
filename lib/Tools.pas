@@ -30,7 +30,8 @@ End;
 }
 Function CharToNum(a:string):int64;
 Begin
-	val(a,result);
+	//val(a,result);
+	result:=StrToInt64Def(a,0);
 End;
 
 
@@ -47,7 +48,8 @@ End;
 }
 Function CharToReal(a:string):real;
 Begin
-	val(a,result);
+	//val(a,result);
+	result:=StrToFloatDef(a,0);
 End;
 
 {
@@ -80,7 +82,7 @@ Begin
 	end;
 	
 	result:=display;
-	exit();
+	exit;
 End;
 
 
@@ -110,6 +112,19 @@ Begin
 	until i>=length(a);
 End;
 
+Function PowerInt(bas: Int64;expo: Int64) : Int64;
+Var
+	i:longint;
+Begin
+	if expo<0 then begin
+		result:=0;
+		exit;
+	end;
+	result:=1;
+	for i:=1 to expo do
+		result:=result*bas;
+End;
+
 {***********************************************************}
 Function SDECtoHEX(a:integer):char;
 Begin
@@ -130,6 +145,7 @@ Begin
 		13 : result:=('D');
 		14 : result:=('E');
 		15 : result:=('F');
+		else result:='-';
 	end;
 End;
 
@@ -178,7 +194,7 @@ Begin
         result:=0;
         for i:=length(s) downto 1 do begin
                 if s[i]='1' then
-                result:=result+2 ** (length(s)-i);
+                result:=result+PowerInt( 2 , (length(s)-i) );
         end;
 End;
 

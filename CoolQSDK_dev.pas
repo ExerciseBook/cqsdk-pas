@@ -17,11 +17,10 @@
 	{$MODE DELPHI}
 {$ENDIF}
 
-{$UNITPATH lib}
 {$I-}
 {$h+}
 
-unit CoolQSDK;
+unit CoolQSDK_dev;
 
 interface
 {$INCLUDE lib\CoolQ_variable.pas}
@@ -109,7 +108,7 @@ Var
 
 implementation
 
-uses math,dateutils,sysutils,Classes,iconv; 
+uses math,sysutils,iconv; 
 
 const
 	Base64Chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';

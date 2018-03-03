@@ -1,3 +1,24 @@
+unit Plugin_events;
+
+interface
+
+uses CoolQSDK,iconv;
+Function code_eventStartup:longint;
+Function code_eventExit:longint;
+Function code_eventEnable:longint;
+Function code_eventDisable:longint;
+Function code_eventPrivateMsg(subType,MsgID:longint;fromQQ:int64;const msg:ansistring;font:longint):longint;
+Function code_eventGroupMsg(subType,MsgID:longint;fromgroup,fromQQ:int64;const fromAnonymous,msg:ansistring;font:longint):longint;
+Function code_eventDiscussMsg(subType,MsgID:longint;fromDiscuss,fromQQ:int64;msg:ansistring;font:longint):longint;
+Function code_eventGroupUpload(subType,sendTime:longint;fromGroup,fromQQ:int64;Pfileinfo:ansistring):longint;
+Function code_eventSystem_GroupAdmin(subType,sendTime:longint;fromGroup,beingOperateQQ:int64):longint;
+Function code_eventSystem_GroupMemberDecrease(subType,sendTime:longint;fromGroup,fromQQ,beingOperateQQ:int64):longint;
+Function code_eventSystem_GroupMemberIncrease(subType,sendTime:longint;fromGroup,fromQQ,beingOperateQQ:int64):longint;
+Function code_eventFriend_Add(subType,sendTime:longint;fromQQ:int64):longint;
+Function code_eventRequest_AddFriend(subType,sendTime:longint;fromQQ:int64;const msg:ansistring;responseFlag:Pchar):longint;
+Function code_eventRequest_AddGroup(subType,sendTime:longint;fromGroup,fromQQ:int64;msg:ansistring;responseFlag:Pchar):longint;
+			
+implementation
 {
 * Type=1001 酷Q启动
 * 无论本应用是否被启用，本函数都会在酷Q启动后执行一次，请在这里执行应用初始化代码。
@@ -130,7 +151,6 @@ Var
 	FileInfo	:CQ_Type_GroupFile;
 	Back		:ansistring;
 Begin
-	code_eventGroupUpload:=0;
 	//收到文件上传信息 并尝试解析
 	if CQ_Tools_TextToFile(Pfileinfo,FileInfo) then begin
 		//群文件信息解析成功
@@ -214,7 +234,6 @@ Function code_eventSystem_GroupMemberDecrease(
 			subType,sendTime		:longint;
 			fromGroup,fromQQ,
 			beingOperateQQ			:int64):longint;
-stdcall;
 Begin
 {$IFDEF FPC}
 	exit(EVENT_IGNORE); 
@@ -234,7 +253,6 @@ Function code_eventSystem_GroupMemberIncrease(
 			subType,sendTime		:longint;
 			fromGroup,fromQQ,
 			beingOperateQQ			:int64):longint;
-stdcall;
 Begin
 	CQ_i_sendGroupMsg(fromgroup,'欢迎新人 [CQ:at,qq='+NumToChar(beingOperateQQ)+'] 加入本群');
 {$IFDEF FPC}
@@ -252,7 +270,6 @@ End;
 Function code_eventFriend_Add(
 			subType,sendTime		:longint;
 			fromQQ					:int64):longint;
-stdcall;
 Begin
 {$IFDEF FPC}
 	exit(EVENT_IGNORE); 
@@ -275,7 +292,6 @@ Function code_eventRequest_AddFriend(
 			fromQQ						:int64;
 			const msg					:ansistring;
 			responseFlag				:Pchar):longint;
-stdcall;
 Begin
 	CQ_i_setFriendAddRequest(responseFlag, REQUEST_DENY,''); //拒绝好友添加请求
 	
@@ -300,7 +316,6 @@ Function code_eventRequest_AddGroup(
 			fromGroup,fromQQ			:int64;
 			msg							:ansistring;
 			responseFlag				:Pchar):longint;
-stdcall;
 Begin	
 {$IFDEF FPC}
 	exit(EVENT_IGNORE); 
@@ -309,3 +324,5 @@ Begin
 {$ENDIF}
 	//关于返回值说明, 见“code_eventPrivateMsg”函数
 End;
+
+end.

@@ -23,38 +23,37 @@
 unit CoolQSDK;
 
 interface
-
 Type
 	CQ_Type_QQ=
 		record
-			QQID			: int64;	//QQå·
-			nick			: string;	//æ˜µç§°
-			sex,						//æ€§åˆ«
-			age				: longint;	//å¹´é¾„
+			QQID			: int64;	//QQºÅ
+			nick			: string;	//êÇ³Æ
+			sex,						//ĞÔ±ğ
+			age				: longint;	//ÄêÁä
 		end;
 	CQ_Type_GroupMember=
 		record
-			GroupID,					// ç¾¤å·
-			QQID			: int64;	// QQå·
-			nick,						// QQæ˜µç§°
-			card			: string;	// ç¾¤åç‰‡
-			sex,						// æ€§åˆ« 0/ç”· 1/å¥³
-			age				: longint;	// å¹´é¾„
-			aera			: string;	// åœ°åŒº
-			jointime,					// å…¥ç¾¤æ—¶é—´
-			lastsent		: longint;	// ä¸Šæ¬¡å‘è¨€æ—¶é—´
-			level_name		: string;	// å¤´è¡”åå­—
-			permission		: longint;	// æƒé™ç­‰çº§ 1/æˆå‘˜ 2/ç®¡ç†å‘˜ 3/ç¾¤ä¸»
-			unfriendly		: boolean;	// ä¸è‰¯æˆå‘˜è®°å½•
-			title			: string;	// è‡ªå®šä¹‰å¤´è¡”
-			titleExpiretime : longint;	// å¤´è¡”è¿‡æœŸæ—¶é—´
-			nickcanchange	: boolean;	// ç®¡ç†å‘˜æ˜¯å¦èƒ½ååŠ©æ”¹å
+			GroupID,					// ÈººÅ
+			QQID			: int64;	// QQºÅ
+			nick,						// QQêÇ³Æ
+			card			: string;	// ÈºÃûÆ¬
+			sex,						// ĞÔ±ğ 0/ÄĞ 1/Å®
+			age				: longint;	// ÄêÁä
+			aera			: string;	// µØÇø
+			jointime,					// ÈëÈºÊ±¼ä
+			lastsent		: longint;	// ÉÏ´Î·¢ÑÔÊ±¼ä
+			level_name		: string;	// Í·ÏÎÃû×Ö
+			permission		: longint;	// È¨ÏŞµÈ¼¶ 1/³ÉÔ± 2/¹ÜÀíÔ± 3/ÈºÖ÷
+			unfriendly		: boolean;	// ²»Á¼³ÉÔ±¼ÇÂ¼
+			title			: string;	// ×Ô¶¨ÒåÍ·ÏÎ
+			titleExpiretime : longint;	// Í·ÏÎ¹ıÆÚÊ±¼ä
+			nickcanchange	: boolean;	// ¹ÜÀíÔ±ÊÇ·ñÄÜĞ­Öú¸ÄÃû
 		end;
 	CQ_Type_GroupMember_List=
 		record
-			l : longint; 						//æ•°ç»„é•¿åº¦
-			s :	Array Of CQ_Type_GroupMember;	//ç¾¤æˆå‘˜åˆ—è¡¨
-			//ä¸Šé¢çš„è¿™ä¸ªå®šä¹‰å«åšåŠ¨æ€æ•°ç»„ï¼Œæ•°ç»„ç¼–å·æ˜¯ä»ç¬¬0ä½åˆ°ç¬¬l-1ä½ã€‚ä¸€å…±æ˜¯lä½ã€‚
+			l : longint; 						//Êı×é³¤¶È
+			s :	Array Of CQ_Type_GroupMember;	//Èº³ÉÔ±ÁĞ±í
+			//ÉÏÃæµÄÕâ¸ö¶¨Òå½Ğ×ö¶¯Ì¬Êı×é£¬Êı×é±àºÅÊÇ´ÓµÚ0Î»µ½µÚl-1Î»¡£Ò»¹²ÊÇlÎ»¡£
 		end;
 	CQ_Type_GroupAnonymous=
 		record
@@ -64,9 +63,9 @@ Type
 		end;
 	CQ_Type_GroupFile=
 		record
-			fileid			: string;	//æ–‡ä»¶ID
-			filename		: string;	//æ–‡ä»¶å
-			size			: int64;	//æ–‡ä»¶å¤§å°
+			fileid			: string;	//ÎÄ¼şID
+			filename		: string;	//ÎÄ¼şÃû
+			size			: int64;	//ÎÄ¼ş´óĞ¡
 			busid			: longint;	//busid
 		end;
 	CQ_Type_GroupInfo=
@@ -76,8 +75,8 @@ Type
 		end;
 	CQ_Type_GroupList=
 		record
-			l : longint;					//æ•°ç»„é•¿åº¦
-			s : Array Of CQ_Type_GroupInfo;	//ç¾¤åˆ—è¡¨
+			l : longint;					//Êı×é³¤¶È
+			s : Array Of CQ_Type_GroupInfo;	//ÈºÁĞ±í
 		end;
 	{CQ_Type_MsgType=
 		record
@@ -92,32 +91,32 @@ Const
 	CR = #$0d;
 	LF = #$0a;
 	CRLF = CR + LF;
-	// æ¢è¡Œç¬¦
+	// »»ĞĞ·û
 	
 	CQAPIVER=9;
 	CQAPIVERTEXT='9';
-	// CoolQ APIç‰ˆæœ¬
+	// CoolQ API°æ±¾
 	
-	EVENT_IGNORE=0;        //äº‹ä»¶_å¿½ç•¥
-	EVENT_BLOCK=1;         //äº‹ä»¶_æ‹¦æˆª
+	EVENT_IGNORE=0;        //ÊÂ¼ş_ºöÂÔ
+	EVENT_BLOCK=1;         //ÊÂ¼ş_À¹½Ø
 
-	REQUEST_ALLOW=1;       //è¯·æ±‚_é€šè¿‡
-	REQUEST_ACCEPT=1;       //è¯·æ±‚_é€šè¿‡
-	REQUEST_DENY=2;        //è¯·æ±‚_æ‹’ç»
+	REQUEST_ALLOW=1;       //ÇëÇó_Í¨¹ı
+	REQUEST_ACCEPT=1;       //ÇëÇó_Í¨¹ı
+	REQUEST_DENY=2;        //ÇëÇó_¾Ü¾ø
 
-	REQUEST_GROUPADD=1;    //è¯·æ±‚_ç¾¤æ·»åŠ 
-	REQUEST_GROUPINVITE=2; //è¯·æ±‚_ç¾¤é‚€è¯·
+	REQUEST_GROUPADD=1;    //ÇëÇó_ÈºÌí¼Ó
+	REQUEST_GROUPINVITE=2; //ÇëÇó_ÈºÑûÇë
 
-	CQLOG_DEBUG=0;           //è°ƒè¯• ç°è‰²
-	CQLOG_INFO=10;           //ä¿¡æ¯ é»‘è‰²
-	CQLOG_INFOSUCCESS=11;    //ä¿¡æ¯(æˆåŠŸ) ç´«è‰²
-	CQLOG_INFORECV=12;       //ä¿¡æ¯(æ¥æ”¶) è“è‰²
-	CQLOG_INFOSEND=13;       //ä¿¡æ¯(å‘é€) ç»¿è‰²
-	CQLOG_WARNING=20;        //è­¦å‘Š æ©™è‰²
-	CQLOG_ERROR=30;          //é”™è¯¯ çº¢è‰²
-	CQLOG_FATAL=40;          //è‡´å‘½é”™è¯¯ æ·±çº¢
+	CQLOG_DEBUG=0;           //µ÷ÊÔ »ÒÉ«
+	CQLOG_INFO=10;           //ĞÅÏ¢ ºÚÉ«
+	CQLOG_INFOSUCCESS=11;    //ĞÅÏ¢(³É¹¦) ×ÏÉ«
+	CQLOG_INFORECV=12;       //ĞÅÏ¢(½ÓÊÕ) À¶É«
+	CQLOG_INFOSEND=13;       //ĞÅÏ¢(·¢ËÍ) ÂÌÉ«
+	CQLOG_WARNING=20;        //¾¯¸æ ³ÈÉ«
+	CQLOG_ERROR=30;          //´íÎó ºìÉ«
+	CQLOG_FATAL=40;          //ÖÂÃü´íÎó Éîºì
 
-	//æ‚¬æµ®çª—é¢œè‰²
+	//Ğü¸¡´°ÑÕÉ«
 	CQSuspensionWindow_Green=1;
 	CQSuspensionWindow_Orange=2;
 	CQSuspensionWindow_Red=3;
@@ -125,7 +124,7 @@ Const
 	CQSuspensionWindow_Black=5;
 	CQSuspensionWindow_grey=6;
 	
-	// ä¸‹é¢çš„å‡½æ•°çš„ç¡®åˆ‡å«ä¹‰è¯·æŸ¥é˜…libæ–‡ä»¶å¤¹ä¸‹çš„æ–‡ä»¶ã€‚
+	// ÏÂÃæµÄº¯ÊıµÄÈ·ÇĞº¬ÒåÇë²éÔÄlibÎÄ¼ş¼ĞÏÂµÄÎÄ¼ş¡£
 	// lib\Tools.pas
 	Function PtoS(a:pchar):ansistring;
 	Function StoP(a:ansistring):Pchar;
@@ -142,10 +141,10 @@ Const
 	Function Base64_Encryption(s:ansistring):ansistring;
 	Function Base64_Decryption(s:ansistring):ansistring;
 	// lib\CoolQ_CQapplication.pas
-		// é…·Qç è½¬ä¹‰
+		// ¿áQÂë×ªÒå
 	Function CQ_CharEncode(str:ansistring;Comma:boolean):ansistring;
 	Function CQ_CharDecode(str:ansistring):ansistring;
-		// é…·Qç å°è£…
+		// ¿áQÂë·â×°
 	function CQCode_Group_At(QQID:int64):ansistring;
 	function CQCode_emoji(ID:int64):ansistring;
 	function CQCode_face(ID:int64):ansistring;
@@ -161,12 +160,12 @@ Const
 	function CQCode_dice(ID:int64):ansistring;
 	function CQCode_share(url,title,Content,image:ansistring):ansistring;
 	function CQCode_contact(t:ansistring;id:int64):ansistring;
-		// é…·QAPI
+		// ¿áQAPI
 	function CQ_i_sendPrivateMsg(QQID:int64;msg:ansistring):longint;		
 	function CQ_i_sendGroupMsg(groupid:int64;const msg:ansistring):longint;	
 	function CQ_i_sendDiscussMsg(DiscussID:int64;msg:ansistring):longint;	
 	function CQ_i_sendLike(QQID:int64):longint;overload;								
-	function CQ_i_sendLike(QQID:int64;times:longint):longint;overload;						//åŠ æ–™çš„ä¸€ä¸ªå‡½æ•°
+	function CQ_i_sendLike(QQID:int64;times:longint):longint;overload;						//¼ÓÁÏµÄÒ»¸öº¯Êı
 	function CQ_i_sendLikeV2(QQID:int64;times:longint):longint;				
 	function CQ_i_getRecord(filename,format:ansistring):ansistring;			
 	function CQ_Tools_TextToAnonymous(source:ansistring;Var Anonymous:CQ_Type_GroupAnonymous):boolean;
@@ -195,21 +194,21 @@ Const
 	function CQ_i_getGroupMemberList(GroupID:int64;Var GroupMemberList:CQ_Type_GroupMember_List):longint;
 	function CQ_i_getGroupList(Var GroupList:CQ_Type_GroupList):longint;
 	function CQ_i_deleteMsg(msgID:int64):longint;
-		// ç¼–ç è½¬æ¢
+		// ±àÂë×ª»»
 	Function CoolQ_Tools_UTF8ToAnsi(Sstr:ansistring):ansistring;
 	Function CoolQ_Tools_AnsiToUTF8(Sstr:ansistring):ansistring;
 Var
 	AuthCode:longint;
-	//AuthCode CoolQç”¨æ¥è¯†åˆ«ä½ æ˜¯å¦æ˜¯åˆæ³•\è°ƒç”¨çš„ç©æ„å„¿
+	//AuthCode CoolQÓÃÀ´Ê¶±ğÄãÊÇ·ñÊÇºÏ·¨\µ÷ÓÃµÄÍæÒâ¶ù
 	CQAPPID		:string='com.binkic.cqdemo';
 	CQAPPINFO	:string;
 	
 	GlobalUTF8Mode	:boolean;
-	//è¯·åœ¨åº”ç”¨ä¸»ç¨‹åºä¸­ä¿®æ”¹APPIDä¸ºä½ çš„APPID
+	//ÇëÔÚÓ¦ÓÃÖ÷³ÌĞòÖĞĞŞ¸ÄAPPIDÎªÄãµÄAPPID
 
 implementation
 
-uses math,dateutils,sysutils,Classes,iconv; 
+uses math,sysutils,iconv; 
 
 const
 	Base64Chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
@@ -218,7 +217,7 @@ var
 	Base64DecoderTable:array[ansichar] of byte;
 
 {
-	Char* è½¬æ¢åˆ° å­—ç¬¦ä¸²
+	Char* ×ª»»µ½ ×Ö·û´®
 }
 Function PtoS(a:pchar):ansistring;
 Begin
@@ -226,7 +225,7 @@ Begin
 End;
 
 {
-	å­—ç¬¦ä¸² è½¬æ¢åˆ° Char*
+	×Ö·û´® ×ª»»µ½ Char*
 }
 Function StoP(a:ansistring):Pchar;
 Begin
@@ -236,7 +235,7 @@ End;
 {***********************************************************}
 
 {
-	æ•°å­— è½¬æ¢åˆ° å­—ç¬¦ä¸²
+	Êı×Ö ×ª»»µ½ ×Ö·û´®
 }
 Function NumToChar(a:int64):string;
 Begin
@@ -245,16 +244,17 @@ End;
 
 
 {
-	å­—ç¬¦ä¸² è½¬æ¢åˆ° æ•°å­—
+	×Ö·û´® ×ª»»µ½ Êı×Ö
 }
 Function CharToNum(a:string):int64;
 Begin
-	val(a,result);
+	//val(a,result);
+	result:=StrToInt64Def(a,0);
 End;
 
 
 {
-	åŒç²¾æµ®ç‚¹ è½¬æ¢åˆ° å­—ç¬¦ä¸²
+	Ë«¾«¸¡µã ×ª»»µ½ ×Ö·û´®
 }
 Function RealToChar(a:real):string;
 Begin
@@ -262,15 +262,16 @@ Begin
 End;
 
 {
-	å­—ç¬¦ä¸² è½¬æ¢åˆ° åŒç²¾æµ®ç‚¹
+	×Ö·û´® ×ª»»µ½ Ë«¾«¸¡µã
 }
 Function CharToReal(a:string):real;
 Begin
-	val(a,result);
+	//val(a,result);
+	result:=StrToFloatDef(a,0);
 End;
 
 {
-	åŒç²¾æµ®ç‚¹ è½¬æ¢åˆ° èƒ½çœ‹çš„å­—ç¬¦ä¸²
+	Ë«¾«¸¡µã ×ª»»µ½ ÄÜ¿´µÄ×Ö·û´®
 }
 
 Function RealToDisplay(a:real;b:longint):string;
@@ -299,7 +300,7 @@ Begin
 	end;
 	
 	result:=display;
-	exit();
+	exit;
 End;
 
 
@@ -329,6 +330,19 @@ Begin
 	until i>=length(a);
 End;
 
+Function PowerInt(bas: Int64;expo: Int64) : Int64;
+Var
+	i:longint;
+Begin
+	if expo<0 then begin
+		result:=0;
+		exit;
+	end;
+	result:=1;
+	for i:=1 to expo do
+		result:=result*bas;
+End;
+
 {***********************************************************}
 Function SDECtoHEX(a:integer):char;
 Begin
@@ -349,6 +363,7 @@ Begin
 		13 : result:=('D');
 		14 : result:=('E');
 		15 : result:=('F');
+		else result:='-';
 	end;
 End;
 
@@ -376,7 +391,7 @@ Begin
 End;
 
 {
-	åè¿›åˆ¶è½¬äºŒè¿›åˆ¶
+	Ê®½øÖÆ×ª¶ş½øÖÆ
 }
 Function Hex_Conversion_10to2(s:longint):string;
 Begin
@@ -388,7 +403,7 @@ Begin
         while length(result)<8 do result:='0'+result;
 End;
 {
-	äºŒè¿›åˆ¶è½¬åè¿›åˆ¶
+	¶ş½øÖÆ×ªÊ®½øÖÆ
 }
 Function Hex_Conversion_2to10(s:string):longint;
 Var
@@ -397,12 +412,12 @@ Begin
         result:=0;
         for i:=length(s) downto 1 do begin
                 if s[i]='1' then
-                result:=result+2 ** (length(s)-i);
+                result:=result+PowerInt( 2 , (length(s)-i) );
         end;
 End;
 
 Function UrlEncode(s:ansistring):ansistring;
-//ç¼–ç 
+//±àÂë
 Var
 	a:ansistring;
 	i:longint;
@@ -427,7 +442,7 @@ Begin
 End;
 
 Function UrlDecode(s:ansistring):ansistring;
-//è§£ç 
+//½âÂë
 Var
 	i:longint;
 	outs:ansistring;
@@ -436,22 +451,22 @@ Begin
 	i:=1;
 	while i<=length(s) do begin
 		if s[i]='%' then begin
-			//ä¹Ÿè®¸éœ€è¦è½¬ä¹‰
+			//Ò²ĞíĞèÒª×ªÒå
 			if (SHEXtoDec(s[i+1])<>-1) and (SHEXtoDec(s[i+2])<>-1) then begin
-				//éœ€è¦è½¬ä¹‰
+				//ĞèÒª×ªÒå
 				outs:=outs+GB2312ASCtoChar(s[i+1],s[i+2]);
 				i:=i+3;
 			end
 			else
 			begin
-				//ä¾ç„¶ä¸éœ€è¦è½¬ä¹‰
+				//ÒÀÈ»²»ĞèÒª×ªÒå
 				outs:=outs+s[i];
 				i:=i+1;
 			end;
 		end
 		else
 		begin
-			//ä¸éœ€è¦è½¬ä¹‰
+			//²»ĞèÒª×ªÒå
 			outs:=outs+s[i];
 			i:=i+1;
 		end;
@@ -520,6 +535,7 @@ function CQ_getGroupList(AuthCode:longint):Pchar;
 function CQ_deleteMsg(AuthCode:longint;MsgId:int64):longint;
 	stdcall; external 'CQP.dll' name 'CQ_deleteMsg';
 
+	
 procedure InitBase64;
 var i:longint;
 begin
@@ -622,7 +638,7 @@ begin
 end;
 
 {
-	åè½¬å­—ç¬¦ä¸²
+	·´×ª×Ö·û´®
 }
 Function CoolQ_Tools_Flip(s:ansistring):ansistring;
 Var
@@ -640,11 +656,11 @@ Begin
 	result:=0;
 	bin:=CoolQ_Tools_Flip(bin);
 	for i:=1 to length(bin) do begin
-		result:=result+256**(i-1)*integer(bin[i]);
+		result:=result+PowerInt(256,(i-1))*integer(bin[i]);
 	end;
 End;
 
-{ //è²Œä¼¼æœ‰é—®é¢˜
+{ //Ã²ËÆÓĞÎÊÌâ
 Function NumToBin(num:int64;len:longint):ansistring;
 Begin
 	result:='';
@@ -652,7 +668,7 @@ Begin
 		result:=NumToChar(num mod 256)+result;
 		num:=num div 256;
 	end;
-	while length(result)<len*3 do result:='00'+result; //è¿™ä¸€è¡Œ
+	while length(result)<len*3 do result:='00'+result; //ÕâÒ»ĞĞ
 End;
 }
 
@@ -667,7 +683,7 @@ Begin
 End;
 
 {
-	è§£åŒ…
+	½â°ü
 }
 Function CoolQ_Tools_Unpack_GetStr_GivenLength(Var i:longint;
 								len:longint;
@@ -675,7 +691,7 @@ Function CoolQ_Tools_Unpack_GetStr_GivenLength(Var i:longint;
 Begin
 	if len<=0 then begin
 		result:='';
-		exit();
+		exit;
 	end;
 	result:=copy(s,i,len);
 	i:=i+len;
@@ -742,6 +758,7 @@ Begin
 		else result:=sResult;
 End;
 
+
 Function CQ_CharEncode(str:ansistring;Comma:boolean):ansistring;
 Begin
 	Message_Replace(str,'&','&amp;');
@@ -762,8 +779,8 @@ Begin
 End;
 
 {
-QQIDä¸ºè¢«@çš„ç¾¤æˆå‘˜QQã€‚è¯¥å‚æ•°ä¸º-1ï¼Œåˆ™@å…¨ä½“æˆå‘˜ï¼Œè‹¥æ¬¡æ•°ç”¨å°½æˆ–æƒé™ä¸è¶³åˆ™ä¼šè½¬æ¢ä¸ºæ–‡æœ¬ã€‚
-ä¸¾ä¾‹ï¼š[CQ:at,qq=123456]
+QQIDÎª±»@µÄÈº³ÉÔ±QQ¡£¸Ã²ÎÊıÎª-1£¬Ôò@È«Ìå³ÉÔ±£¬Èô´ÎÊıÓÃ¾¡»òÈ¨ÏŞ²»×ãÔò»á×ª»»ÎªÎÄ±¾¡£
+¾ÙÀı£º[CQ:at,qq=123456]
 }
 function CQCode_Group_At(QQID:int64):ansistring;
 Begin
@@ -771,8 +788,8 @@ Begin
 End;
 
 {
-IDä¸ºemojiå­—ç¬¦çš„unicodeç¼–å·
-ä¸¾ä¾‹ï¼š[CQ:emoji,id=128513]ï¼ˆå‘é€ä¸€ä¸ªå¤§ç¬‘çš„emojiè¡¨æƒ…ï¼‰
+IDÎªemoji×Ö·ûµÄunicode±àºÅ
+¾ÙÀı£º[CQ:emoji,id=128513]£¨·¢ËÍÒ»¸ö´óĞ¦µÄemoji±íÇé£©
 }
 function CQCode_emoji(ID:int64):ansistring;
 Begin
@@ -780,25 +797,25 @@ Begin
 End;
 
 {
-IDä¸º0-170çš„æ•°å­—
-ä¸¾ä¾‹ï¼š[CQ:face,id=14]ï¼ˆå‘é€ä¸€ä¸ªå¾®ç¬‘çš„QQè¡¨æƒ…ï¼‰
+IDÎª0-170µÄÊı×Ö
+¾ÙÀı£º[CQ:face,id=14]£¨·¢ËÍÒ»¸öÎ¢Ğ¦µÄQQ±íÇé£©
 }
 function CQCode_face(ID:int64):ansistring;
 Begin
 	result:=('[CQ:at,face='+NumToChar(ID)+']');
 End;
 
-//çª—å£æŠ–åŠ¨ï¼ˆä»…æ”¯æŒå¥½å‹æ¶ˆæ¯ä½¿ç”¨ï¼‰
+//´°¿Ú¶¶¶¯£¨½öÖ§³ÖºÃÓÑÏûÏ¢Ê¹ÓÃ£©
 function CQCode_Shake:ansistring;
 Begin
 	result:=('[CQ:shake]');
 End;
 
 {
-æœ¬CQç éœ€åŠ åœ¨æ¶ˆæ¯çš„å¼€å¤´ã€‚
-å½“ Force ä¸ºfalseæ—¶ï¼Œä»£è¡¨ä¸å¼ºåˆ¶ä½¿ç”¨åŒ¿åï¼Œå¦‚æœåŒ¿åå¤±è´¥å°†è½¬ä¸ºæ™®é€šæ¶ˆæ¯å‘é€ã€‚
-å½“ Force ä¸ºtrueæ—¶ï¼Œä»£è¡¨å¼ºåˆ¶ä½¿ç”¨åŒ¿åï¼Œå¦‚æœåŒ¿åå¤±è´¥å°†å–æ¶ˆè¯¥æ¶ˆæ¯çš„å‘é€ã€‚
-ä¸¾ä¾‹ï¼š
+±¾CQÂëĞè¼ÓÔÚÏûÏ¢µÄ¿ªÍ·¡£
+µ± Force ÎªfalseÊ±£¬´ú±í²»Ç¿ÖÆÊ¹ÓÃÄäÃû£¬Èç¹ûÄäÃûÊ§°Ü½«×ªÎªÆÕÍ¨ÏûÏ¢·¢ËÍ¡£
+µ± Force ÎªtrueÊ±£¬´ú±íÇ¿ÖÆÊ¹ÓÃÄäÃû£¬Èç¹ûÄäÃûÊ§°Ü½«È¡Ïû¸ÃÏûÏ¢µÄ·¢ËÍ¡£
+¾ÙÀı£º
 }
 function CQCode_anonymous(Force:boolean):ansistring;	
 Begin
@@ -806,8 +823,8 @@ Begin
 End;
 
 {
-urlä¸ºå›¾ç‰‡æ–‡ä»¶åç§°ï¼Œå›¾ç‰‡å­˜æ”¾åœ¨é…·Qç›®å½•çš„data\image\ä¸‹
-ä¸¾ä¾‹ï¼š[CQ:image,file=1.jpg]ï¼ˆå‘é€data\image\1.jpgï¼‰
+urlÎªÍ¼Æ¬ÎÄ¼şÃû³Æ£¬Í¼Æ¬´æ·ÅÔÚ¿áQÄ¿Â¼µÄdata\image\ÏÂ
+¾ÙÀı£º[CQ:image,file=1.jpg]£¨·¢ËÍdata\image\1.jpg£©
 }
 function CQCode_image(url:ansistring):ansistring;
 Begin
@@ -815,26 +832,26 @@ Begin
 End;
 
 {
-sourceä¸ºéŸ³ä¹å¹³å°ç±»å‹ï¼Œç›®å‰æ”¯æŒqqã€163ã€xiami
-musicidä¸ºå¯¹åº”éŸ³ä¹å¹³å°çš„æ•°å­—éŸ³ä¹id
-æ³¨æ„ï¼šéŸ³ä¹åªèƒ½ä½œä¸ºå•ç‹¬çš„ä¸€æ¡æ¶ˆæ¯å‘é€
-ä¸¾ä¾‹ï¼š
-[CQ:music,type=qq,id=422594]ï¼ˆå‘é€ä¸€é¦–QQéŸ³ä¹çš„â€œTime after timeâ€æ­Œæ›²åˆ°ç¾¤å†…ï¼‰
-[CQ:music,type=163,id=28406557]ï¼ˆå‘é€ä¸€é¦–ç½‘æ˜“äº‘éŸ³ä¹çš„â€œæ¡œå’²ãâ€æ­Œæ›²åˆ°ç¾¤å†…ï¼‰
+sourceÎªÒôÀÖÆ½Ì¨ÀàĞÍ£¬Ä¿Ç°Ö§³Öqq¡¢163¡¢xiami
+musicidÎª¶ÔÓ¦ÒôÀÖÆ½Ì¨µÄÊı×ÖÒôÀÖid
+×¢Òâ£ºÒôÀÖÖ»ÄÜ×÷Îªµ¥¶ÀµÄÒ»ÌõÏûÏ¢·¢ËÍ
+¾ÙÀı£º
+[CQ:music,type=qq,id=422594]£¨·¢ËÍÒ»Ê×QQÒôÀÖµÄ¡°Time after time¡±¸èÇúµ½ÈºÄÚ£©
+[CQ:music,type=163,id=28406557]£¨·¢ËÍÒ»Ê×ÍøÒ×ÔÆÒôÀÖµÄ¡°—@†D¤¯¡±¸èÇúµ½ÈºÄÚ£©
 }
 function CQCode_Music(source:string;musicid:int64;isnew:boolean):ansistring;
 Begin
 	result:=('[CQ:music,type='+source+',id='+NumToChar(musicid)+String_Choose(isnew,',style=1','')+']')
-	{è¿”å› (â€œ[CQ:music,id=â€ ï¼‹ åˆ°æ–‡æœ¬ (æ­Œæ›²ID) ï¼‹ â€œ]â€)}
+	{·µ»Ø (¡°[CQ:music,id=¡± £« µ½ÎÄ±¾ (¸èÇúID) £« ¡°]¡±)}
 End;
 
 {
-å‘é€éŸ³ä¹è‡ªå®šä¹‰åˆ†äº«(music)
-url ç‚¹å‡»åˆ†äº«åè¿›å…¥çš„éŸ³ä¹é¡µé¢ï¼ˆå¦‚æ­Œæ›²ä»‹ç»é¡µï¼‰
-audio éŸ³ä¹çš„éŸ³é¢‘é“¾æ¥ï¼ˆå¦‚mp3é“¾æ¥ï¼‰
-title éŸ³ä¹çš„æ ‡é¢˜ï¼Œå»ºè®®12å­—ä»¥å†…
-content éŸ³ä¹çš„ç®€ä»‹ï¼Œå»ºè®®30å­—ä»¥å†…
-image éŸ³ä¹çš„å°é¢å›¾ç‰‡é“¾æ¥ï¼Œç•™ç©ºåˆ™ä¸ºé»˜è®¤å›¾ç‰‡
+·¢ËÍÒôÀÖ×Ô¶¨Òå·ÖÏí(music)
+url µã»÷·ÖÏíºó½øÈëµÄÒôÀÖÒ³Ãæ£¨Èç¸èÇú½éÉÜÒ³£©
+audio ÒôÀÖµÄÒôÆµÁ´½Ó£¨Èçmp3Á´½Ó£©
+title ÒôÀÖµÄ±êÌâ£¬½¨Òé12×ÖÒÔÄÚ
+content ÒôÀÖµÄ¼ò½é£¬½¨Òé30×ÖÒÔÄÚ
+image ÒôÀÖµÄ·âÃæÍ¼Æ¬Á´½Ó£¬Áô¿ÕÔòÎªÄ¬ÈÏÍ¼Æ¬
 }
 function CQCode_Music_Custom(url,audio,title,content,image:ansistring):ansistring;
 Begin
@@ -847,7 +864,7 @@ Begin
 End;
 
 {
-å‘é€ä½ç½®åˆ†äº«(location)
+·¢ËÍÎ»ÖÃ·ÖÏí(location)
 
 }
 function CQCode_Location(latitude,longitude:real;Zoom:longint;Name,Address:ansistring):ansistring;
@@ -858,7 +875,7 @@ Begin
 ENd;
 
 {
-idä¸ºè¯¥åŸåˆ›è¡¨æƒ…çš„IDï¼Œå­˜æ”¾åœ¨é…·Qç›®å½•çš„data\bface\ä¸‹
+idÎª¸ÃÔ­´´±íÇéµÄID£¬´æ·ÅÔÚ¿áQÄ¿Â¼µÄdata\bface\ÏÂ
 }
 function CQCode_bface(ID:int64):ansistring;
 Begin
@@ -866,9 +883,9 @@ Begin
 End;
 
 {
-1ä¸ºéŸ³é¢‘æ–‡ä»¶åç§°ï¼ŒéŸ³é¢‘å­˜æ”¾åœ¨é…·Qç›®å½•çš„data\record\ä¸‹
-2ä¸ºæ˜¯å¦ä¸ºå˜å£°ï¼Œè‹¥è¯¥å‚æ•°ä¸ºtrueåˆ™æ˜¾ç¤ºå˜å£°æ ‡è®°ã€‚è¯¥å‚æ•°å¯è¢«å¿½ç•¥ã€‚
-ä¸¾ä¾‹ï¼š[CQ:record,file=1.silkï¼Œmagic=true]ï¼ˆå‘é€data\record\1.silkï¼Œå¹¶æ ‡è®°ä¸ºå˜å£°ï¼‰
+1ÎªÒôÆµÎÄ¼şÃû³Æ£¬ÒôÆµ´æ·ÅÔÚ¿áQÄ¿Â¼µÄdata\record\ÏÂ
+2ÎªÊÇ·ñÎª±äÉù£¬Èô¸Ã²ÎÊıÎªtrueÔòÏÔÊ¾±äÉù±ê¼Ç¡£¸Ã²ÎÊı¿É±»ºöÂÔ¡£
+¾ÙÀı£º[CQ:record,file=1.silk£¬magic=true]£¨·¢ËÍdata\record\1.silk£¬²¢±ê¼ÇÎª±äÉù£©
 }
 function CQCode_record(url:ansistring;magic:boolean):ansistring;
 Begin
@@ -876,10 +893,10 @@ Begin
 End;
 
 {
-idä¸ºçŒœæ‹³ç»“æœçš„ç±»å‹ï¼Œæš‚ä¸æ”¯æŒå‘é€æ—¶è‡ªå®šä¹‰ã€‚è¯¥å‚æ•°å¯è¢«å¿½ç•¥ã€‚
-1 - çŒœæ‹³ç»“æœä¸ºçŸ³å¤´
-2 - çŒœæ‹³ç»“æœä¸ºå‰ªåˆ€
-3 - çŒœæ‹³ç»“æœä¸ºå¸ƒ
+idÎª²ÂÈ­½á¹ûµÄÀàĞÍ£¬Ôİ²»Ö§³Ö·¢ËÍÊ±×Ô¶¨Òå¡£¸Ã²ÎÊı¿É±»ºöÂÔ¡£
+1 - ²ÂÈ­½á¹ûÎªÊ¯Í·
+2 - ²ÂÈ­½á¹ûÎª¼ôµ¶
+3 - ²ÂÈ­½á¹ûÎª²¼
 }
 function CQCode_rps(ID:int64):ansistring;
 Begin
@@ -887,7 +904,7 @@ Begin
 End;
 
 {
-idå¯¹åº”æ·å‡ºçš„ç‚¹æ•°ï¼Œæš‚ä¸æ”¯æŒå‘é€æ—¶è‡ªå®šä¹‰ã€‚è¯¥å‚æ•°å¯è¢«å¿½ç•¥ã€‚
+id¶ÔÓ¦ÖÀ³öµÄµãÊı£¬Ôİ²»Ö§³Ö·¢ËÍÊ±×Ô¶¨Òå¡£¸Ã²ÎÊı¿É±»ºöÂÔ¡£
 }
 function CQCode_dice(ID:int64):ansistring;
 Begin
@@ -895,7 +912,7 @@ Begin
 End;
 
 {
-[CQ:share,url=â€ ï¼‹ CQç _è½¬ä¹‰ (urlåœ°å€, çœŸ) ï¼‹ â€œ,title=â€ ï¼‹ CQç _è½¬ä¹‰ (å¡ç‰‡æ ‡é¢˜, çœŸ) ï¼‹ â€œ,content=â€ ï¼‹ CQç _è½¬ä¹‰ (å¡ç‰‡å†…å®¹, çœŸ) ï¼‹ â€œ,image=â€ ï¼‹ CQç _è½¬ä¹‰ (å¡ç‰‡å›¾ç‰‡url, çœŸ) ï¼‹ â€œ]
+[CQ:share,url=¡± £« CQÂë_×ªÒå (urlµØÖ·, Õæ) £« ¡°,title=¡± £« CQÂë_×ªÒå (¿¨Æ¬±êÌâ, Õæ) £« ¡°,content=¡± £« CQÂë_×ªÒå (¿¨Æ¬ÄÚÈİ, Õæ) £« ¡°,image=¡± £« CQÂë_×ªÒå (¿¨Æ¬Í¼Æ¬url, Õæ) £« ¡°]
 }
 function CQCode_share(url,title,Content,image:ansistring):ansistring;
 Begin
@@ -903,7 +920,7 @@ Begin
 End;
 
 {
-[CQ:contact,type=qq/group,id=Qå·/ç¾¤å·]
+[CQ:contact,type=qq/group,id=QºÅ/ÈººÅ]
 }
 function CQCode_contact(t:ansistring;id:int64):ansistring;
 Begin
@@ -912,28 +929,28 @@ End;
 
 
 {API}
-//å‘é€ç§èŠ Auth=106 //sendPrivateMsg
+//·¢ËÍË½ÁÄ Auth=106 //sendPrivateMsg
 function CQ_i_sendPrivateMsg(QQID:int64;msg:ansistring):longint;		//Auth=106 //sendPrivateMsg
 Begin
 	if GlobalUTF8Mode
 		then result:=(CQ_sendPrivateMsg(AuthCode,QQID,StoP(CoolQ_Tools_UTF8ToANSI(msg))))
 		else result:=(CQ_sendPrivateMsg(AuthCode,QQID,StoP(msg)));
 End;
-//å‘é€ç¾¤èŠ Auth=101 //sendGroupMsg
+//·¢ËÍÈºÁÄ Auth=101 //sendGroupMsg
 function CQ_i_sendGroupMsg(groupid:int64;const msg:ansistring):longint;	//Auth=101 //sendGroupMsg
 Begin
 	if GlobalUTF8Mode
 		then result:=(CQ_sendGroupMsg(AuthCode,groupid,StoP(CoolQ_Tools_UTF8ToANSI(msg))))
 		else result:=(CQ_sendGroupMsg(AuthCode,groupid,StoP(msg)));
 End;
-//å‘é€è®¨è®ºç»„ Auth=103 //sendDiscussMsg
+//·¢ËÍÌÖÂÛ×é Auth=103 //sendDiscussMsg
 function CQ_i_sendDiscussMsg(DiscussID:int64;msg:ansistring):longint;	//Auth=103 //sendDiscussMsg
 Begin
 	if GlobalUTF8Mode
 		then result:=(CQ_sendDiscussMsg(AuthCode,DiscussID,StoP(CoolQ_Tools_UTF8ToANSI(msg))))
 		else result:=(CQ_sendDiscussMsg(AuthCode,DiscussID,StoP(msg)));
 End;
-//å‘é€èµ Auth=110 //sendLike
+//·¢ËÍÔŞ Auth=110 //sendLike
 function CQ_i_sendLike(QQID:int64):longint;overload;								//Auth=110 //sendLike
 Begin
 	result:=(CQ_sendLike(AuthCode,QQID));
@@ -947,11 +964,11 @@ Begin
 	result:=(CQ_sendLikeV2(AuthCode,QQID,min(times,10)));
 End;
 
-//æ¥å—è¯­éŸ³ Auth=30 æ¥æ”¶æ¶ˆæ¯ä¸­çš„è¯­éŸ³(record),è¿”å›ä¿å­˜åœ¨ \data\record\ ç›®å½•ä¸‹çš„æ–‡ä»¶å //getRecord
-function CQ_i_getRecord(filename,format:ansistring):ansistring;			//Auth=30 æ¥æ”¶æ¶ˆæ¯ä¸­çš„è¯­éŸ³(record),è¿”å›ä¿å­˜åœ¨ \data\record\ ç›®å½•ä¸‹çš„æ–‡ä»¶å //getRecord
+//½ÓÊÜÓïÒô Auth=30 ½ÓÊÕÏûÏ¢ÖĞµÄÓïÒô(record),·µ»Ø±£´æÔÚ \data\record\ Ä¿Â¼ÏÂµÄÎÄ¼şÃû //getRecord
+function CQ_i_getRecord(filename,format:ansistring):ansistring;			//Auth=30 ½ÓÊÕÏûÏ¢ÖĞµÄÓïÒô(record),·µ»Ø±£´æÔÚ \data\record\ Ä¿Â¼ÏÂµÄÎÄ¼şÃû //getRecord
 {
-filename æ”¶åˆ°æ¶ˆæ¯ä¸­çš„è¯­éŸ³æ–‡ä»¶å(file)
-format åº”ç”¨æ‰€éœ€çš„è¯­éŸ³æ–‡ä»¶æ ¼å¼ï¼Œç›®å‰æ”¯æŒ mp3,amr,wma,m4a,spx,ogg,wav,flac
+filename ÊÕµ½ÏûÏ¢ÖĞµÄÓïÒôÎÄ¼şÃû(file)
+format Ó¦ÓÃËùĞèµÄÓïÒôÎÄ¼ş¸ñÊ½£¬Ä¿Ç°Ö§³Ö mp3,amr,wma,m4a,spx,ogg,wav,flac
 }
 Begin
 	result:=(
@@ -961,7 +978,7 @@ Begin
 	)
 End;
 
-//æ–‡æœ¬åˆ°åŒ¿å
+//ÎÄ±¾µ½ÄäÃû
 function CQ_Tools_TextToAnonymous(source:ansistring;
 									Var Anonymous:CQ_Type_GroupAnonymous):boolean;
 Var
@@ -970,12 +987,12 @@ Var
 Begin
 	if source='' then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	data:=Base64_Decryption(source);
 	if length(data)<12 then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	i:=1;
 	Anonymous.AID:=CoolQ_Tools_Unpack_GetNum(i,8,data);
@@ -990,7 +1007,7 @@ Begin
 	result:=true;
 End;
 
-//æ–‡æœ¬åˆ°ç¾¤å‘˜ -- ä¼ é€’çš„dataå†…å®¹æ˜¯å·²Base64è§£ç åçš„å†…å®¹
+//ÎÄ±¾µ½ÈºÔ± -- ´«µİµÄdataÄÚÈİÊÇÒÑBase64½âÂëºóµÄÄÚÈİ
 function CQ_Tools_TextToGroupMember_Main(data:ansistring;
 									Var info:CQ_Type_GroupMember):boolean;
 Var
@@ -998,7 +1015,7 @@ Var
 Begin
 	if length(data)<40 then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	i:=1;
 	info.groupid:=CoolQ_Tools_Unpack_GetNum(i,8,data);
@@ -1028,7 +1045,7 @@ Begin
 	result:=(true);
 End;
 
-//æ–‡æœ¬åˆ°ç¾¤æˆå‘˜ -- ä¼ é€’çš„scourceå†…å®¹æ˜¯æœªBase64è§£ç åçš„å†…å®¹
+//ÎÄ±¾µ½Èº³ÉÔ± -- ´«µİµÄscourceÄÚÈİÊÇÎ´Base64½âÂëºóµÄÄÚÈİ
 function CQ_Tools_TextToGroupMember(source:ansistring;
 									Var info:CQ_Type_GroupMember):boolean;
 Var
@@ -1036,14 +1053,14 @@ Var
 Begin
 	if source='' then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	data:=Base64_Decryption(source);
 	result:=(CQ_Tools_TextToGroupMember_Main(data,info));
 End;
 
 
-//æ–‡æœ¬åˆ°ç¾¤æˆå‘˜åˆ—è¡¨
+//ÎÄ±¾µ½Èº³ÉÔ±ÁĞ±í
 function CQ_Tools_TextToGroupMemberList(source:ansistring;Var GroupMemberList:CQ_Type_GroupMember_List):boolean;
 Var
 	data	:	ansistring;
@@ -1051,12 +1068,12 @@ Var
 Begin
 	if source='' then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	data:=Base64_Decryption(source);
 	if length(data)<10 then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	i:=1;
 	GroupMemberList.l:=CoolQ_Tools_Unpack_GetNum(i,4,data);
@@ -1066,20 +1083,20 @@ Begin
 			then
 			begin
 				result:=false;
-				exit();
+				exit;
 			end
 			else
 			begin
 				if CQ_Tools_TextToGroupMember_Main(CoolQ_Tools_Unpack_GetStr(i,data),GroupMemberList.s[j])=false then begin
 					result:=false;
-					exit();
+					exit;
 				end;
 			end;
 	end;
 	result:=true;
 End;
 
-//æ–‡æœ¬åˆ°ç¾¤æ–‡ä»¶
+//ÎÄ±¾µ½ÈºÎÄ¼ş
 Function CQ_Tools_TextToFile(source:string;Var info:CQ_Type_GroupFile):boolean;
 Var
 	data:ansistring;
@@ -1087,12 +1104,12 @@ Var
 Begin
 	if source='' then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	data:=Base64_Decryption(source);
 	if length(data)<20 then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	i:=1;
 	info.FileID:=CoolQ_Tools_Unpack_GetStr(i,data);
@@ -1108,14 +1125,14 @@ Begin
 	result:=true;
 End;
 
-//å…¶ä»–_è½¬æ¢_ansihexåˆ°ç¾¤ä¿¡æ¯
+//ÆäËû_×ª»»_ansihexµ½ÈºĞÅÏ¢
 Function CQ_Tools_TextToGroupInfo(source:ansistring;Var GroupInfo:CQ_Type_GroupInfo):boolean;
 Var
 	i:longint;
 Begin
 	if length(source)<10 then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	i:=1;
 	GroupInfo.GroupID:=CoolQ_Tools_Unpack_GetNum(i,8,source);
@@ -1128,7 +1145,7 @@ Begin
 	result:=true;
 End;
 
-//å…¶ä»–_è½¬æ¢_æ–‡æœ¬åˆ°ç¾¤åˆ—è¡¨ä¿¡æ¯a
+//ÆäËû_×ª»»_ÎÄ±¾µ½ÈºÁĞ±íĞÅÏ¢a
 Function CQ_Tools_TextToGroupListInfo(source:ansistring;Var GroupList:CQ_Type_GroupList):boolean;
 Var
 	data:ansistring;
@@ -1136,12 +1153,12 @@ Var
 Begin
 	if source='' then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	data:=Base64_Decryption(source);
 	if length(data)<4 then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	i:=1;
 	GroupList.l:=CoolQ_Tools_Unpack_GetNum(i,4,data);
@@ -1151,38 +1168,38 @@ Begin
 			then
 			begin
 				result:=false;
-				exit();
+				exit;
 			end
 			else
 			begin
 				if CQ_Tools_TextToGroupInfo(CoolQ_Tools_Unpack_GetStr(i,data),GroupList.s[j])=false then begin
 					result:=false;
-					exit();
+					exit;
 				end;
 			end;
 	end;
 	result:=true;
 End;
 
-//è·å–Cookies Auth=20 æ…ç”¨,æ­¤æ¥å£éœ€è¦ä¸¥æ ¼æˆæƒ //getCookies
+//»ñÈ¡Cookies Auth=20 É÷ÓÃ,´Ë½Ó¿ÚĞèÒªÑÏ¸ñÊÚÈ¨ //getCookies
 Function CQ_i_GetCookies():ansistring;
 Begin
 	result:=(CQ_GetCookies(AuthCode));
 End;
 
-//è·å–CsrfToken Auth=20 å³QQç½‘é¡µç”¨åˆ°çš„bkn/g_tkç­‰ æ…ç”¨,æ­¤æ¥å£éœ€è¦ä¸¥æ ¼æˆæƒ //getCsrfToken
+//»ñÈ¡CsrfToken Auth=20 ¼´QQÍøÒ³ÓÃµ½µÄbkn/g_tkµÈ É÷ÓÃ,´Ë½Ó¿ÚĞèÒªÑÏ¸ñÊÚÈ¨ //getCsrfToken
 Function CQ_i_getCsrfToken():longint;
 Begin
 	result:=(CQ_GetCsrfToken(AuthCode));
 End;
 
-//å–ç™»é™†QQ getLoginQQ
+//È¡µÇÂ½QQ getLoginQQ
 Function CQ_i_GetLoginQQ():int64;
 Begin
 	result:=(CQ_GetLoginQQ(authcode));
 End;
 
-//å–ç™»é™†QQæ˜µç§°ã€€getLoginNick
+//È¡µÇÂ½QQêÇ³Æ¡¡getLoginNick
 Function CQ_i_getLoginNick():string;
 Begin
 	if GlobalUTF8Mode
@@ -1190,7 +1207,7 @@ Begin
 		else result:=(CQ_GetLoginNick(AuthCode));
 End;
 
-//å–é™Œç”Ÿäººä¿¡æ¯ Auth=131 //CQ_getStrangerInfo
+//È¡Ä°ÉúÈËĞÅÏ¢ Auth=131 //CQ_getStrangerInfo
 Function CQ_i_GetStrangerInfo(QQ:int64;Var info:CQ_Type_QQ;nocache:boolean):longint;
 Var
 	data:ansistring;
@@ -1200,7 +1217,7 @@ Begin
 	data:=Base64_Decryption(data);
 	if length(data)<16 then begin
 		result:=-1000;
-		exit();
+		exit;
 	end;
 	i:=1;
 	info.QQID:=CoolQ_Tools_Unpack_GetNum(i,8,data);
@@ -1215,7 +1232,7 @@ Begin
 	result:=0;
 End;
 
-//å–ç¾¤æˆå‘˜ä¿¡æ¯ Auth=130 //getGroupMemberInfoV2
+//È¡Èº³ÉÔ±ĞÅÏ¢ Auth=130 //getGroupMemberInfoV2
 function CQ_i_getGroupMemberInfo(groupid,qqid:int64;
 								Var info:CQ_Type_GroupMember;
 								nocache:boolean):longint;
@@ -1225,25 +1242,25 @@ Begin
 	return:=CQ_getGroupMemberInfoV2(AuthCode,groupid,QQID,nocache);
 	if return='' then begin
 		result:=-1000;
-		exit();
+		exit;
 	end;
 	if CQ_Tools_TextToGroupMember(return,info)=false then begin
 		result:=-1000;
-		exit();
+		exit;
 	end;
 	result:=0;
 End;
 
-//è¿”å›çš„è·¯å¾„æœ«å°¾å¸¦"\" //getAppDirectory
+//·µ»ØµÄÂ·¾¶Ä©Î²´ø"\" //getAppDirectory
 function CQ_i_getAppDirectory:ansistring;
 Begin
 	result:=(PtoS(CQ_getAppDirectory(AuthCode)));
 End;
 
-{æˆåŠŸè¿”å›æ—¥å¿—ID //addlog
-	priority æ•°å€¼è¯·çœ‹å¸¸é‡åˆ—è¡¨ CQLOG_*
-	category æ˜¯ç±»å‹
-	content æ˜¯æ—¥å¿—å†…å®¹
+{³É¹¦·µ»ØÈÕÖ¾ID //addlog
+	priority ÊıÖµÇë¿´³£Á¿ÁĞ±í CQLOG_*
+	category ÊÇÀàĞÍ
+	content ÊÇÈÕÖ¾ÄÚÈİ
 }
 function CQ_i_addLog(priority:longint;const category,content:ansistring):longint;
 Begin
@@ -1252,39 +1269,39 @@ Begin
 		else result:=(CQ_addLog(AuthCode,priority,StoP(category),StoP(content)));
 End;
 
-//æ·»åŠ å¥½å‹è¯·æ±‚å›å¤ Auth=150 //setFriendAddRequest
+//Ìí¼ÓºÃÓÑÇëÇó»Ø¸´ Auth=150 //setFriendAddRequest
 function CQ_i_setFriendAddRequest(const responseflag:pchar;responseoperation:longint;const remark:string):longint;
 Begin
 	if GlobalUTF8Mode
 		then
 			result:=(CQ_setFriendAddRequest(authcode,
-										responseflag,			//é€šè¿‡äº‹ä»¶å‡½æ•°ä¼ é€’è·å¾—
-										responseoperation,		//é€šè¿‡å¸¸é‡è¡¨è·å¾—
-										StoP(CoolQ_Tools_UTF8ToANSI(remark))))			//æ·»åŠ åå¥½å‹å¤‡æ³¨
+										responseflag,			//Í¨¹ıÊÂ¼şº¯Êı´«µİ»ñµÃ
+										responseoperation,		//Í¨¹ı³£Á¿±í»ñµÃ
+										StoP(CoolQ_Tools_UTF8ToANSI(remark))))			//Ìí¼ÓºóºÃÓÑ±¸×¢
 		else
 			result:=(CQ_setFriendAddRequest(authcode,
-										responseflag,			//é€šè¿‡äº‹ä»¶å‡½æ•°ä¼ é€’è·å¾—
-										responseoperation,		//é€šè¿‡å¸¸é‡è¡¨è·å¾—
-										StoP(remark)))			//æ·»åŠ åå¥½å‹å¤‡æ³¨
+										responseflag,			//Í¨¹ıÊÂ¼şº¯Êı´«µİ»ñµÃ
+										responseoperation,		//Í¨¹ı³£Á¿±í»ñµÃ
+										StoP(remark)))			//Ìí¼ÓºóºÃÓÑ±¸×¢
 
 End;
 
-//ç½®åŒ¿åç¾¤å‘˜ç¦è¨€ Auth=124 //setGroupAnonymousBan
+//ÖÃÄäÃûÈºÔ±½ûÑÔ Auth=124 //setGroupAnonymousBan
 function CQ_i_setGroupAnonymousMute(group:int64;fromAnonymous:string;duration:int64):longint;
 Begin
 	result:=(CQ_setGroupAnonymousBan(authcode,
 								group,
-								StoP(fromAnonymous),		//é€šè¿‡äº‹ä»¶å‡½æ•°ä¼ é€’è·å¾—
-								duration));					//ç¦è¨€æ—¶é•¿ å•ä½ç§’ ä¸æ”¯æŒè§£ç¦
+								StoP(fromAnonymous),		//Í¨¹ıÊÂ¼şº¯Êı´«µİ»ñµÃ
+								duration));					//½ûÑÔÊ±³¤ µ¥Î»Ãë ²»Ö§³Ö½â½û
 End;
 
-//ç½®å…¨ç¾¤ç¦è¨€ Auth=123 //setGroupWholeBan
+//ÖÃÈ«Èº½ûÑÔ Auth=123 //setGroupWholeBan
 function CQ_i_setGroupWholeMute(groupid:int64;enableban:boolean):longint;
 Begin
 	result:=(CQ_setGroupWholeBan(AuthCode,groupid,enableban));
 End;
 
-//ç½®ç¾¤æˆå‘˜åç‰‡ Auth=126 //setGroupCard
+//ÖÃÈº³ÉÔ±ÃûÆ¬ Auth=126 //setGroupCard
 function CQ_i_setGroupCard(group,qq:int64;nick:string):longint;
 Begin
 	if GlobalUTF8Mode
@@ -1300,28 +1317,28 @@ Begin
 								StoP(nick)))
 End;
 
-//ç½®ç¾¤å‘˜ä¸“å±å¤´è¡” Auth=128 éœ€ç¾¤ä¸»æƒé™ //setGroupSpecialTitle
+//ÖÃÈºÔ±×¨ÊôÍ·ÏÎ Auth=128 ĞèÈºÖ÷È¨ÏŞ //setGroupSpecialTitle
 Function CQ_i_setGroupSpecialTitle(Group,ID:int64;Title:string;duration:int64):longint;
 Begin
 	if GlobalUTF8Mode
 		then
 			result:=(CQ_setGroupSpecialTitle(authcode,
-										group,				//ç›®æ ‡ç¾¤
-										id,					//ç›®æ ‡QQ
-										StoP(CoolQ_Tools_UTF8ToANSI(title)),		//è‹¥è¦åˆ é™¤å¤´è¡”ï¼Œåˆ™ç•™ç©º
-										duration))			//ä¸“å±å¤´è¡”æœ‰æ•ˆæœŸï¼Œå•ä½ä¸ºç§’ã€‚å¦‚æœæ°¸ä¹…æœ‰æ•ˆï¼Œè¿™é‡Œå¡«å†™-1
+										group,				//Ä¿±êÈº
+										id,					//Ä¿±êQQ
+										StoP(CoolQ_Tools_UTF8ToANSI(title)),		//ÈôÒªÉ¾³ıÍ·ÏÎ£¬ÔòÁô¿Õ
+										duration))			//×¨ÊôÍ·ÏÎÓĞĞ§ÆÚ£¬µ¥Î»ÎªÃë¡£Èç¹ûÓÀ¾ÃÓĞĞ§£¬ÕâÀïÌîĞ´-1
 		else
 			result:=(CQ_setGroupSpecialTitle(authcode,
-										group,				//ç›®æ ‡ç¾¤
-										id,					//ç›®æ ‡QQ
-										StoP(title),		//è‹¥è¦åˆ é™¤å¤´è¡”ï¼Œåˆ™ç•™ç©º
-										duration));			//ä¸“å±å¤´è¡”æœ‰æ•ˆæœŸï¼Œå•ä½ä¸ºç§’ã€‚å¦‚æœæ°¸ä¹…æœ‰æ•ˆï¼Œè¿™é‡Œå¡«å†™-1
+										group,				//Ä¿±êÈº
+										id,					//Ä¿±êQQ
+										StoP(title),		//ÈôÒªÉ¾³ıÍ·ÏÎ£¬ÔòÁô¿Õ
+										duration));			//×¨ÊôÍ·ÏÎÓĞĞ§ÆÚ£¬µ¥Î»ÎªÃë¡£Èç¹ûÓÀ¾ÃÓĞĞ§£¬ÕâÀïÌîĞ´-1
 End;
 
 
 {
-	ç½®ç¾¤ç®¡ç†å‘˜ Auth=122 //setGroupAdmin
-	operation trueè®¾ç½®æˆç®¡ç†å‘˜ falseå–æ¶ˆç®¡ç†å‘˜
+	ÖÃÈº¹ÜÀíÔ± Auth=122 //setGroupAdmin
+	operation trueÉèÖÃ³É¹ÜÀíÔ± falseÈ¡Ïû¹ÜÀíÔ±
 }
 Function CQ_i_setGroupAdmin(group,qq:int64;operation:boolean):longint;
 Begin
@@ -1329,8 +1346,8 @@ Begin
 End;
 
 {
-	ç½®ç¾¤åŒ¿åè®¾ç½® Auth=125 //setGroupAnonymous
-	operation trueå¼€å¯åŒ¿å falseå…³é—­åŒ¿å
+	ÖÃÈºÄäÃûÉèÖÃ Auth=125 //setGroupAnonymous
+	operation true¿ªÆôÄäÃû false¹Ø±ÕÄäÃû
 }
 Function CQ_i_setGroupAnonymous(group:int64;operation:boolean):longint;
 Begin
@@ -1338,11 +1355,11 @@ Begin
 End;
 
 
-//ç½®ç¾¤æ·»åŠ è¯·æ±‚ Auth=151 //setGroupAddRequest
-Function CQ_i_setGroupAddRequest(responseflag:string;	//è¯·æ±‚äº‹ä»¶æ”¶åˆ°çš„â€œresponseflagâ€å‚æ•°
-								subtype		:longint;	//æ ¹æ®è¯·æ±‚äº‹ä»¶çš„å­ç±»å‹åŒºåˆ† #è¯·æ±‚_ç¾¤æ·»åŠ  æˆ– #è¯·æ±‚_ç¾¤é‚€è¯·
-								responseoperation:longint;	//#è¯·æ±‚_é€šè¿‡ æˆ– #è¯·æ±‚_æ‹’ç»
-								reason		:string 	//æ“ä½œç†ç”±ï¼Œä»… #è¯·æ±‚_ç¾¤æ·»åŠ  ä¸” #è¯·æ±‚_æ‹’ç» æ—¶å¯ç”¨
+//ÖÃÈºÌí¼ÓÇëÇó Auth=151 //setGroupAddRequest
+Function CQ_i_setGroupAddRequest(responseflag:string;	//ÇëÇóÊÂ¼şÊÕµ½µÄ¡°responseflag¡±²ÎÊı
+								subtype		:longint;	//¸ù¾İÇëÇóÊÂ¼şµÄ×ÓÀàĞÍÇø·Ö #ÇëÇó_ÈºÌí¼Ó »ò #ÇëÇó_ÈºÑûÇë
+								responseoperation:longint;	//#ÇëÇó_Í¨¹ı »ò #ÇëÇó_¾Ü¾ø
+								reason		:string 	//²Ù×÷ÀíÓÉ£¬½ö #ÇëÇó_ÈºÌí¼Ó ÇÒ #ÇëÇó_¾Ü¾ø Ê±¿ÉÓÃ
 								):longint;
 Begin
 	if GlobalUTF8Mode
@@ -1369,33 +1386,33 @@ Begin
 End;
 
 {
-ç½®ç¾¤é€€å‡º Auth=127 æ…ç”¨,æ­¤æ¥å£éœ€è¦ä¸¥æ ¼æˆæƒ //setGroupLeave
-Disband trueè§£æ•£æœ¬ç¾¤[ç¾¤ä¸»] falseé€€å‡ºæœ¬ç¾¤[ç¾¤ç®¡/ç¾¤å‘˜]
+ÖÃÈºÍË³ö Auth=127 É÷ÓÃ,´Ë½Ó¿ÚĞèÒªÑÏ¸ñÊÚÈ¨ //setGroupLeave
+Disband true½âÉ¢±¾Èº[ÈºÖ÷] falseÍË³ö±¾Èº[Èº¹Ü/ÈºÔ±]
 }
 Function CQ_i_setGroupLeave(group:int64;isdisband:boolean):longint;
 Begin
 	result:=(CQ_setGroupLeave(Authcode,Group,IsDisband));
 End;
 
-//ç½®ç¾¤å‘˜ç¦è¨€ Auth=121 //setGroupBan
+//ÖÃÈºÔ±½ûÑÔ Auth=121 //setGroupBan
 function CQ_i_setGroupMute(groupid,QQID,duration:int64):longint;
 Begin
 	result:=(CQ_setGroupBan(AuthCode,groupid,QQID,duration));
 End;
 
-//ç½®ç¾¤å‘˜ç§»é™¤ Auth=120 //setGroupKick
+//ÖÃÈºÔ±ÒÆ³ı Auth=120 //setGroupKick
 function CQ_i_setGroupKick(groupid,QQID:int64;rejectaddrequest:boolean):longint;
 Begin
 	result:=(CQ_setGroupKick(AuthCode,Groupid,QQID,rejectaddrequest));
 End;
 
-//ç½®è®¨è®ºç»„é€€å‡º Auth=140 //setDiscussLeave
+//ÖÃÌÖÂÛ×éÍË³ö Auth=140 //setDiscussLeave
 function CQ_i_setDiscussLeave(DiscussID:int64):longint;
 Begin
 	result:=(CQ_setDiscussLeave(authcode,DiscussID));
 End;
 
-//ç½®è‡´å‘½é”™è¯¯æç¤º //setFatal
+//ÖÃÖÂÃü´íÎóÌáÊ¾ //setFatal
 function CQ_i_setFatal(msg:ansistring):longint;
 Begin
 	if GlobalUTF8Mode
@@ -1403,7 +1420,7 @@ Begin
 		else result:=(CQ_setFatal(authcode,StoP(msg)));
 End;
 
-//å–ç¾¤æˆå‘˜åˆ—è¡¨ Auth=160 //getGroupMemberList
+//È¡Èº³ÉÔ±ÁĞ±í Auth=160 //getGroupMemberList
 function CQ_i_getGroupMemberList(GroupID:int64;Var GroupMemberList:CQ_Type_GroupMember_List):longint;
 Var
 	return	:	ansistring;
@@ -1411,19 +1428,19 @@ Begin
 	return:=PtoS(CQ_getGroupMemberList(AuthCode,GroupID));
 	if return='' then begin
 		result:=-1000;
-		exit();
+		exit;
 	end
 	else
 	if CQ_Tools_TextToGroupMemberList(return,GroupMemberList)=false then begin
 		result:=-1000;
-		exit();
+		exit;
 	end;
 	result:=0;
 End;
 
 
 
-//å–ç¾¤åˆ—è¡¨ Auth=161  //getGroupList
+//È¡ÈºÁĞ±í Auth=161  //getGroupList
 function CQ_i_getGroupList(Var GroupList:CQ_Type_GroupList):longint;
 Var
 	return	:	ansistring;
@@ -1431,18 +1448,18 @@ Begin
 	return:=PtoS(CQ_getGroupList(AuthCode));
 	if return='' then begin
 		result:=-1000;
-		exit();
+		exit;
 	end
 	else
 	if CQ_Tools_TextToGroupListInfo(return,GroupList)=false then begin
 		result:=-1000;
-		exit();
+		exit;
 	end;
 	result:=0;
 End;
 
 
-//æ’¤å›æ¶ˆæ¯ Auth=180 //deleteMsg
+//³·»ØÏûÏ¢ Auth=180 //deleteMsg
 function CQ_i_deleteMsg(msgID:int64):longint;
 Begin
 	result:=(CQ_deleteMsg(AuthCode,msgID));

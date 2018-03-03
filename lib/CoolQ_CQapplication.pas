@@ -226,12 +226,12 @@ Var
 Begin
 	if source='' then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	data:=Base64_Decryption(source);
 	if length(data)<12 then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	i:=1;
 	Anonymous.AID:=CoolQ_Tools_Unpack_GetNum(i,8,data);
@@ -254,7 +254,7 @@ Var
 Begin
 	if length(data)<40 then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	i:=1;
 	info.groupid:=CoolQ_Tools_Unpack_GetNum(i,8,data);
@@ -292,7 +292,7 @@ Var
 Begin
 	if source='' then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	data:=Base64_Decryption(source);
 	result:=(CQ_Tools_TextToGroupMember_Main(data,info));
@@ -307,12 +307,12 @@ Var
 Begin
 	if source='' then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	data:=Base64_Decryption(source);
 	if length(data)<10 then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	i:=1;
 	GroupMemberList.l:=CoolQ_Tools_Unpack_GetNum(i,4,data);
@@ -322,13 +322,13 @@ Begin
 			then
 			begin
 				result:=false;
-				exit();
+				exit;
 			end
 			else
 			begin
 				if CQ_Tools_TextToGroupMember_Main(CoolQ_Tools_Unpack_GetStr(i,data),GroupMemberList.s[j])=false then begin
 					result:=false;
-					exit();
+					exit;
 				end;
 			end;
 	end;
@@ -343,12 +343,12 @@ Var
 Begin
 	if source='' then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	data:=Base64_Decryption(source);
 	if length(data)<20 then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	i:=1;
 	info.FileID:=CoolQ_Tools_Unpack_GetStr(i,data);
@@ -371,7 +371,7 @@ Var
 Begin
 	if length(source)<10 then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	i:=1;
 	GroupInfo.GroupID:=CoolQ_Tools_Unpack_GetNum(i,8,source);
@@ -392,12 +392,12 @@ Var
 Begin
 	if source='' then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	data:=Base64_Decryption(source);
 	if length(data)<4 then begin
 		result:=false;
-		exit();
+		exit;
 	end;
 	i:=1;
 	GroupList.l:=CoolQ_Tools_Unpack_GetNum(i,4,data);
@@ -407,13 +407,13 @@ Begin
 			then
 			begin
 				result:=false;
-				exit();
+				exit;
 			end
 			else
 			begin
 				if CQ_Tools_TextToGroupInfo(CoolQ_Tools_Unpack_GetStr(i,data),GroupList.s[j])=false then begin
 					result:=false;
-					exit();
+					exit;
 				end;
 			end;
 	end;
@@ -456,7 +456,7 @@ Begin
 	data:=Base64_Decryption(data);
 	if length(data)<16 then begin
 		result:=-1000;
-		exit();
+		exit;
 	end;
 	i:=1;
 	info.QQID:=CoolQ_Tools_Unpack_GetNum(i,8,data);
@@ -481,11 +481,11 @@ Begin
 	return:=CQ_getGroupMemberInfoV2(AuthCode,groupid,QQID,nocache);
 	if return='' then begin
 		result:=-1000;
-		exit();
+		exit;
 	end;
 	if CQ_Tools_TextToGroupMember(return,info)=false then begin
 		result:=-1000;
-		exit();
+		exit;
 	end;
 	result:=0;
 End;
@@ -667,12 +667,12 @@ Begin
 	return:=PtoS(CQ_getGroupMemberList(AuthCode,GroupID));
 	if return='' then begin
 		result:=-1000;
-		exit();
+		exit;
 	end
 	else
 	if CQ_Tools_TextToGroupMemberList(return,GroupMemberList)=false then begin
 		result:=-1000;
-		exit();
+		exit;
 	end;
 	result:=0;
 End;
@@ -687,12 +687,12 @@ Begin
 	return:=PtoS(CQ_getGroupList(AuthCode));
 	if return='' then begin
 		result:=-1000;
-		exit();
+		exit;
 	end
 	else
 	if CQ_Tools_TextToGroupListInfo(return,GroupList)=false then begin
 		result:=-1000;
-		exit();
+		exit;
 	end;
 	result:=0;
 End;
