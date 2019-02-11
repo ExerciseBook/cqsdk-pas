@@ -212,7 +212,7 @@ Begin
 			and (s[i]<>'/') and (s[i]<>'\')
 			and (s[i]<>':') and (s[i]<>'%')
 			and (s[i]<>'[') and (s[i]<>']')
-			and (s[i]<>',') then a:=a+s[i]
+			and (s[i]<>',') and (s[i]<>'+') then a:=a+s[i]
 		else a:=a+'%'+SDECtoHEX(integer(s[i])div 16)+SDECtoHEX(integer(s[i])mod 16);
 
 	result:=(a);
@@ -245,6 +245,11 @@ Begin
 				outs:=outs+s[i];
 				i:=i+1;
 			end;
+		end
+		else
+		if s[i]='+' then begin
+			outs:=outs+' ';
+			i:=i+1;
 		end
 		else
 		begin
