@@ -100,7 +100,7 @@ begin
 end;
 
 {
-	·´×ª×Ö·û´®
+	åè½¬å­—ç¬¦ä¸²
 }
 Function CoolQ_Tools_Flip(s:ansistring):ansistring;
 Var
@@ -122,7 +122,7 @@ Begin
 	end;
 End;
 
-{ //Ã²ËÆÓĞÎÊÌâ
+{ //è²Œä¼¼æœ‰é—®é¢˜
 Function NumToBin(num:int64;len:longint):ansistring;
 Begin
 	result:='';
@@ -130,7 +130,7 @@ Begin
 		result:=NumToChar(num mod 256)+result;
 		num:=num div 256;
 	end;
-	while length(result)<len*3 do result:='00'+result; //ÕâÒ»ĞĞ
+	while length(result)<len*3 do result:='00'+result; //è¿™ä¸€è¡Œ
 End;
 }
 
@@ -145,7 +145,7 @@ Begin
 End;
 
 {
-	½â°ü
+	è§£åŒ…
 }
 Function CoolQ_Tools_Unpack_GetStr_GivenLength(Var i:longint;
 								len:longint;

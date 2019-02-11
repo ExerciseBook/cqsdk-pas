@@ -1,34 +1,34 @@
 Type
 	CQ_Type_QQ=
 		record
-			QQID			: int64;	//QQºÅ
-			nick			: string;	//êÇ³Æ
-			sex,						//ĞÔ±ğ
-			age				: longint;	//ÄêÁä
+			QQID			: int64;	//QQå·
+			nick			: string;	//æ˜µç§°
+			sex,						//æ€§åˆ«
+			age				: longint;	//å¹´é¾„
 		end;
 	CQ_Type_GroupMember=
 		record
-			GroupID,					// ÈººÅ
-			QQID			: int64;	// QQºÅ
-			nick,						// QQêÇ³Æ
-			card			: string;	// ÈºÃûÆ¬
-			sex,						// ĞÔ±ğ 0/ÄĞ 1/Å®
-			age				: longint;	// ÄêÁä
-			aera			: string;	// µØÇø
-			jointime,					// ÈëÈºÊ±¼ä
-			lastsent		: longint;	// ÉÏ´Î·¢ÑÔÊ±¼ä
-			level_name		: string;	// Í·ÏÎÃû×Ö
-			permission		: longint;	// È¨ÏŞµÈ¼¶ 1/³ÉÔ± 2/¹ÜÀíÔ± 3/ÈºÖ÷
-			unfriendly		: boolean;	// ²»Á¼³ÉÔ±¼ÇÂ¼
-			title			: string;	// ×Ô¶¨ÒåÍ·ÏÎ
-			titleExpiretime : longint;	// Í·ÏÎ¹ıÆÚÊ±¼ä
-			nickcanchange	: boolean;	// ¹ÜÀíÔ±ÊÇ·ñÄÜĞ­Öú¸ÄÃû
+			GroupID,					// ç¾¤å·
+			QQID			: int64;	// QQå·
+			nick,						// QQæ˜µç§°
+			card			: string;	// ç¾¤åç‰‡
+			sex,						// æ€§åˆ« 0/ç”· 1/å¥³
+			age				: longint;	// å¹´é¾„
+			aera			: string;	// åœ°åŒº
+			jointime,					// å…¥ç¾¤æ—¶é—´
+			lastsent		: longint;	// ä¸Šæ¬¡å‘è¨€æ—¶é—´
+			level_name		: string;	// å¤´è¡”åå­—
+			permission		: longint;	// æƒé™ç­‰çº§ 1/æˆå‘˜ 2/ç®¡ç†å‘˜ 3/ç¾¤ä¸»
+			unfriendly		: boolean;	// ä¸è‰¯æˆå‘˜è®°å½•
+			title			: string;	// è‡ªå®šä¹‰å¤´è¡”
+			titleExpiretime : longint;	// å¤´è¡”è¿‡æœŸæ—¶é—´
+			nickcanchange	: boolean;	// ç®¡ç†å‘˜æ˜¯å¦èƒ½ååŠ©æ”¹å
 		end;
 	CQ_Type_GroupMember_List=
 		record
-			l : longint; 						//Êı×é³¤¶È
-			s :	Array Of CQ_Type_GroupMember;	//Èº³ÉÔ±ÁĞ±í
-			//ÉÏÃæµÄÕâ¸ö¶¨Òå½Ğ×ö¶¯Ì¬Êı×é£¬Êı×é±àºÅÊÇ´ÓµÚ0Î»µ½µÚl-1Î»¡£Ò»¹²ÊÇlÎ»¡£
+			l : longint; 						//æ•°ç»„é•¿åº¦
+			s :	Array Of CQ_Type_GroupMember;	//ç¾¤æˆå‘˜åˆ—è¡¨
+			//ä¸Šé¢çš„è¿™ä¸ªå®šä¹‰å«åšåŠ¨æ€æ•°ç»„ï¼Œæ•°ç»„ç¼–å·æ˜¯ä»ç¬¬0ä½åˆ°ç¬¬l-1ä½ã€‚ä¸€å…±æ˜¯lä½ã€‚
 		end;
 	CQ_Type_GroupAnonymous=
 		record
@@ -38,9 +38,9 @@ Type
 		end;
 	CQ_Type_GroupFile=
 		record
-			fileid			: string;	//ÎÄ¼şID
-			filename		: string;	//ÎÄ¼şÃû
-			size			: int64;	//ÎÄ¼ş´óĞ¡
+			fileid			: string;	//æ–‡ä»¶ID
+			filename		: string;	//æ–‡ä»¶å
+			size			: int64;	//æ–‡ä»¶å¤§å°
 			busid			: longint;	//busid
 		end;
 	CQ_Type_GroupInfo=
@@ -50,8 +50,8 @@ Type
 		end;
 	CQ_Type_GroupList=
 		record
-			l : longint;					//Êı×é³¤¶È
-			s : Array Of CQ_Type_GroupInfo;	//ÈºÁĞ±í
+			l : longint;					//æ•°ç»„é•¿åº¦
+			s : Array Of CQ_Type_GroupInfo;	//ç¾¤åˆ—è¡¨
 		end;
 	{CQ_Type_MsgType=
 		record
@@ -66,32 +66,32 @@ Const
 	CR = #$0d;
 	LF = #$0a;
 	CRLF = CR + LF;
-	// »»ĞĞ·û
+	// æ¢è¡Œç¬¦
 	
 	CQAPIVER=9;
 	CQAPIVERTEXT='9';
-	// CoolQ API°æ±¾
+	// CoolQ APIç‰ˆæœ¬
 	
-	EVENT_IGNORE=0;        //ÊÂ¼ş_ºöÂÔ
-	EVENT_BLOCK=1;         //ÊÂ¼ş_À¹½Ø
+	EVENT_IGNORE=0;        //äº‹ä»¶_å¿½ç•¥
+	EVENT_BLOCK=1;         //äº‹ä»¶_æ‹¦æˆª
 
-	REQUEST_ALLOW=1;       //ÇëÇó_Í¨¹ı
-	REQUEST_ACCEPT=1;       //ÇëÇó_Í¨¹ı
-	REQUEST_DENY=2;        //ÇëÇó_¾Ü¾ø
+	REQUEST_ALLOW=1;       //è¯·æ±‚_é€šè¿‡
+	REQUEST_ACCEPT=1;       //è¯·æ±‚_é€šè¿‡
+	REQUEST_DENY=2;        //è¯·æ±‚_æ‹’ç»
 
-	REQUEST_GROUPADD=1;    //ÇëÇó_ÈºÌí¼Ó
-	REQUEST_GROUPINVITE=2; //ÇëÇó_ÈºÑûÇë
+	REQUEST_GROUPADD=1;    //è¯·æ±‚_ç¾¤æ·»åŠ 
+	REQUEST_GROUPINVITE=2; //è¯·æ±‚_ç¾¤é‚€è¯·
 
-	CQLOG_DEBUG=0;           //µ÷ÊÔ »ÒÉ«
-	CQLOG_INFO=10;           //ĞÅÏ¢ ºÚÉ«
-	CQLOG_INFOSUCCESS=11;    //ĞÅÏ¢(³É¹¦) ×ÏÉ«
-	CQLOG_INFORECV=12;       //ĞÅÏ¢(½ÓÊÕ) À¶É«
-	CQLOG_INFOSEND=13;       //ĞÅÏ¢(·¢ËÍ) ÂÌÉ«
-	CQLOG_WARNING=20;        //¾¯¸æ ³ÈÉ«
-	CQLOG_ERROR=30;          //´íÎó ºìÉ«
-	CQLOG_FATAL=40;          //ÖÂÃü´íÎó Éîºì
+	CQLOG_DEBUG=0;           //è°ƒè¯• ç°è‰²
+	CQLOG_INFO=10;           //ä¿¡æ¯ é»‘è‰²
+	CQLOG_INFOSUCCESS=11;    //ä¿¡æ¯(æˆåŠŸ) ç´«è‰²
+	CQLOG_INFORECV=12;       //ä¿¡æ¯(æ¥æ”¶) è“è‰²
+	CQLOG_INFOSEND=13;       //ä¿¡æ¯(å‘é€) ç»¿è‰²
+	CQLOG_WARNING=20;        //è­¦å‘Š æ©™è‰²
+	CQLOG_ERROR=30;          //é”™è¯¯ çº¢è‰²
+	CQLOG_FATAL=40;          //è‡´å‘½é”™è¯¯ æ·±çº¢
 
-	//Ğü¸¡´°ÑÕÉ«
+	//æ‚¬æµ®çª—é¢œè‰²
 	CQSuspensionWindow_Green=1;
 	CQSuspensionWindow_Orange=2;
 	CQSuspensionWindow_Red=3;
