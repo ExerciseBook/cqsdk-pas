@@ -1,4 +1,4 @@
-Function CQ_CharEncode(str:ansistring;Comma:boolean):ansistring;
+Function CQ_CharEncode(str:ansistring;Comma:boolean):ansistring;overload;
 Begin
 	Message_Replace(str,'&','&amp;');
 	Message_Replace(str,'[','&#91;');
@@ -8,7 +8,25 @@ Begin
 	end;
 	result:=(Str);
 End;
-Function CQ_CharDecode(str:ansistring):ansistring;
+Function CQ_CharEncode(str:widestring;Comma:boolean):widestring;overload;
+Begin
+	Message_Replace(str,'&','&amp;');
+	Message_Replace(str,'[','&#91;');
+	Message_Replace(str,']','&#93;');
+	if Comma then begin
+		Message_Replace(str,',','&#44;');
+	end;
+	result:=(Str);
+End;
+Function CQ_CharDecode(str:ansistring):ansistring;overload;
+Begin
+	Message_Replace(str,'&#93;',']');
+	Message_Replace(str,'&#91;','[');
+	Message_Replace(str,'&#44;',',');
+	Message_Replace(str,'&amp;','&');
+	result:=(str);
+End;
+Function CQ_CharDecode(str:widestring):widestring;overload;
 Begin
 	Message_Replace(str,'&#93;',']');
 	Message_Replace(str,'&#91;','[');
@@ -21,33 +39,51 @@ End;
 QQID为被@的群成员QQ。该参数为-1，则@全体成员，若次数用尽或权限不足则会转换为文本。
 举例：[CQ:at,qq=123456]
 }
-function CQCode_Group_At(QQID:int64):ansistring;
+function CQCode_Group_At(QQID:int64):ansistring;overload;
 Begin
-	result:=('[CQ:at,qq='+String_Choose(QQID=-1,'all',NumToChar(QQID))+']');
+	result:='[CQ:at,qq='+String_Choose_as(QQID=-1,'all',NumToChar_as(QQID))+']';
 End;
+function CQCode_Group_At(QQID:int64):widestring;overload;
+Begin
+	result:='[CQ:at,qq='+String_Choose_ws(QQID=-1,'all',NumToChar_ws(QQID))+']';
+End;
+
 
 {
 ID为emoji字符的unicode编号
 举例：[CQ:emoji,id=128513]（发送一个大笑的emoji表情）
 }
-function CQCode_emoji(ID:int64):ansistring;
+function CQCode_emoji(ID:int64):ansistring;overload;deprecated;
 Begin
-	result:=('[CQ:emoji,id='+NumToChar(ID)+']');
+	result:='[CQ:emoji,id='+NumToChar_as(ID)+']';
+End;
+function CQCode_emoji(ID:int64):widestring;overload;deprecated;
+Begin
+	result:='[CQ:emoji,id='+NumToChar_ws(ID)+']';
 End;
 
 {
 ID为0-170的数字
 举例：[CQ:face,id=14]（发送一个微笑的QQ表情）
 }
-function CQCode_face(ID:int64):ansistring;
+function CQCode_face(ID:int64):ansistring;overload;
 Begin
-	result:=('[CQ:at,face='+NumToChar(ID)+']');
+	result:='[CQ:at,face='+NumToChar_as(ID)+']';
+End;
+function CQCode_face(ID:int64):widestring;overload;
+Begin
+	result:='[CQ:at,face='+NumToChar_ws(ID)+']';
 End;
 
+
 //窗口抖动（仅支持好友消息使用）
-function CQCode_Shake:ansistring;
+function CQCode_Shake:ansistring;overload;
 Begin
-	result:=('[CQ:shake]');
+	result:='[CQ:shake]';
+End;
+function CQCode_Shake:widestring;overload;
+Begin
+	result:='[CQ:shake]';
 End;
 
 {
@@ -56,18 +92,35 @@ End;
 当 Force 为true时，代表强制使用匿名，如果匿名失败将取消该消息的发送。
 举例：
 }
-function CQCode_anonymous(Force:boolean):ansistring;	
+function CQCode_anonymous(Force:boolean):ansistring;overload;
 Begin
-	result:=('[CQ:anonymous'+String_Choose(Force,'',',ignore=true')+']');
+	result:='[CQ:anonymous'+String_Choose_as(Force,'',',ignore=true')+']';
 End;
+function CQCode_anonymous(Force:boolean):widestring;overload;
+Begin
+	result:='[CQ:anonymous'+String_Choose_ws(Force,'',',ignore=true')+']';
+End;
+function CQCode_anonymous():ansistring;overload;
+Begin
+	result:='[CQ:anonymous]';
+End;
+function CQCode_anonymous():widestring;overload;
+Begin
+	result:='[CQ:anonymous]';
+End;
+
 
 {
 url为图片文件名称，图片存放在酷Q目录的data\image\下
 举例：[CQ:image,file=1.jpg]（发送data\image\1.jpg）
 }
-function CQCode_image(url:ansistring):ansistring;
+function CQCode_image(url:ansistring):ansistring;overload;
 Begin
-	result:=('[CQ:image,file='+CQ_CharEncode(url,true)+']')
+	result:='[CQ:image,file='+CQ_CharEncode(url,true)+']';
+End;
+function CQCode_image(url:widestring):widestring;overload;
+Begin
+	result:='[CQ:image,file='+CQ_CharEncode(url,true)+']';
 End;
 
 {
@@ -78,10 +131,13 @@ musicid为对应音乐平台的数字音乐id
 [CQ:music,type=qq,id=422594]（发送一首QQ音乐的“Time after time”歌曲到群内）
 [CQ:music,type=163,id=28406557]（发送一首网易云音乐的“桜咲く”歌曲到群内）
 }
-function CQCode_Music(source:ansistring;musicid:int64;isnew:boolean):ansistring;
+function CQCode_Music(source:ansistring;musicid:int64;isnew:boolean):ansistring;overload;
 Begin
-	result:=('[CQ:music,type='+source+',id='+NumToChar(musicid)+String_Choose(isnew,',style=1','')+']')
-	{返回 (“[CQ:music,id=” ＋ 到文本 (歌曲ID) ＋ “]”)}
+	result:='[CQ:music,type='+source+',id='+NumToChar_as(musicid)+String_Choose_as(isnew,',style=1','')+']';
+End;
+function CQCode_Music(source:widestring;musicid:int64;isnew:boolean):widestring;overload;
+Begin
+	result:='[CQ:music,type='+source+',id='+NumToChar_ws(musicid)+String_Choose_ws(isnew,',style=1','')+']';
 End;
 
 {
@@ -92,33 +148,51 @@ title 音乐的标题，建议12字以内
 content 音乐的简介，建议30字以内
 image 音乐的封面图片链接，留空则为默认图片
 }
-function CQCode_Music_Custom(url,audio,title,content,image:ansistring):ansistring;
+function CQCode_Music_Custom(url,audio,title,content,image:ansistring):ansistring;overload;
 Begin
 	result:='[CQ:music,type=custom,url='+CQ_CharEncode(url,true)
 						+',audio='+CQ_CharEncode(audio,true)
-						+String_Choose(title='','',',title='+CQ_CharEncode(title,true))
-						+String_Choose(content='','',',content='+CQ_CharEncode(content,true))
-						+String_Choose(image='','',',image='+CQ_CharEncode(image,true))
+						+String_Choose_as(title='','',',title='+CQ_CharEncode(title,true))
+						+String_Choose_as(content='','',',content='+CQ_CharEncode(content,true))
+						+String_Choose_as(image='','',',image='+CQ_CharEncode(image,true))
+						+']';
+End;
+function CQCode_Music_Custom(url,audio,title,content,image:widestring):widestring;overload;
+Begin
+	result:='[CQ:music,type=custom,url='+CQ_CharEncode(url,true)
+						+',audio='+CQ_CharEncode(audio,true)
+						+String_Choose_ws(title='','',',title='+CQ_CharEncode(title,true))
+						+String_Choose_ws(content='','',',content='+CQ_CharEncode(content,true))
+						+String_Choose_ws(image='','',',image='+CQ_CharEncode(image,true))
 						+']';
 End;
 
 {
 发送位置分享(location)
-
 }
-function CQCode_Location(latitude,longitude:real;Zoom:longint;Name,Address:ansistring):ansistring;
+function CQCode_Location(latitude,longitude:real;Zoom:longint;Name,Address:ansistring):ansistring;overload;
 Begin
-	result:='[CQ:location,lat='+RealToDisplay(latitude,6)+',lon='+RealToDisplay(longitude,6);
-	if zoom>0 then result:=result+',zoom='+NumToChar(zoom);
+	result:='[CQ:location,lat='+RealToDisplay_as(latitude,6)+',lon='+RealToDisplay_as(longitude,6);
+	if zoom>0 then result:=result+',zoom='+NumToChar_as(zoom);
 	result:=result+',title='+CQ_CharEncode(Name,true)+',content'+CQ_CharEncode(Address,true)+']';
-ENd;
+End;
+function CQCode_Location(latitude,longitude:real;Zoom:longint;Name,Address:widestring):widestring;overload;
+Begin
+	result:='[CQ:location,lat='+RealToDisplay_ws(latitude,6)+',lon='+RealToDisplay_ws(longitude,6);
+	if zoom>0 then result:=result+',zoom='+NumToChar_ws(zoom);
+	result:=result+',title='+CQ_CharEncode(Name,true)+',content'+CQ_CharEncode(Address,true)+']';
+End;
 
 {
 id为该原创表情的ID，存放在酷Q目录的data\bface\下
 }
-function CQCode_bface(ID:int64):ansistring;
+function CQCode_bface(ID:int64):ansistring;overload;
 Begin
-	result:=('[CQ:bface,id='+NumToChar(ID)+']');
+	result:='[CQ:bface,id='+NumToChar_as(ID)+']';
+End;
+function CQCode_bface(ID:int64):widestring;overload;
+Begin
+	result:='[CQ:bface,id='+NumToChar_ws(ID)+']';
 End;
 
 {
@@ -126,46 +200,64 @@ End;
 2为是否为变声，若该参数为true则显示变声标记。该参数可被忽略。
 举例：[CQ:record,file=1.silk，magic=true]（发送data\record\1.silk，并标记为变声）
 }
-function CQCode_record(url:ansistring;magic:boolean):ansistring;
+function CQCode_record(url:ansistring;magic:boolean):ansistring;overload;
 Begin
-	result:=('[CQ:record,file='+CQ_CharEncode(url,true)+String_Choose(magic,',magic=true','')+']');
+	result:='[CQ:record,file='+CQ_CharEncode(url,true)+String_Choose_as(magic,',magic=true','')+']';
 End;
-
+function CQCode_record(url:widestring;magic:boolean):widestring;overload;
+Begin
+	result:='[CQ:record,file='+CQ_CharEncode(url,true)+String_Choose_ws(magic,',magic=true','')+']';
+End;
 {
 id为猜拳结果的类型，暂不支持发送时自定义。该参数可被忽略。
 1 - 猜拳结果为石头
 2 - 猜拳结果为剪刀
 3 - 猜拳结果为布
 }
-function CQCode_rps(ID:int64):ansistring;
+function CQCode_rps(ID:int64):ansistring;overload;
 Begin
-	result:=('[CQ:rps,id='+NumToChar(ID)+']');
+	result:='[CQ:rps,id='+NumToChar_as(ID)+']';
+End;
+function CQCode_rps(ID:int64):widestring;overload;
+Begin
+	result:='[CQ:rps,id='+NumToChar_ws(ID)+']';
 End;
 
 {
 id对应掷出的点数，暂不支持发送时自定义。该参数可被忽略。
 }
-function CQCode_dice(ID:int64):ansistring;
+function CQCode_dice(ID:int64):ansistring;overload;
 Begin
-	result:=('[CQ:dice,id='+NumToChar(ID)+']');
+	result:='[CQ:dice,id='+NumToChar_as(ID)+']';
+End;
+function CQCode_dice(ID:int64):widestring;overload;
+Begin
+	result:='[CQ:dice,id='+NumToChar_ws(ID)+']';
 End;
 
 {
 [CQ:share,url=” ＋ CQ码_转义 (url地址, 真) ＋ “,title=” ＋ CQ码_转义 (卡片标题, 真) ＋ “,content=” ＋ CQ码_转义 (卡片内容, 真) ＋ “,image=” ＋ CQ码_转义 (卡片图片url, 真) ＋ “]
 }
-function CQCode_share(url,title,Content,image:ansistring):ansistring;
+function CQCode_share(url,title,Content,image:ansistring):ansistring;overload;
 Begin
-	result:=('[CQ:share,url='+CQ_CharEncode(url,true)+',title='+CQ_CharEncode(title,true)+',content='+CQ_CharEncode(content,true)+',image='+CQ_CharEncode(image,true)+']');
+	result:='[CQ:share,url='+CQ_CharEncode(url,true)+',title='+CQ_CharEncode(title,true)+',content='+CQ_CharEncode(content,true)+',image='+CQ_CharEncode(image,true)+']';
+End;
+function CQCode_share(url,title,Content,image:widestring):widestring;overload;
+Begin
+	result:='[CQ:share,url='+CQ_CharEncode(url,true)+',title='+CQ_CharEncode(title,true)+',content='+CQ_CharEncode(content,true)+',image='+CQ_CharEncode(image,true)+']';
 End;
 
 {
 [CQ:contact,type=qq/group,id=Q号/群号]
 }
-function CQCode_contact(t:ansistring;id:int64):ansistring;
+function CQCode_contact(t:ansistring;id:int64):ansistring;overload;
 Begin
-	result:=('[CQ:contact,type='+t+',id='+NumToChar(id)+']');
+	result:='[CQ:contact,type='+t+',id='+NumToChar_as(id)+']';
 End;
-
+function CQCode_contact(t:widestring;id:int64):widestring;overload;
+Begin
+	result:='[CQ:contact,type='+t+',id='+NumToChar_ws(id)+']';
+End;
 
 {API}
 //发送私聊 Auth=106 //sendPrivateMsg

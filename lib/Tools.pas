@@ -23,7 +23,14 @@ Function NumToChar(a:int64):string;
 Begin
 	str(a,result);
 End;
-
+Function NumToChar_as(a:int64):ansistring;
+Begin
+	str(a,result);
+End;
+Function NumToChar_ws(a:int64):widestring;
+Begin
+	str(a,result);
+End;
 
 {
 	字符串 转换到 数字
@@ -55,7 +62,6 @@ End;
 {
 	双精浮点 转换到 能看的字符串
 }
-
 Function RealToDisplay(a:real;b:longint):string;
 Var
 	display:string;
@@ -84,32 +90,113 @@ Begin
 	result:=display;
 	exit;
 End;
-
+Function RealToDisplay_as(a:real;b:longint):ansistring;
+Var
+	display:ansistring;
+	i:longint;
+Begin
+	if a>=0 
+		then display:=''
+		else
+		begin
+			display:='-';
+			a:=-a;
+		end;
+	
+	display:=display+NumToChar(trunc(a));
+	a:=(a-trunc(a))*10;
+	
+	if b<0 then b:=16;
+	b:=min(b,16);
+	if b<>0 then display:=display+'.';
+	
+	for i:=1 to b do begin
+		display:=display+NumToChar(trunc(a));
+		a:=(a-trunc(a))*10;
+	end;
+	
+	result:=display;
+	exit;
+End;
+Function RealToDisplay_ws(a:real;b:longint):widestring;
+Var
+	display:widestring;
+	i:longint;
+Begin
+	if a>=0 
+		then display:=''
+		else
+		begin
+			display:='-';
+			a:=-a;
+		end;
+	
+	display:=display+NumToChar_ws(trunc(a));
+	a:=(a-trunc(a))*10;
+	
+	if b<0 then b:=16;
+	b:=min(b,16);
+	if b<>0 then display:=display+'.';
+	
+	for i:=1 to b do begin
+		display:=display+NumToChar_ws(trunc(a));
+		a:=(a-trunc(a))*10;
+	end;
+	
+	result:=display;
+	exit;
+End;
 
 {***********************************************************}
 
-Function String_Choose(expression:boolean;a,b:ansistring):ansistring;
+Function String_Choose(expression:boolean;a,b:ansistring):ansistring;overload;
+Begin
+	if expression then result:=a else result:=b;
+End;
+Function String_Choose(expression:boolean;a,b:widestring):widestring;overload;
+Begin
+	if expression then result:=a else result:=b;
+End;
+Function String_Choose_as(expression:boolean;a,b:ansistring):ansistring;
+Begin
+	if expression then result:=a else result:=b;
+End;
+Function String_Choose_ws(expression:boolean;a,b:widestring):widestring;
 Begin
 	if expression then result:=a else result:=b;
 End;
 
-
-Procedure Message_Replace(var a:ansistring;
-							  b,c:ansistring);
+Procedure Message_Replace(var a:ansistring;b,c:ansistring);overload;
 Var
 	i:longint;
-	lenb:longint;
+	lena,lenb:longint;
 Begin
 	i:=0;
+	lena:=length(a);
 	lenb:=length(b);
-	
 	repeat
 		inc(i);
 		if copy(a,i,lenb) = b then begin
 			a:=copy(a,1,i-1)+c+copy(a,i+lenb,length(a));
 			i:=i+length(c)-1;
 		end;
-	until i>=length(a);
+	until i>=lena;
+End;
+Procedure Message_Replace(var a:widestring;b,c:widestring);overload;
+Var
+	i:longint;
+	lena,lenb:longint;
+Begin
+	i:=0;
+	lena:=length(a);
+	lenb:=length(b);
+	repeat
+		inc(i);
+		if copy(a,i,lenb) = b then begin
+			a:=copy(a,1,i-1)+c+copy(a,i+lenb,length(a));
+			i:=i+length(c)-1;
+		end;
+	until i>=lena;
 End;
 
 Function PowerInt(bas: Int64;expo: Int64) : Int64;

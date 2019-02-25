@@ -22,8 +22,12 @@ interface
 	Function RealToChar(a:real):string;
 	Function CharToReal(a:string):real;
 	Function RealToDisplay(a:real;b:longint):string;
-	Function String_Choose(expression:boolean;a,b:ansistring):ansistring;
-	Procedure Message_Replace(var a:ansistring;b,c:ansistring);
+	Function String_Choose(expression:boolean;a,b:ansistring):ansistring;overload;
+	Function String_Choose(expression:boolean;a,b:widestring):widestring;overload;
+	Function String_Choose_as(expression:boolean;a,b:ansistring):ansistring;
+	Function String_Choose_ws(expression:boolean;a,b:widestring):widestring;
+	Procedure Message_Replace(var a:ansistring;b,c:ansistring);overload;
+	Procedure Message_Replace(var a:widestring;b,c:widestring);overload;
 	Function UrlEncode(s:ansistring):ansistring;
 	Function UrlDecode(s:ansistring):ansistring;
 	// lib\CoolQ_Tools.pas
@@ -31,24 +35,43 @@ interface
 	Function Base64_Decryption(s:ansistring):ansistring;
 	// lib\CoolQ_CQapplication.pas
 		// 酷Q码转义
-	Function CQ_CharEncode(str:ansistring;Comma:boolean):ansistring;
-	Function CQ_CharDecode(str:ansistring):ansistring;
+	Function CQ_CharEncode(str:ansistring;Comma:boolean):ansistring;overload;
+	Function CQ_CharEncode(str:widestring;Comma:boolean):widestring;overload;
+	Function CQ_CharDecode(str:ansistring):ansistring;overload;
+	Function CQ_CharDecode(str:widestring):widestring;overload;
 		// 酷Q码封装
-	function CQCode_Group_At(QQID:int64):ansistring;
-	function CQCode_emoji(ID:int64):ansistring;
-	function CQCode_face(ID:int64):ansistring;
-	function CQCode_Shake:ansistring;
-	function CQCode_anonymous(Force:boolean):ansistring;	
-	function CQCode_image(url:ansistring):ansistring;
-	function CQCode_Music(source:ansistring;musicid:int64;isnew:boolean):ansistring;
-	function CQCode_Music_Custom(url,audio,title,content,image:ansistring):ansistring;
-	function CQCode_Location(latitude,longitude:real;Zoom:longint;Name,Address:ansistring):ansistring;
-	function CQCode_bface(ID:int64):ansistring;
-	function CQCode_record(url:ansistring;magic:boolean):ansistring;
-	function CQCode_rps(ID:int64):ansistring;
-	function CQCode_dice(ID:int64):ansistring;
-	function CQCode_share(url,title,Content,image:ansistring):ansistring;
-	function CQCode_contact(t:ansistring;id:int64):ansistring;
+	function CQCode_Group_At(QQID:int64):ansistring;overload;
+	function CQCode_Group_At(QQID:int64):widestring;overload;
+	function CQCode_emoji(ID:int64):ansistring;overload;deprecated;
+	function CQCode_emoji(ID:int64):widestring;overload;deprecated;
+	function CQCode_face(ID:int64):ansistring;overload;
+	function CQCode_face(ID:int64):widestring;overload;
+	function CQCode_Shake:ansistring;overload;
+	function CQCode_Shake:widestring;overload;
+	function CQCode_anonymous(Force:boolean):ansistring;overload;
+	function CQCode_anonymous(Force:boolean):widestring;overload;
+	function CQCode_anonymous():ansistring;overload;
+	function CQCode_anonymous():widestring;overload;
+	function CQCode_image(url:ansistring):ansistring;overload;
+	function CQCode_image(url:widestring):widestring;overload;
+	function CQCode_Music(source:ansistring;musicid:int64;isnew:boolean):ansistring;overload;
+	function CQCode_Music(source:widestring;musicid:int64;isnew:boolean):widestring;overload;
+	function CQCode_Music_Custom(url,audio,title,content,image:ansistring):ansistring;overload;
+	function CQCode_Music_Custom(url,audio,title,content,image:widestring):widestring;overload;
+	function CQCode_Location(latitude,longitude:real;Zoom:longint;Name,Address:ansistring):ansistring;overload;
+	function CQCode_Location(latitude,longitude:real;Zoom:longint;Name,Address:widestring):widestring;overload;
+	function CQCode_bface(ID:int64):ansistring;overload;
+	function CQCode_bface(ID:int64):widestring;overload;
+	function CQCode_record(url:ansistring;magic:boolean):ansistring;overload;
+	function CQCode_record(url:widestring;magic:boolean):widestring;overload;
+	function CQCode_rps(ID:int64):ansistring;overload;
+	function CQCode_rps(ID:int64):widestring;overload;
+	function CQCode_dice(ID:int64):ansistring;overload;
+	function CQCode_dice(ID:int64):widestring;overload;
+	function CQCode_share(url,title,Content,image:ansistring):ansistring;overload;
+	function CQCode_share(url,title,Content,image:widestring):widestring;overload;
+	function CQCode_contact(t:ansistring;id:int64):ansistring;overload;
+	function CQCode_contact(t:widestring;id:int64):widestring;overload;
 		// 酷QAPI
 	function CQ_i_sendPrivateMsg(QQID:int64;msg:ansistring):longint;				//Auth=106 //sendPrivateMsg
 	function CQ_sendPrivateMsg(QQID:int64;msg:ansistring):longint;overload;			//Auth=106 //sendPrivateMsg
@@ -120,12 +143,12 @@ interface
 Var
 	AuthCode:longint;
 	//AuthCode CoolQ用来识别你是否是合法\调用的玩意儿
-	CQAPPID		:ansistring='com.binkic.cqdemo';
-	CQAPPINFO	:ansistring;
 	
-	GlobalUTF8Mode	:boolean;
+	CQAPPID		:ansistring='com.binkic.cqdemo';
 	//请在应用主程序中修改APPID为你的APPID
 
+	CQAPPINFO	:ansistring;
+	GlobalUTF8Mode:boolean;
 implementation
 
 uses math,sysutils,iconv; 
