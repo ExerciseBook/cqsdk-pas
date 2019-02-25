@@ -1,7 +1,7 @@
 {
 	Char* 转换到 字符串
 }
-Function PtoS(a:pchar):ansistring;
+Function PtoS(a:PAnsiChar):ansistring;
 Begin
 	result:=strPas(a)
 End;
@@ -9,9 +9,9 @@ End;
 {
 	字符串 转换到 Char*
 }
-Function StoP(a:ansistring):Pchar;
+Function StoP(a:ansistring):PAnsiChar;
 Begin
-	result:=pchar(@a[1]);
+	result:=PAnsiChar(@a[1]);
 End;
 
 {***********************************************************}
