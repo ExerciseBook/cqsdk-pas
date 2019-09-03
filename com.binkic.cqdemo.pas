@@ -1,28 +1,28 @@
 {
 	CoolQ SDK for Pascal/Delphi
-	API°æ±¾	£º	9.9
-	±àÒëÆ÷	£º	FPC 3.0.0
+	APIç‰ˆæœ¬	ï¼š	9.9
+	ç¼–è¯‘å™¨	ï¼š	FPC 3.0.0
 	
-	×¢Òâ Free Pascal
-		ÀïµÄÊ±¼ä¿âÊÇÒÔµ±Ç°ÏµÍ³Ê±¼äµÄ 1970-1-1 00:00:00 ×÷ÎªUnixÊ±¼ä´ÁÆðµã
-		È»¶øÌÚÑ¶´«µÝµÄÐÅÏ¢ÊÇÒÔ ±ê×¼Ê±¼äµÄ1970-1-1 00:00:00 ×÷ÎªÊ±¼ä´ÁÆðµã
+	æ³¨æ„ Free Pascal
+		é‡Œçš„æ—¶é—´åº“æ˜¯ä»¥å½“å‰ç³»ç»Ÿæ—¶é—´çš„ 1970-1-1 00:00:00 ä½œä¸ºUnixæ—¶é—´æˆ³èµ·ç‚¹
+		ç„¶è€Œè…¾è®¯ä¼ é€’çš„ä¿¡æ¯æ˜¯ä»¥ æ ‡å‡†æ—¶é—´çš„1970-1-1 00:00:00 ä½œä¸ºæ—¶é—´æˆ³èµ·ç‚¹
 }
 library
 	testdll;
-	//DLL ±àÒë
+	//DLL ç¼–è¯‘
 
 {$APPTYPE GUI}
 {$I-}
 {$h+}
 
 Uses
-	iconv,CoolQSDK,		//¿áQSDKµ¥Ôª
+	iconv,CoolQSDK,		//é…·QSDKå•å…ƒ
 	windows,math,dateutils,sysutils,Classes,
 	
-	plugin_events, //²å¼þÊÂ¼þ´¦Àíµ¥Ôª
-	plugin_menu //²å¼þ²Ëµ¥´¦Àíµ¥Ôª
+	plugin_events, //æ’ä»¶äº‹ä»¶å¤„ç†å•å…ƒ
+	plugin_menu //æ’ä»¶èœå•å¤„ç†å•å…ƒ
 	;
-	//ÔØÈë¿â
+	//è½½å…¥åº“
 
 
 
@@ -30,22 +30,15 @@ Uses
 
 
 { 
-* ·µ»ØÓ¦ÓÃµÄApiVer¡¢Appid£¬´ò°üºó½«²»»áµ÷ÓÃ
+* è¿”å›žåº”ç”¨çš„ApiVerã€Appidï¼Œæ‰“åŒ…åŽå°†ä¸ä¼šè°ƒç”¨
 }
 Function AppInfo:pChar;
 stdcall; 
 Begin
 	CQAPPID:='com.binkic.cqdemo';
-	//ÇëÐÞ¸ÄAPPIDÎªÄãµÄAPPID
+	//è¯·ä¿®æ”¹APPIDä¸ºä½ çš„APPID
 	
-	
-	//GlobalUTF8Mode:=true; //ÊÇ·ñ¿ªÆôÈ«¾ÖUTF8Ä£Ê½
-	{
-		¿áQµÄËùÓÐapiÏÖÔÚÊ¹ÓÃµÄÊÇgb18030×÷ÎªunicodeÖ§³Ö¡£
-		¿ªÆôÕâ¸ö¹¦ÄÜºó²å¼þÄÚµÄËùÓÐapi½«»áÓÉÕâ¸ösdkÄÚÖÃµÄ¹¦ÄÜ×Ô¶¯×ögb18030Óëutf8µÄ×ª»»
-	}
-	
-	//ÏÂÃæÁ½ÐÐ²»ÓÃÐÞ¸Ä //Ã»Ã«²¡£¬µÄÈ·ÊÇÁ½ÐÐ¡£ #»¬»ü
+	//ä¸‹é¢ä¸¤è¡Œä¸ç”¨ä¿®æ”¹
 	CQAPPINFO:=CQAPIVERTEXT+','+CQAPPID;
 {$IFDEF FPC}
 	exit(StoP(CQAPPINFO));
@@ -55,13 +48,19 @@ Begin
 End;
 
 {
-* ½ÓÊÕÓ¦ÓÃAuthCode£¬¿áQ¶ÁÈ¡Ó¦ÓÃÐÅÏ¢ºó£¬Èç¹û½ÓÊÜ¸ÃÓ¦ÓÃ£¬½«»áµ÷ÓÃÕâ¸öº¯Êý²¢´«µÝAuthCode¡£
-* ²»ÒªÔÚ±¾º¯Êý´¦ÀíÆäËûÈÎºÎ´úÂë£¬ÒÔÃâ·¢ÉúÒì³£Çé¿ö¡£ÈçÐèÖ´ÐÐ³õÊ¼»¯´úÂëÇëÔÚStartupÊÂ¼þÖÐÖ´ÐÐ£¨Type=1001£©¡£
+* æŽ¥æ”¶åº”ç”¨AuthCodeï¼Œé…·Qè¯»å–åº”ç”¨ä¿¡æ¯åŽï¼Œå¦‚æžœæŽ¥å—è¯¥åº”ç”¨ï¼Œå°†ä¼šè°ƒç”¨è¿™ä¸ªå‡½æ•°å¹¶ä¼ é€’AuthCodeã€‚
+* ä¸è¦åœ¨æœ¬å‡½æ•°å¤„ç†å…¶ä»–ä»»ä½•ä»£ç ï¼Œä»¥å…å‘ç”Ÿå¼‚å¸¸æƒ…å†µã€‚å¦‚éœ€æ‰§è¡Œåˆå§‹åŒ–ä»£ç è¯·åœ¨Startupäº‹ä»¶ä¸­æ‰§è¡Œï¼ˆType=1001ï¼‰ã€‚
 }
 Function Initialize(ac:longint):longint;
 stdcall;
 Begin
 	AuthCode:=ac;
+		
+	//GlobalUTF8Mode:=true; //æ˜¯å¦å¼€å¯å…¨å±€UTF8æ¨¡å¼
+	{
+		é…·Qçš„æ‰€æœ‰apiçŽ°åœ¨ä½¿ç”¨çš„æ˜¯gb18030ä½œä¸ºunicodeæ”¯æŒã€‚
+		å¼€å¯è¿™ä¸ªåŠŸèƒ½åŽæ’ä»¶å†…çš„æ‰€æœ‰apiå°†ä¼šç”±è¿™ä¸ªsdkå†…ç½®çš„åŠŸèƒ½è‡ªåŠ¨åšgb18030ä¸Žutf8çš„è½¬æ¢
+	}
 {$IFDEF FPC}
 	exit(0);
 {$ELSE}
@@ -436,8 +435,6 @@ Begin
 End;
 
 exports
-	//ÕâÀïÊÇÔÊÐíÍâ²¿µ÷ÓÃµÄº¯ÊýÁÐ±í
-	//index ºóÃæ¸ú×ÅµÄÊý×ÖÖ»ÊÇÇ¿ÆÈÖ¢µ÷ÕûË³ÐòÓÃµÄ¡û_¡û Ã²ËÆÃ»ÓÐÊ²Ã´Êµ¼ÊÓÃÍ¾
 	AppInfo index 1,
 	Initialize index 2,
 	_eventStartup index 3,

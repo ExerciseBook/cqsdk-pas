@@ -171,6 +171,7 @@ Const
 	function CQ_Tools_TextToAnonymous(source:ansistring;Var Anonymous:CQ_Type_GroupAnonymous):boolean;
 	Function CQ_Tools_TextToFile(source:string;Var info:CQ_Type_GroupFile):boolean;
 	Function CQ_i_GetCookies():ansistring;
+	Function CQ_i_getCookiesV2(domain:ansistring):ansistring;
 	Function CQ_i_getCsrfToken():longint;
 	Function CQ_i_GetLoginQQ():int64;
 	Function CQ_i_getLoginNick():string;
@@ -519,10 +520,14 @@ function CQ_getStrangerInfo(AuthCode:longint;QQID:int64;nocache:boolean):Pchar;
 	stdcall; external 'CQP.dll' name 'CQ_getStrangerInfo';	
 function CQ_addLog(AuthCode,priority:longint;const category,content:Pchar):longint;
 	stdcall; external 'CQP.dll' name 'CQ_addLog';
-function CQ_getRecord(AuthCode:longint;filename,format:Pchar):Pchar;
+function CQ_getRecord(AuthCode:longint;filename,format:Pchar):Pchar;		//【已弃用】接收语音，并返回语音文件相对路径
 	stdcall; external 'CQP.dll' name 'CQ_getRecord';
+function CQ_getRecordV2(AuthCode:longint;filename,format:Pchar):Pchar;
+	stdcall; external 'CQP.dll' name 'CQ_getRecordV2';
 function CQ_getCookies(AuthCode:longint):Pchar;
 	stdcall; external 'CQP.dll' name 'CQ_getCookies';
+function CQ_getCookiesV2(AuthCode:longint;domain:Pchar):Pchar;
+	stdcall; external 'CQP.dll' name 'CQ_getCookiesV2';
 function CQ_getCsrfToken(AuthCode:longint):longint;
 	stdcall; external 'CQP.dll' name 'CQ_getCsrfToken';
 function CQ_getLoginQQ(AuthCode:longint):int64;
@@ -539,6 +544,12 @@ function CQ_getGroupList(AuthCode:longint):Pchar;
 	stdcall; external 'CQP.dll' name 'CQ_getGroupList';
 function CQ_deleteMsg(AuthCode:longint;MsgId:int64):longint;
 	stdcall; external 'CQP.dll' name 'CQ_deleteMsg';
+function CQ_getImage(AuthCode:longint;fileName:Pchar):Pchar;	//接收图片，并返回图片文件绝对路径
+	stdcall; external 'CQP.dll' name 'CQ_getImage';
+function CQ_canSendImage(AuthCode:longint):longint;				//是否支持发送语音，返回大于 0 为支持，等于 0 为不支持
+	stdcall; external 'CQP.dll' name 'CQ_canSendImage';
+function CQ_canSendRecord(AuthCode:longint):longint;			//是否支持发送语音，返回大于 0 为支持，等于 0 为不支持
+	stdcall; external 'CQP.dll' name 'CQ_canSendRecord';
 
 	
 procedure InitBase64;
@@ -1189,7 +1200,16 @@ End;
 //获取Cookies Auth=20 慎用,此接口需要严格授权 //getCookies
 Function CQ_i_GetCookies():ansistring;
 Begin
-	result:=(CQ_GetCookies(AuthCode));
+	result:=PtoS(CQ_GetCookies(AuthCode));
+End;
+
+//获取Cookies Auth=20 慎用,此接口需要严格授权 //getCookiesV2
+{
+	domain 目标域名，如 api.example.com
+}
+Function CQ_i_getCookiesV2(domain:ansistring):ansistring;
+Begin
+	result:=PtoS(CQ_getCookiesV2(AuthCode,StoP(domain)));
 End;
 
 //获取CsrfToken Auth=20 即QQ网页用到的bkn/g_tk等 慎用,此接口需要严格授权 //getCsrfToken
