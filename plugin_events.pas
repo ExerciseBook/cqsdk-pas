@@ -7,16 +7,16 @@ Function code_eventStartup:longint;
 Function code_eventExit:longint;
 Function code_eventEnable:longint;
 Function code_eventDisable:longint;
-Function code_eventPrivateMsg(subType,MsgID:longint;fromQQ:int64;const msg:ansistring;font:longint):longint;
-Function code_eventGroupMsg(subType,MsgID:longint;fromgroup,fromQQ:int64;const fromAnonymous,msg:ansistring;font:longint):longint;
-Function code_eventDiscussMsg(subType,MsgID:longint;fromDiscuss,fromQQ:int64;msg:ansistring;font:longint):longint;
+Function code_eventPrivateMsg(subType,MsgID:longint;fromQQ:int64;const msg:widestring;font:longint):longint;
+Function code_eventGroupMsg(subType,MsgID:longint;fromgroup,fromQQ:int64;const fromAnonymous:ansistring;const msg:widestring;font:longint):longint;
+Function code_eventDiscussMsg(subType,MsgID:longint;fromDiscuss,fromQQ:int64;msg:widestring;font:longint):longint;
 Function code_eventGroupUpload(subType,sendTime:longint;fromGroup,fromQQ:int64;Pfileinfo:ansistring):longint;
 Function code_eventSystem_GroupAdmin(subType,sendTime:longint;fromGroup,beingOperateQQ:int64):longint;
 Function code_eventSystem_GroupMemberDecrease(subType,sendTime:longint;fromGroup,fromQQ,beingOperateQQ:int64):longint;
 Function code_eventSystem_GroupMemberIncrease(subType,sendTime:longint;fromGroup,fromQQ,beingOperateQQ:int64):longint;
 Function code_eventFriend_Add(subType,sendTime:longint;fromQQ:int64):longint;
-Function code_eventRequest_AddFriend(subType,sendTime:longint;fromQQ:int64;const msg:ansistring;responseFlag:Pchar):longint;
-Function code_eventRequest_AddGroup(subType,sendTime:longint;fromGroup,fromQQ:int64;msg:ansistring;responseFlag:Pchar):longint;
+Function code_eventRequest_AddFriend(subType,sendTime:longint;fromQQ:int64;const msg:widestring;responseFlag:PAnsichar):longint;
+Function code_eventRequest_AddGroup(subType,sendTime:longint;fromGroup,fromQQ:int64;msg:widestring;responseFlag:PAnsichar):longint;
 			
 implementation
 {
@@ -84,7 +84,7 @@ End;
 Function code_eventPrivateMsg(
 			subType,MsgID			:longint;
 			fromQQ					:int64;
-			const msg				:ansistring;
+			const msg				:widestring;
 			font					:longint):longint;
 Begin
 {$IFDEF FPC}
@@ -102,7 +102,8 @@ End;
 Function code_eventGroupMsg(
 			subType,MsgID			:longint;
 			fromgroup,fromQQ		:int64;
-			const fromAnonymous,msg	:ansistring;
+			const fromAnonymous		:ansistring;
+			const msg				:widestring;
 			font					:longint):longint;
 Var
 	AnonymousMes	:	CQ_Type_GroupAnonymous;
@@ -129,7 +130,7 @@ End;
 Function code_eventDiscussMsg(
 			subType,MsgID			:longint;
 			fromDiscuss,fromQQ		:int64;
-			msg						:ansistring;
+			msg						:widestring;
 			font					:longint):longint;
 Begin
 {$IFDEF FPC}
@@ -149,7 +150,7 @@ Function code_eventGroupUpload(
 			Pfileinfo			:ansistring):longint;
 Var
 	FileInfo	:CQ_Type_GroupFile;
-	Back		:ansistring;
+	Back		:widestring;
 Begin
 	//收到文件上传信息 并尝试解析
 	if CQ_Tools_TextToFile(Pfileinfo,FileInfo) then begin
@@ -290,8 +291,8 @@ End;
 Function code_eventRequest_AddFriend(
 			subType,sendTime			:longint;
 			fromQQ						:int64;
-			const msg					:ansistring;
-			responseFlag				:Pchar):longint;
+			const msg					:widestring;
+			responseFlag				:PAnsichar):longint;
 Begin
 	CQ_i_setFriendAddRequest(responseFlag, REQUEST_DENY,''); //拒绝好友添加请求
 	
@@ -314,8 +315,8 @@ End;
 Function code_eventRequest_AddGroup(
 			subType,sendTime			:longint;
 			fromGroup,fromQQ			:int64;
-			msg							:ansistring;
-			responseFlag				:Pchar):longint;
+			msg							:widestring;
+			responseFlag				:PAnsichar):longint;
 Begin	
 {$IFDEF FPC}
 	exit(EVENT_IGNORE); 

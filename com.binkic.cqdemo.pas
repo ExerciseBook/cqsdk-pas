@@ -32,7 +32,7 @@ Uses
 { 
 * 返回应用的ApiVer、Appid，打包后将不会调用
 }
-Function AppInfo:pChar;
+Function AppInfo:PAnsichar;
 stdcall; 
 Begin
 	CQAPPID:='com.binkic.cqdemo';
@@ -113,143 +113,84 @@ End;
 Function _eventPrivateMsg(
 			subType,MsgID		:longint;
 			fromQQ					:int64;
-			const msg				:Pchar;
+			const msg				:PAnsichar;
 			font					:longint):longint;
 stdcall;
 Begin
 {$IFDEF FPC}
-	if GlobalUTF8Mode
-	then
-		exit(code_eventPrivateMsg(
-				subType,MsgID,
-				fromQQ,
-				CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
-				font
-			)
+	exit(code_eventPrivateMsg(
+			subType,MsgID,
+			fromQQ,
+			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+			font
 		)
-	else
-		exit(code_eventPrivateMsg(
-				subType,MsgID,
-				fromQQ,
-				PtoS(msg),
-				font
-			)
-		);
+	);
 {$ELSE}
-	if GlobalUTF8Mode
-	then
-		result:=code_eventPrivateMsg(
-				subType,MsgID,
-				fromQQ,
-				CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
-				font
-			)
-	else
-		result:=code_eventPrivateMsg(
-				subType,MsgID,
-				fromQQ,
-				PtoS(msg),
-				font
-			);
+	result:=code_eventPrivateMsg(
+			subType,MsgID,
+			fromQQ,
+			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+			font
+		);
 {$ENDIF}
 End;
 
 Function _eventGroupMsg(
 			subType,MsgID		:longint;
 			fromgroup,fromQQ		:int64;
-			const fromAnonymous,msg	:Pchar;
+			const fromAnonymous,msg	:PAnsichar;
 			font					:longint):longint;
 stdcall;
 Begin
 {$IFDEF FPC}
-	if GlobalUTF8Mode
-	then
-		exit(code_eventGroupMsg(
-				subType,MsgID,
-				fromgroup,fromQQ,
-				PtoS(fromAnonymous),
-				CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
-				font
-			)
+	exit(code_eventGroupMsg(
+			subType,MsgID,
+			fromgroup,fromQQ,
+			PtoS(fromAnonymous),
+			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+			font
 		)
-	else
-		exit(code_eventGroupMsg(
-				subType,MsgID,
-				fromgroup,fromQQ,
-				PtoS(fromAnonymous),
-				PtoS(msg),
-				font
-			)
-		);
+	);
 {$ELSE}
-	if GlobalUTF8Mode
-	then
-		result:=code_eventGroupMsg(
-				subType,MsgID,
-				fromgroup,fromQQ,
-				PtoS(fromAnonymous),
-				CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
-				font
-			)
-	else
-		result:=code_eventGroupMsg(
-				subType,MsgID,
-				fromgroup,fromQQ,
-				PtoS(fromAnonymous),
-				PtoS(msg),
-				font
-			);
+	result:=code_eventGroupMsg(
+			subType,MsgID,
+			fromgroup,fromQQ,
+			PtoS(fromAnonymous),
+			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+			font
+		);
 {$ENDIF}
 End;
 
 Function _eventDiscussMsg(
 			subType,MsgID		:longint;
 			fromDiscuss,fromQQ		:int64;
-			msg						:Pchar;
+			msg						:PAnsichar;
 			font					:longint):longint;
 stdcall;
 Begin
 {$IFDEF FPC}
-	if GlobalUTF8Mode
-	then
-		exit(code_eventDiscussMsg(
-			subType,MsgID,
-			fromDiscuss,fromQQ,
-			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
-			font
-			)
+	exit(code_eventDiscussMsg(
+		subType,MsgID,
+		fromDiscuss,fromQQ,
+		CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+		font
 		)
-	else
-		exit(code_eventDiscussMsg(
-			subType,MsgID,
-			fromDiscuss,fromQQ,
-			PtoS(msg),
-			font
-			)
-		)
+	);
 {$ELSE}
-	if GlobalUTF8Mode
-	then
-		result:=code_eventDiscussMsg(
-			subType,MsgID,
-			fromDiscuss,fromQQ,
-			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
-			font
-			)
-	else
-		result:=code_eventDiscussMsg(
-			subType,MsgID,
-			fromDiscuss,fromQQ,
-			PtoS(msg),
-			font
-			)
+	result:=code_eventDiscussMsg(
+		subType,MsgID,
+		fromDiscuss,fromQQ,
+		CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+		font
+		);
 {$ENDIF}
 End;
 
 Function _eventGroupUpload(
 			subType,sendTime	:longint;
 			fromGroup,fromQQ	:int64;
-			fileinfo			:Pchar):longint;
+			fileinfo			:PAnsichar):longint;
 stdcall;
 Begin
 {$IFDEF FPC}
@@ -351,86 +292,48 @@ End;
 Function _eventRequest_AddFriend(
 			subType,sendTime			:longint;
 			fromQQ						:int64;
-			const msg,responseFlag		:Pchar):longint;
+			const msg,responseFlag		:PAnsichar):longint;
 stdcall;
 Begin
 {$IFDEF FPC}
-	if GlobalUTF8Mode
-	then
-		exit(code_eventRequest_AddFriend(
-				subType,sendTime,
-				fromQQ,
-				CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
-				responseFlag
-			)
+	exit(code_eventRequest_AddFriend(
+			subType,sendTime,
+			fromQQ,
+			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+			responseFlag
 		)
-	else
-		exit(code_eventRequest_AddFriend(
-				subType,sendTime,
-				fromQQ,
-				PtoS(msg),
-				responseFlag
-			)
-		);
+	);
 {$ELSE}
-	if GlobalUTF8Mode
-	then
-		result:=code_eventRequest_AddFriend(
-				subType,sendTime,
-				fromQQ,
-				CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
-				responseFlag
-			)
-	else
-		result:=code_eventRequest_AddFriend(
-				subType,sendTime,
-				fromQQ,
-				PtoS(msg),
-				responseFlag
-			);
+	result:=code_eventRequest_AddFriend(
+			subType,sendTime,
+			fromQQ,
+			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+			responseFlag
+		);
 {$ENDIF}
 End;
 
 Function _eventRequest_AddGroup(
 			subType,sendTime			:longint;
 			fromGroup,fromQQ			:int64;
-			msg,responseFlag			:Pchar):longint;
+			msg,responseFlag			:PAnsichar):longint;
 stdcall;
 Begin
 {$IFDEF FPC}
-	if GlobalUTF8Mode
-	then
-		exit(code_eventRequest_AddGroup(
-				subType,sendTime,
-				fromGroup,fromQQ,
-				CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
-				responseFlag
-			)
+	exit(code_eventRequest_AddGroup(
+			subType,sendTime,
+			fromGroup,fromQQ,
+			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+			responseFlag
 		)
-	else
-		exit(code_eventRequest_AddGroup(
-				subType,sendTime,
-				fromGroup,fromQQ,
-				PtoS(msg),
-				responseFlag
-			)
-		);
+	);
 {$ELSE}
-	if GlobalUTF8Mode
-	then
-		result:=code_eventRequest_AddGroup(
-				subType,sendTime,
-				fromGroup,fromQQ,
-				CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
-				responseFlag
-			)
-	else
-		result:=code_eventRequest_AddGroup(
-				subType,sendTime,
-				fromGroup,fromQQ,
-				PtoS(msg),
-				responseFlag
-			);
+	result:=code_eventRequest_AddGroup(
+			subType,sendTime,
+			fromGroup,fromQQ,
+			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+			responseFlag
+		);
 {$ENDIF}
 End;
 
