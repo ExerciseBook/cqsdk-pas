@@ -186,7 +186,7 @@ Const
 	function CQ_i_getRecord(filename,format:ansistring):ansistring;overload;
 	function CQ_i_getRecord(filename:widestring;format:ansistring):ansistring;overload;
 	function CQ_Tools_TextToAnonymous(source:ansistring;Var Anonymous:CQ_Type_GroupAnonymous):boolean;
-	Function CQ_Tools_TextToFile(source:string;Var info:CQ_Type_GroupFile):boolean;
+	Function CQ_Tools_TextToFile(source:ansistring;Var info:CQ_Type_GroupFile):boolean;
 	Function CQ_i_GetCookies():ansistring;
 	Function CQ_i_getCookiesV2(domain:ansistring):ansistring;
 	Function CQ_i_getCsrfToken():longint;
@@ -459,7 +459,7 @@ End;
 {
 	十进制转二进制
 }
-Function Hex_Conversion_10to2(s:longint):string;
+Function Hex_Conversion_10to2(s:longint):ansistring;
 Begin
         result:='';
         while s>0 do begin
@@ -471,7 +471,7 @@ End;
 {
 	二进制转十进制
 }
-Function Hex_Conversion_2to10(s:string):longint;
+Function Hex_Conversion_2to10(s:ansistring):longint;
 Var
         i:longint;
 Begin
@@ -1216,7 +1216,7 @@ Begin
 End;
 
 //文本到群文件
-Function CQ_Tools_TextToFile(source:string;Var info:CQ_Type_GroupFile):boolean;
+Function CQ_Tools_TextToFile(source:ansistring;Var info:CQ_Type_GroupFile):boolean;
 Var
 	data:ansistring;
 	i:longint;
