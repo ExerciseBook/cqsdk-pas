@@ -118,7 +118,7 @@ Begin
 	exit(code_eventPrivateMsg(
 			subType,MsgID,
 			fromQQ,
-			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+			CoolQ_Tools_AnsiToWide(PtoS(msg)),
 			font
 		)
 	);
@@ -126,7 +126,7 @@ Begin
 	result:=code_eventPrivateMsg(
 			subType,MsgID,
 			fromQQ,
-			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+			CoolQ_Tools_AnsiToWide(PtoS(msg)),
 			font
 		);
 {$ENDIF}
@@ -144,7 +144,7 @@ Begin
 			subType,MsgID,
 			fromgroup,fromQQ,
 			PtoS(fromAnonymous),
-			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+			CoolQ_Tools_AnsiToWide(PtoS(msg)),
 			font
 		)
 	);
@@ -153,7 +153,7 @@ Begin
 			subType,MsgID,
 			fromgroup,fromQQ,
 			PtoS(fromAnonymous),
-			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+			CoolQ_Tools_AnsiToWide(PtoS(msg)),
 			font
 		);
 {$ENDIF}
@@ -170,7 +170,7 @@ Begin
 	exit(code_eventDiscussMsg(
 		subType,MsgID,
 		fromDiscuss,fromQQ,
-		CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+		CoolQ_Tools_AnsiToWide(PtoS(msg)),
 		font
 		)
 	);
@@ -178,7 +178,7 @@ Begin
 	result:=code_eventDiscussMsg(
 		subType,MsgID,
 		fromDiscuss,fromQQ,
-		CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+		CoolQ_Tools_AnsiToWide(PtoS(msg)),
 		font
 		);
 {$ENDIF}
@@ -296,7 +296,7 @@ Begin
 	exit(code_eventRequest_AddFriend(
 			subType,sendTime,
 			fromQQ,
-			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+			CoolQ_Tools_AnsiToWide(PtoS(msg)),
 			responseFlag
 		)
 	);
@@ -304,7 +304,7 @@ Begin
 	result:=code_eventRequest_AddFriend(
 			subType,sendTime,
 			fromQQ,
-			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+			CoolQ_Tools_AnsiToWide(PtoS(msg)),
 			responseFlag
 		);
 {$ENDIF}
@@ -320,7 +320,7 @@ Begin
 	exit(code_eventRequest_AddGroup(
 			subType,sendTime,
 			fromGroup,fromQQ,
-			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+			CoolQ_Tools_AnsiToWide(PtoS(msg)),
 			responseFlag
 		)
 	);
@@ -328,7 +328,7 @@ Begin
 	result:=code_eventRequest_AddGroup(
 			subType,sendTime,
 			fromGroup,fromQQ,
-			CoolQ_Tools_AnsiToUTF8(PtoS(msg)),
+			CoolQ_Tools_AnsiToWide(PtoS(msg)),
 			responseFlag
 		);
 {$ENDIF}
