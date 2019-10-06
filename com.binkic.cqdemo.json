@@ -127,7 +127,7 @@
     "status":[		// 悬浮窗状态（见 com.example.status 样例）
 		
     ],
-    "auth":    "auth":[        // 应用权限（发布前请删除无用权限）
+    "auth":[        // 应用权限（发布前请删除无用权限）
         //20,  //[敏感]取Cookies    getCookies / getCsrfToken
         //30,  //接收语音           getRecord
         101,   //发送群消息         sendGroupMsg
