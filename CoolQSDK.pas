@@ -254,7 +254,7 @@ Const
 	function CQ_i_getGroupMemberList(GroupID:int64;Var GroupMemberList:CQ_Type_GroupMember_List):longint;
 	function CQ_i_getGroupList(Var GroupList:CQ_Type_GroupList):longint;
 	function CQ_i_deleteMsg(msgID:int64):longint;
-	function CQ_i_getFriendList(Var GroupList:CQ_Type_FriendsList):longint;
+	function CQ_i_getFriendList(Var friendList:CQ_Type_FriendsList):longint;
 	function CQ_i_canSendImage():longint;
 	function CQ_i_canSendRecord(AuthCode:longint):longint;
 	
