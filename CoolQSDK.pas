@@ -1752,7 +1752,7 @@ Begin
 End;
 
 //取好友列表 Auth=162  //getFriendList
-function CQ_i_getFriendList(Var GroupList:CQ_Type_FriendsList):longint;
+function CQ_i_getFriendList(Var friendList:CQ_Type_FriendsList):longint;
 Var
 	return	:	ansistring;
 Begin
@@ -1762,7 +1762,7 @@ Begin
 		exit;
 	end
 	else
-	if CQ_Tools_TextToFriendsListInfo(return,GroupList)=false then begin
+	if CQ_Tools_TextToFriendsListInfo(return,friendList)=false then begin
 		result:=-1000;
 		exit;
 	end;
