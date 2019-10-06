@@ -320,7 +320,7 @@ End;
 Function CharToNum(a:widestring):int64;overload;
 Begin
 	//val(a,result);
-	result:=StrToInt64Def(a,0);
+	result:=StrToInt64Def(ansistring(a),0);
 End;
 
 
@@ -347,7 +347,7 @@ End;
 Function CharToReal(a:widestring):real;overload;
 Begin
 	//val(a,result);
-	result:=StrToFloatDef(a,0);
+	result:=StrToFloatDef(ansistring(a),0);
 End;
 
 
@@ -396,11 +396,11 @@ Begin
 End;
 Function String_Choose(expression:boolean;a:widestring;b:ansistring):widestring;overload;
 Begin
-	if expression then result:=a else result:=b;
+	if expression then result:=a else result:=widestring(b);
 End;
 Function String_Choose(expression:boolean;a:ansistring;b:widestring):widestring;overload;
 Begin
-	if expression then result:=a else result:=b;
+	if expression then result:=widestring(a) else result:=b;
 End;
 
 Procedure Message_Replace(var a:ansistring;b,c:ansistring);overload;
@@ -1023,8 +1023,8 @@ End;
 }
 function CQCode_Location(latitude,longitude:real;Zoom:longint;Name,Address:widestring):widestring;
 Begin
-	result:='[CQ:location,lat='+RealToDisplay(latitude,6)+',lon='+RealToDisplay(longitude,6);
-	if zoom>0 then result:=result+',zoom='+NumToChar(zoom);
+	result:='[CQ:location,lat='+widestring(RealToDisplay(latitude,6))+',lon='+widestring(RealToDisplay(longitude,6));
+	if zoom>0 then result:=result+',zoom='+widestring(NumToChar(zoom));
 	result:=result+',title='+CQ_CharEncode(Name,true)+',content'+CQ_CharEncode(Address,true)+']';
 ENd;
 
@@ -1047,7 +1047,7 @@ Begin
 End;
 function CQCode_record(url:widestring;magic:boolean):widestring;overload;
 Begin
-	result:=('[CQ:record,file='+CQ_CharEncode(url,true)+String_Choose(magic,',magic=true','')+']');
+	result:=('[CQ:record,file='+CQ_CharEncode(url,true)+String_Choose(magic,widestring(',magic=true'),widestring(''))+']');
 End;
 
 {
