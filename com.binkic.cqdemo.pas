@@ -7,6 +7,8 @@
 		里的时间库是以当前系统时间的 1970-1-1 00:00:00 作为Unix时间戳起点
 		然而腾讯传递的信息是以 标准时间的1970-1-1 00:00:00 作为时间戳起点
 }
+{$CODEPAGE UTF-8}
+
 library
 	testdll;
 	//DLL 编译
@@ -56,11 +58,6 @@ stdcall;
 Begin
 	AuthCode:=ac;
 		
-	//GlobalUTF8Mode:=true; //是否开启全局UTF8模式
-	{
-		酷Q的所有api现在使用的是gb18030作为unicode支持。
-		开启这个功能后插件内的所有api将会由这个sdk内置的功能自动做gb18030与utf8的转换
-	}
 {$IFDEF FPC}
 	exit(0);
 {$ELSE}

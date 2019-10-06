@@ -1,3 +1,5 @@
+{$CODEPAGE UTF-8}
+
 unit Plugin_events;
 
 interface
@@ -20,9 +22,9 @@ Function code_eventRequest_AddGroup(subType,sendTime:longint;fromGroup,fromQQ:in
 			
 implementation
 {
-* Type=1001 ¿áQÆô¶¯
-* ÎÞÂÛ±¾Ó¦ÓÃÊÇ·ñ±»ÆôÓÃ£¬±¾º¯Êý¶¼»áÔÚ¿áQÆô¶¯ºóÖ´ÐÐÒ»´Î£¬ÇëÔÚÕâÀïÖ´ÐÐÓ¦ÓÃ³õÊ¼»¯´úÂë¡£
-* Èç·Ç±ØÒª£¬²»½¨ÒéÔÚÕâÀï¼ÓÔØ´°¿Ú¡££¨¿ÉÒÔÌí¼Ó²Ëµ¥£¬ÈÃÓÃ»§ÊÖ¶¯´ò¿ª´°¿Ú£©
+* Type=1001 é…·Qå¯åŠ¨
+* æ— è®ºæœ¬åº”ç”¨æ˜¯å¦è¢«å¯ç”¨ï¼Œæœ¬å‡½æ•°éƒ½ä¼šåœ¨é…·Qå¯åŠ¨åŽæ‰§è¡Œä¸€æ¬¡ï¼Œè¯·åœ¨è¿™é‡Œæ‰§è¡Œåº”ç”¨åˆå§‹åŒ–ä»£ç ã€‚
+* å¦‚éžå¿…è¦ï¼Œä¸å»ºè®®åœ¨è¿™é‡ŒåŠ è½½çª—å£ã€‚ï¼ˆå¯ä»¥æ·»åŠ èœå•ï¼Œè®©ç”¨æˆ·æ‰‹åŠ¨æ‰“å¼€çª—å£ï¼‰
 }
 Function code_eventStartup:longint;
 Begin
@@ -34,9 +36,9 @@ Begin
 End;
 
 {
-* Type=1002 ¿áQÍË³ö
-* ÎÞÂÛ±¾Ó¦ÓÃÊÇ·ñ±»ÆôÓÃ£¬±¾º¯Êý¶¼»áÔÚ¿áQÍË³öÇ°Ö´ÐÐÒ»´Î£¬ÇëÔÚÕâÀïÖ´ÐÐ²å¼þ¹Ø±Õ´úÂë¡£
-* ±¾º¯Êýµ÷ÓÃÍê±Ïºó£¬¿áQ½«ºÜ¿ì¹Ø±Õ£¬Çë²»ÒªÔÙÍ¨¹ýÏß³ÌµÈ·½Ê½Ö´ÐÐÆäËû´úÂë¡£
+* Type=1002 é…·Qé€€å‡º
+* æ— è®ºæœ¬åº”ç”¨æ˜¯å¦è¢«å¯ç”¨ï¼Œæœ¬å‡½æ•°éƒ½ä¼šåœ¨é…·Qé€€å‡ºå‰æ‰§è¡Œä¸€æ¬¡ï¼Œè¯·åœ¨è¿™é‡Œæ‰§è¡Œæ’ä»¶å…³é—­ä»£ç ã€‚
+* æœ¬å‡½æ•°è°ƒç”¨å®Œæ¯•åŽï¼Œé…·Qå°†å¾ˆå¿«å…³é—­ï¼Œè¯·ä¸è¦å†é€šè¿‡çº¿ç¨‹ç­‰æ–¹å¼æ‰§è¡Œå…¶ä»–ä»£ç ã€‚
 }
 Function code_eventExit:longint;
 Begin
@@ -48,10 +50,10 @@ Begin
 End;
 
 {
-* Type=1003 Ó¦ÓÃÒÑ±»ÆôÓÃ
-* µ±Ó¦ÓÃ±»ÆôÓÃºó£¬½«ÊÕµ½´ËÊÂ¼þ¡£
-* Èç¹û¿áQÔØÈëÊ±Ó¦ÓÃÒÑ±»ÆôÓÃ£¬ÔòÔÚ_eventStartup(Type=1001,¿áQÆô¶¯)±»µ÷ÓÃºó£¬±¾º¯ÊýÒ²½«±»µ÷ÓÃÒ»´Î¡£
-* Èç·Ç±ØÒª£¬²»½¨ÒéÔÚÕâÀï¼ÓÔØ´°¿Ú¡££¨¿ÉÒÔÌí¼Ó²Ëµ¥£¬ÈÃÓÃ»§ÊÖ¶¯´ò¿ª´°¿Ú£©
+* Type=1003 åº”ç”¨å·²è¢«å¯ç”¨
+* å½“åº”ç”¨è¢«å¯ç”¨åŽï¼Œå°†æ”¶åˆ°æ­¤äº‹ä»¶ã€‚
+* å¦‚æžœé…·Qè½½å…¥æ—¶åº”ç”¨å·²è¢«å¯ç”¨ï¼Œåˆ™åœ¨_eventStartup(Type=1001,é…·Qå¯åŠ¨)è¢«è°ƒç”¨åŽï¼Œæœ¬å‡½æ•°ä¹Ÿå°†è¢«è°ƒç”¨ä¸€æ¬¡ã€‚
+* å¦‚éžå¿…è¦ï¼Œä¸å»ºè®®åœ¨è¿™é‡ŒåŠ è½½çª—å£ã€‚ï¼ˆå¯ä»¥æ·»åŠ èœå•ï¼Œè®©ç”¨æˆ·æ‰‹åŠ¨æ‰“å¼€çª—å£ï¼‰
 }
 Function code_eventEnable:longint;
 Begin
@@ -63,10 +65,10 @@ Begin
 End;
 
 {
-* Type=1004 Ó¦ÓÃ½«±»Í£ÓÃ
-* µ±Ó¦ÓÃ±»Í£ÓÃÇ°£¬½«ÊÕµ½´ËÊÂ¼þ¡£
-* Èç¹û¿áQÔØÈëÊ±Ó¦ÓÃÒÑ±»Í£ÓÃ£¬Ôò±¾º¯Êý*²»»á*±»µ÷ÓÃ¡£
-* ÎÞÂÛ±¾Ó¦ÓÃÊÇ·ñ±»ÆôÓÃ£¬¿áQ¹Ø±ÕÇ°±¾º¯Êý¶¼*²»»á*±»µ÷ÓÃ¡£
+* Type=1004 åº”ç”¨å°†è¢«åœç”¨
+* å½“åº”ç”¨è¢«åœç”¨å‰ï¼Œå°†æ”¶åˆ°æ­¤äº‹ä»¶ã€‚
+* å¦‚æžœé…·Qè½½å…¥æ—¶åº”ç”¨å·²è¢«åœç”¨ï¼Œåˆ™æœ¬å‡½æ•°*ä¸ä¼š*è¢«è°ƒç”¨ã€‚
+* æ— è®ºæœ¬åº”ç”¨æ˜¯å¦è¢«å¯ç”¨ï¼Œé…·Qå…³é—­å‰æœ¬å‡½æ•°éƒ½*ä¸ä¼š*è¢«è°ƒç”¨ã€‚
 }
 Function code_eventDisable:longint;
 Begin
@@ -78,8 +80,8 @@ Begin
 End;
 
 {
-* Type=21 Ë½ÁÄÏûÏ¢
-* subType ×ÓÀàÐÍ£¬11/À´×ÔºÃÓÑ 1/À´×ÔÔÚÏß×´Ì¬ 2/À´×ÔÈº 3/À´×ÔÌÖÂÛ×é
+* Type=21 ç§èŠæ¶ˆæ¯
+* subType å­ç±»åž‹ï¼Œ11/æ¥è‡ªå¥½å‹ 1/æ¥è‡ªåœ¨çº¿çŠ¶æ€ 2/æ¥è‡ªç¾¤ 3/æ¥è‡ªè®¨è®ºç»„
 }
 Function code_eventPrivateMsg(
 			subType,MsgID			:longint;
@@ -89,15 +91,15 @@ Function code_eventPrivateMsg(
 Begin
 {$IFDEF FPC}
 	exit(EVENT_IGNORE);
-		//Èç¹ûÒª»Ø¸´ÏûÏ¢£¬Çëµ÷ÓÃ¿áQ·½·¨·¢ËÍ£¬²¢ÇÒÕâÀï exit(EVENT_BLOCK) - ½Ø¶Ï±¾ÌõÏûÏ¢£¬²»ÔÙ¼ÌÐø´¦Àí  ×¢Òâ£ºÓ¦ÓÃÓÅÏÈ¼¶ÉèÖÃÎª"×î¸ß"(10000)Ê±£¬²»µÃÊ¹ÓÃ±¾·µ»ØÖµ
-		//Èç¹û²»»Ø¸´ÏûÏ¢£¬½»ÓÉÖ®ºóµÄÓ¦ÓÃ/¹ýÂËÆ÷´¦Àí£¬ÕâÀï exit(return EVENT_IGNORE) - ºöÂÔ±¾ÌõÏûÏ¢
+		//å¦‚æžœè¦å›žå¤æ¶ˆæ¯ï¼Œè¯·è°ƒç”¨é…·Qæ–¹æ³•å‘é€ï¼Œå¹¶ä¸”è¿™é‡Œ exit(EVENT_BLOCK) - æˆªæ–­æœ¬æ¡æ¶ˆæ¯ï¼Œä¸å†ç»§ç»­å¤„ç†  æ³¨æ„ï¼šåº”ç”¨ä¼˜å…ˆçº§è®¾ç½®ä¸º"æœ€é«˜"(10000)æ—¶ï¼Œä¸å¾—ä½¿ç”¨æœ¬è¿”å›žå€¼
+		//å¦‚æžœä¸å›žå¤æ¶ˆæ¯ï¼Œäº¤ç”±ä¹‹åŽçš„åº”ç”¨/è¿‡æ»¤å™¨å¤„ç†ï¼Œè¿™é‡Œ exit(return EVENT_IGNORE) - å¿½ç•¥æœ¬æ¡æ¶ˆæ¯
 {$ELSE}
 	result:=EVENT_IGNORE;
 {$ENDIF}
 End;
 
 {
-* Type=2 ÈºÏûÏ¢
+* Type=2 ç¾¤æ¶ˆæ¯
 }
 Function code_eventGroupMsg(
 			subType,MsgID			:longint;
@@ -111,21 +113,21 @@ Begin
 
 	if (fromQQ=80000000) and (fromAnonymous<>'') then begin
 		CQ_Tools_TextToAnonymous(fromAnonymous,AnonymousMes);
-		//½«ÄäÃûÓÃ»§ÐÅÏ¢´æµ½ AnonymousMes
+		//å°†åŒ¿åç”¨æˆ·ä¿¡æ¯å­˜åˆ° AnonymousMes
 	end;
 
-	if msg='Ç©µ½' then CQ_i_sendGroupMsg(fromgroup,CQCode_Group_At(fromQQ)+' : Ç©µ½²¢Ã»ÓÐ³É¹¦[CQ:image,file=funnyface.png]');
+	if msg='ç­¾åˆ°' then CQ_i_sendGroupMsg(fromgroup,widestring(CQCode_Group_At(fromQQ))+' : ç­¾åˆ°å¹¶æ²¡æœ‰æˆåŠŸ[CQ:image,file=funnyface.png]');
 		
 {$IFDEF FPC}
 	exit(EVENT_IGNORE);
 {$ELSE}
 	result:=EVENT_IGNORE;
 {$ENDIF}
-	//¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°code_eventPrivateMsg¡±º¯Êý
+	//å…³äºŽè¿”å›žå€¼è¯´æ˜Ž, è§â€œcode_eventPrivateMsgâ€å‡½æ•°
 End;
 
 {
-* Type=4 ÌÖÂÛ×éÏûÏ¢
+* Type=4 è®¨è®ºç»„æ¶ˆæ¯
 }
 Function code_eventDiscussMsg(
 			subType,MsgID			:longint;
@@ -138,11 +140,11 @@ Begin
 {$ELSE}
 	result:=EVENT_IGNORE;
 {$ENDIF}
-	//¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°code_eventPrivateMsg¡±º¯Êý
+	//å…³äºŽè¿”å›žå€¼è¯´æ˜Ž, è§â€œcode_eventPrivateMsgâ€å‡½æ•°
 End;
 
 {
-*Type=11 ÈºÎÄ¼þÉÏ´«ÊÂ¼þ
+*Type=11 ç¾¤æ–‡ä»¶ä¸Šä¼ äº‹ä»¶
 }
 Function code_eventGroupUpload(
 			subType,sendTime	:longint;
@@ -152,51 +154,51 @@ Var
 	FileInfo	:CQ_Type_GroupFile;
 	Back		:widestring;
 Begin
-	//ÊÕµ½ÎÄ¼þÉÏ´«ÐÅÏ¢ ²¢³¢ÊÔ½âÎö
+	//æ”¶åˆ°æ–‡ä»¶ä¸Šä¼ ä¿¡æ¯ å¹¶å°è¯•è§£æž
 	if CQ_Tools_TextToFile(Pfileinfo,FileInfo) then begin
-		//ÈºÎÄ¼þÐÅÏ¢½âÎö³É¹¦
+		//ç¾¤æ–‡ä»¶ä¿¡æ¯è§£æžæˆåŠŸ
 		
-		Back:='[CQ:at,qq=%FROMQQ%] ÉÏ´«ÁËÒ»¸öÎÄ¼þ£¬ÐÅÏ¢ÈçÏÂ£º'+CRLF+
+		Back:='[CQ:at,qq=%FROMQQ%] ä¸Šä¼ äº†ä¸€ä¸ªæ–‡ä»¶ï¼Œä¿¡æ¯å¦‚ä¸‹ï¼š'+CRLF+
 				'----------------'+CRLF+
-				'ÎÄ¼þÃû    : %FILENAME%'+CRLF+
-				'ÎÄ¼þ´óÐ¡  : %SIZE%'+CRLF+
+				'æ–‡ä»¶å    : %FILENAME%'+CRLF+
+				'æ–‡ä»¶å¤§å°  : %SIZE%'+CRLF+
 				'----------------'+CRLF+
-				'ÎÄ¼þ±àºÅ  : %FILEID%'+CRLF+
+				'æ–‡ä»¶ç¼–å·  : %FILEID%'+CRLF+
 				'busID   : %BUSID%';
-		Message_Replace(Back,'%FROMQQ%',numtochar(fromQQ));
-		Message_Replace(Back,'%FILEID%',FileInfo.fileID);
+		Message_Replace(Back,'%FROMQQ%',widestring(numtochar(fromQQ)));
+		Message_Replace(Back,'%FILEID%',widestring(FileInfo.fileID));
 		Message_Replace(Back,'%FILENAME%',FileInfo.Filename);
 		if FileInfo.Size<10240 then begin
-			Message_Replace(Back,'%SIZE%',numtochar(FileInfo.Size)+'Byte(s)');
+			Message_Replace(Back,'%SIZE%',widestring(numtochar(FileInfo.Size))+'Byte(s)');
 		end
 		else
 		begin
 			if FileInfo.Size<10485760 then begin
-				Message_Replace(Back,'%SIZE%',RealToDisplay(FileInfo.Size/1024,2)+'Kb');
+				Message_Replace(Back,'%SIZE%',widestring(RealToDisplay(FileInfo.Size/1024,2))+'Kb');
 			end
 			else
 			begin
 				if FileInfo.Size<536870912 then begin
-					Message_Replace(Back,'%SIZE%',RealToDisplay(FileInfo.Size/(1024*1024),2)+'Mb');
+					Message_Replace(Back,'%SIZE%',widestring(RealToDisplay(FileInfo.Size/(1024*1024),2))+'Mb');
 				end
 				else
 				begin
-					Message_Replace(Back,'%SIZE%',RealToDisplay(FileInfo.Size/(1024*1024*1024),2)+'Gb');
+					Message_Replace(Back,'%SIZE%',widestring(RealToDisplay(FileInfo.Size/(1024*1024*1024),2))+'Gb');
 				end;
 			end;
 		end;
-		Message_Replace(Back,'%SIZE.B%',numtochar(FileInfo.Size)+'Byte(s)');
-		Message_Replace(Back,'%SIZE.KB%',RealToDisplay(FileInfo.Size/1024,2)+'Kb');
-		Message_Replace(Back,'%SIZE.MB%',RealToDisplay(FileInfo.Size/(1024*1024),2)+'Mb');
-		Message_Replace(Back,'%SIZE.GB%',RealToDisplay(FileInfo.Size/(1024*1024*1024),2)+'Gb');
-		Message_Replace(Back,'%BUSID%',NumToChar(FileInfo.busid));
+		Message_Replace(Back,'%SIZE.B%',widestring(numtochar(FileInfo.Size)+'Byte(s)'));
+		Message_Replace(Back,'%SIZE.KB%',widestring(RealToDisplay(FileInfo.Size/1024,2))+'Kb');
+		Message_Replace(Back,'%SIZE.MB%',widestring(RealToDisplay(FileInfo.Size/(1024*1024),2))+'Mb');
+		Message_Replace(Back,'%SIZE.GB%',widestring(RealToDisplay(FileInfo.Size/(1024*1024*1024),2))+'Gb');
+		Message_Replace(Back,'%BUSID%',widestring(NumToChar(FileInfo.busid)));
 		
 		CQ_i_sendGroupMsg(fromGroup,Back);		
 	end
 	else
 	begin
-		CQ_i_addLog(CQLOG_DEBUG,'code_eventGroupUpload','½âÎöÊ§°Ü '+Pfileinfo);
-		//ÈºÎÄ¼þÐÅÏ¢½âÎöÊ§°Ü
+		CQ_i_addLog(CQLOG_DEBUG,widestring('code_eventGroupUpload'),'è§£æžå¤±è´¥ '+widestring(Pfileinfo));
+		//ç¾¤æ–‡ä»¶ä¿¡æ¯è§£æžå¤±è´¥
 	end;
 	
 {$IFDEF FPC}
@@ -204,13 +206,13 @@ Begin
 {$ELSE}
 	result:=EVENT_IGNORE;
 {$ENDIF}
-	//¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°code_eventPrivateMsg¡±º¯Êý
+	//å…³äºŽè¿”å›žå€¼è¯´æ˜Ž, è§â€œcode_eventPrivateMsgâ€å‡½æ•°
 End;
 
 
 {
-* Type=101 ÈºÊÂ¼þ-¹ÜÀíÔ±±ä¶¯
-* subType ×ÓÀàÐÍ£¬1/±»È¡Ïû¹ÜÀíÔ± 2/±»ÉèÖÃ¹ÜÀíÔ±
+* Type=101 ç¾¤äº‹ä»¶-ç®¡ç†å‘˜å˜åŠ¨
+* subType å­ç±»åž‹ï¼Œ1/è¢«å–æ¶ˆç®¡ç†å‘˜ 2/è¢«è®¾ç½®ç®¡ç†å‘˜
 }
 Function code_eventSystem_GroupAdmin(
 			subType,sendTime		:longint;
@@ -222,14 +224,14 @@ Begin
 {$ELSE}
 	result:=EVENT_IGNORE;
 {$ENDIF}
-	//¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°code_eventPrivateMsg¡±º¯Êý
+	//å…³äºŽè¿”å›žå€¼è¯´æ˜Ž, è§â€œcode_eventPrivateMsgâ€å‡½æ•°
 End;
 
 {
-* Type=102 ÈºÊÂ¼þ-Èº³ÉÔ±¼õÉÙ
-* subType ×ÓÀàÐÍ£¬1/ÈºÔ±Àë¿ª 2/ÈºÔ±±»Ìß 3/×Ô¼º(¼´µÇÂ¼ºÅ)±»Ìß
-* fromQQ ²Ù×÷ÕßQQ(½ösubTypeÎª2¡¢3Ê±´æÔÚ)
-* beingOperateQQ ±»²Ù×÷QQ
+* Type=102 ç¾¤äº‹ä»¶-ç¾¤æˆå‘˜å‡å°‘
+* subType å­ç±»åž‹ï¼Œ1/ç¾¤å‘˜ç¦»å¼€ 2/ç¾¤å‘˜è¢«è¸¢ 3/è‡ªå·±(å³ç™»å½•å·)è¢«è¸¢
+* fromQQ æ“ä½œè€…QQ(ä»…subTypeä¸º2ã€3æ—¶å­˜åœ¨)
+* beingOperateQQ è¢«æ“ä½œQQ
 }
 Function code_eventSystem_GroupMemberDecrease(
 			subType,sendTime		:longint;
@@ -241,32 +243,32 @@ Begin
 {$ELSE}
 	result:=EVENT_IGNORE
 {$ENDIF}
-	//¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°code_eventPrivateMsg¡±º¯Êý
+	//å…³äºŽè¿”å›žå€¼è¯´æ˜Ž, è§â€œcode_eventPrivateMsgâ€å‡½æ•°
 End;
 
 {
-* Type=103 ÈºÊÂ¼þ-Èº³ÉÔ±Ôö¼Ó
-* subType ×ÓÀàÐÍ£¬1/¹ÜÀíÔ±ÒÑÍ¬Òâ 2/¹ÜÀíÔ±ÑûÇë
-* fromQQ ²Ù×÷ÕßQQ(¼´¹ÜÀíÔ±QQ)
-* beingOperateQQ ±»²Ù×÷QQ(¼´¼ÓÈºµÄQQ)
+* Type=103 ç¾¤äº‹ä»¶-ç¾¤æˆå‘˜å¢žåŠ 
+* subType å­ç±»åž‹ï¼Œ1/ç®¡ç†å‘˜å·²åŒæ„ 2/ç®¡ç†å‘˜é‚€è¯·
+* fromQQ æ“ä½œè€…QQ(å³ç®¡ç†å‘˜QQ)
+* beingOperateQQ è¢«æ“ä½œQQ(å³åŠ ç¾¤çš„QQ)
 }
 Function code_eventSystem_GroupMemberIncrease(
 			subType,sendTime		:longint;
 			fromGroup,fromQQ,
 			beingOperateQQ			:int64):longint;
 Begin
-	CQ_i_sendGroupMsg(fromgroup,'»¶Ó­ÐÂÈË [CQ:at,qq='+NumToChar(beingOperateQQ)+'] ¼ÓÈë±¾Èº');
+	CQ_i_sendGroupMsg(fromgroup,'æ¬¢è¿Žæ–°äºº [CQ:at,qq='+widestring(NumToChar(beingOperateQQ))+'] åŠ å…¥æœ¬ç¾¤');
 {$IFDEF FPC}
 	exit(EVENT_IGNORE); 
 {$ELSE}
 	result:=EVENT_IGNORE;
 {$ENDIF}
-	//¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°code_eventPrivateMsg¡±º¯Êý
+	//å…³äºŽè¿”å›žå€¼è¯´æ˜Ž, è§â€œcode_eventPrivateMsgâ€å‡½æ•°
 End;
 
 
 {
-* Type=201 ºÃÓÑÊÂ¼þ-ºÃÓÑÒÑÌí¼Ó
+* Type=201 å¥½å‹äº‹ä»¶-å¥½å‹å·²æ·»åŠ 
 }
 Function code_eventFriend_Add(
 			subType,sendTime		:longint;
@@ -277,16 +279,16 @@ Begin
 {$ELSE}
 	result:=EVENT_IGNORE;
 {$ENDIF}
-	//¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°code_eventPrivateMsg¡±º¯Êý
+	//å…³äºŽè¿”å›žå€¼è¯´æ˜Ž, è§â€œcode_eventPrivateMsgâ€å‡½æ•°
 End;
 
 
 {
-* Type=301 ÇëÇó-ºÃÓÑÌí¼Ó
-* msg ¸½ÑÔ
+* Type=301 è¯·æ±‚-å¥½å‹æ·»åŠ 
+* msg é™„è¨€
 * responseFlag
-		·´À¡±êÊ¶(´¦ÀíÇëÇóÓÃ)
-		Õâ¸öÎÒ¾Í²»°ïÄã×ª»»³ÉstringÁË£¬·´ÕýÄãÄÃÀ´Ò²Ã»Ê²Ã´ÓÃ
+		åé¦ˆæ ‡è¯†(å¤„ç†è¯·æ±‚ç”¨)
+		è¿™ä¸ªæˆ‘å°±ä¸å¸®ä½ è½¬æ¢æˆstringäº†ï¼Œåæ­£ä½ æ‹¿æ¥ä¹Ÿæ²¡ä»€ä¹ˆç”¨
 }
 Function code_eventRequest_AddFriend(
 			subType,sendTime			:longint;
@@ -294,23 +296,23 @@ Function code_eventRequest_AddFriend(
 			const msg					:widestring;
 			responseFlag				:PAnsichar):longint;
 Begin
-	CQ_i_setFriendAddRequest(responseFlag, REQUEST_DENY,''); //¾Ü¾øºÃÓÑÌí¼ÓÇëÇó
+	CQ_i_setFriendAddRequest(responseFlag, REQUEST_DENY,''); //æ‹’ç»å¥½å‹æ·»åŠ è¯·æ±‚
 	
 {$IFDEF FPC}
 	exit(EVENT_IGNORE); 
 {$ELSE}
 	result:=EVENT_IGNORE;
 {$ENDIF}
-	//¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°code_eventPrivateMsg¡±º¯Êý
+	//å…³äºŽè¿”å›žå€¼è¯´æ˜Ž, è§â€œcode_eventPrivateMsgâ€å‡½æ•°
 End;
 
 {
-* Type=302 ÇëÇó-ÈºÌí¼Ó
-* subType ×ÓÀàÐÍ£¬1/ËûÈËÉêÇëÈëÈº 2/×Ô¼º(¼´µÇÂ¼ºÅ)ÊÜÑûÈëÈº
-* msg ¸½ÑÔ
+* Type=302 è¯·æ±‚-ç¾¤æ·»åŠ 
+* subType å­ç±»åž‹ï¼Œ1/ä»–äººç”³è¯·å…¥ç¾¤ 2/è‡ªå·±(å³ç™»å½•å·)å—é‚€å…¥ç¾¤
+* msg é™„è¨€
 * responseFlag
-		·´À¡±êÊ¶(´¦ÀíÇëÇóÓÃ)
-		Õâ¸öÎÒÒ²²»°ïÄã×ª»»ÁË
+		åé¦ˆæ ‡è¯†(å¤„ç†è¯·æ±‚ç”¨)
+		è¿™ä¸ªæˆ‘ä¹Ÿä¸å¸®ä½ è½¬æ¢äº†
 }
 Function code_eventRequest_AddGroup(
 			subType,sendTime			:longint;
@@ -323,7 +325,7 @@ Begin
 {$ELSE}
 	result:=EVENT_IGNORE;
 {$ENDIF}
-	//¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°code_eventPrivateMsg¡±º¯Êý
+	//å…³äºŽè¿”å›žå€¼è¯´æ˜Ž, è§â€œcode_eventPrivateMsgâ€å‡½æ•°
 End;
 
 end.

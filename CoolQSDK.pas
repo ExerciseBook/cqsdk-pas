@@ -13,6 +13,8 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
  **********************************************************************}
+{$CODEPAGE UTF-8}
+
 {$IFDEF FPC}
 	{$MODE DELPHI}
 {$ENDIF}
@@ -31,6 +33,7 @@ Type
 			sex,						//性别
 			age				: longint;	//年龄
 		end;
+
 	CQ_Type_GroupMember=
 		record
 			GroupID,					// 群号
@@ -49,18 +52,21 @@ Type
 			titleExpiretime : longint;	// 头衔过期时间
 			nickcanchange	: boolean;	// 管理员是否能协助改名
 		end;
+
 	CQ_Type_GroupMember_List=
 		record
 			l : longint; 						//数组长度
 			s :	Array Of CQ_Type_GroupMember;	//群成员列表
 			//上面的这个定义叫做动态数组，数组编号是从第0位到第l-1位。一共是l位。
 		end;
+
 	CQ_Type_GroupAnonymous=
 		record
 			AID				: int64;
 			name			: widestring;
 			Token			: ansistring;
 		end;
+
 	CQ_Type_GroupFile=
 		record
 			fileid			: ansistring;	//文件ID
@@ -68,16 +74,41 @@ Type
 			size			: int64;	//文件大小
 			busid			: longint;	//busid
 		end;
+
 	CQ_Type_GroupInfo=
 		record
 			GroupID			: int64;
 			name			: widestring;
 		end;
+
 	CQ_Type_GroupList=
 		record
 			l : longint;					//数组长度
 			s : Array Of CQ_Type_GroupInfo;	//群列表
 		end;
+
+	CQ_Type_Friend=
+		record
+			QQID 			: int64;	// QQ号
+			nick			: widestring;
+			alias			: widestring;
+		end;
+
+	CQ_Type_FriendsList=
+		record
+			l : longint; //数组长度
+			s : Array of CQ_Type_Friend;
+		end;
+
+	CQ_Type_Group=
+		record
+			GroupID			: int64;
+			name			: widestring;
+			members			: record
+									current,max : longint;
+								end;
+		end;
+
 	{CQ_Type_MsgType=
 		record
 			key,msg			: widestring;
@@ -183,16 +214,21 @@ Const
 	function CQ_i_sendLike(QQID:int64):longint;overload;								
 	function CQ_i_sendLike(QQID:int64;times:longint):longint;overload;						//加料的一个函数
 	function CQ_i_sendLikeV2(QQID:int64;times:longint):longint;				
-	function CQ_i_getRecord(filename,format:ansistring):ansistring;overload;
-	function CQ_i_getRecord(filename:widestring;format:ansistring):ansistring;overload;
+	function CQ_i_getRecord(filename,format:ansistring):ansistring;overload;deprecated;
+	function CQ_i_getRecord(filename:widestring;format:ansistring):ansistring;overload;deprecated;
+	function CQ_i_getRecordV2(filename,format:ansistring):ansistring;overload;
+	function CQ_i_getRecordV2(filename:widestring;format:ansistring):ansistring;overload;
+	function CQ_i_getImage(filename:ansistring):ansistring;overload;
+	function CQ_i_getImage(filename:widestring):ansistring;overload;
 	function CQ_Tools_TextToAnonymous(source:ansistring;Var Anonymous:CQ_Type_GroupAnonymous):boolean;
 	Function CQ_Tools_TextToFile(source:ansistring;Var info:CQ_Type_GroupFile):boolean;
-	Function CQ_i_GetCookies():ansistring;
+	Function CQ_i_getCookies():ansistring;
 	Function CQ_i_getCookiesV2(domain:ansistring):ansistring;
 	Function CQ_i_getCsrfToken():longint;
-	Function CQ_i_GetLoginQQ():int64;
+	Function CQ_i_getLoginQQ():int64;
 	Function CQ_i_getLoginNick():widestring;
-	Function CQ_i_GetStrangerInfo(QQ:int64;Var info:CQ_Type_QQ;nocache:boolean):longint;
+	Function CQ_i_getStrangerInfo(QQ:int64;Var info:CQ_Type_QQ;nocache:boolean):longint;
+	Function CQ_i_getGroupInfo(groupID:int64;Var info:CQ_Type_Group;nocache:boolean):longint;
 	function CQ_i_getGroupMemberInfo(groupid,qqid:int64;Var info:CQ_Type_GroupMember;nocache:boolean):longint;
 	function CQ_i_getAppDirectory:ansistring;
 	function CQ_i_addLog(priority:longint;const category,content:ansistring):longint;overload;
@@ -218,6 +254,10 @@ Const
 	function CQ_i_getGroupMemberList(GroupID:int64;Var GroupMemberList:CQ_Type_GroupMember_List):longint;
 	function CQ_i_getGroupList(Var GroupList:CQ_Type_GroupList):longint;
 	function CQ_i_deleteMsg(msgID:int64):longint;
+	function CQ_i_getFriendList(Var GroupList:CQ_Type_FriendsList):longint;
+	function CQ_i_canSendImage():longint;
+	function CQ_i_canSendRecord(AuthCode:longint):longint;
+	
 		// 编码转换
 	Function CoolQ_Tools_UTF8ToAnsi(Sstr:widestring):ansistring;
 	Function CoolQ_Tools_AnsiToUTF8(Sstr:ansistring):widestring;
@@ -611,10 +651,14 @@ function CQ_deleteMsg(AuthCode:longint;MsgId:int64):longint;
 	stdcall; external 'CQP.dll' name 'CQ_deleteMsg';
 function CQ_getImage(AuthCode:longint;fileName:PAnsiChar):PAnsiChar;	//接收图片，并返回图片文件绝对路径
 	stdcall; external 'CQP.dll' name 'CQ_getImage';
-function CQ_canSendImage(AuthCode:longint):longint;				//是否支持发送语音，返回大于 0 为支持，等于 0 为不支持
+function CQ_canSendImage(AuthCode:longint):longint;				//是否支持发送图片，返回大于 0 为支持，等于 0 为不支持
 	stdcall; external 'CQP.dll' name 'CQ_canSendImage';
 function CQ_canSendRecord(AuthCode:longint):longint;			//是否支持发送语音，返回大于 0 为支持，等于 0 为不支持
 	stdcall; external 'CQP.dll' name 'CQ_canSendRecord';
+function CQ_getFriendList(AuthCode:longint;reserved:boolean):PAnsiChar; //取好友列表 //保留参数，请传入“假”
+	stdcall; external 'CQP.dll' name 'CQ_getFriendList';
+function CQ_getGroupInfo(AuthCode:longint;groupid:int64;nocache:boolean):PAnsiChar; //取群信息(支持缓存)
+	stdcall; external 'CQP.dll' name 'CQ_getGroupInfo';
 
 	
 procedure InitBase64;
@@ -1085,7 +1129,7 @@ Begin
 End;
 
 //接受语音 Auth=30 接收消息中的语音(record),返回保存在 \data\record\ 目录下的文件名 //getRecord
-function CQ_i_getRecord(filename,format:ansistring):ansistring;overload;			//Auth=30 接收消息中的语音(record),返回保存在 \data\record\ 目录下的文件名 //getRecord
+function CQ_i_getRecord(filename,format:ansistring):ansistring;overload;deprecated;
 {
 filename 收到消息中的语音文件名(file)
 format 应用所需的语音文件格式，目前支持 mp3,amr,wma,m4a,spx,ogg,wav,flac
@@ -1097,7 +1141,7 @@ Begin
 		)
 	)
 End;
-function CQ_i_getRecord(filename:widestring;format:ansistring):ansistring;overload;			//Auth=30 接收消息中的语音(record),返回保存在 \data\record\ 目录下的文件名 //getRecord
+function CQ_i_getRecord(filename:widestring;format:ansistring):ansistring;overload;deprecated;
 {
 filename 收到消息中的语音文件名(file)
 format 应用所需的语音文件格式，目前支持 mp3,amr,wma,m4a,spx,ogg,wav,flac
@@ -1106,6 +1150,57 @@ Begin
 	result:=(
 		PtoS(
 			CQ_getRecord(AuthCode,StoP(CoolQ_Tools_UTF8ToANSI(filename)),StoP(format))
+		)
+	)
+End;
+
+//Auth=30 接收消息中的语音(record),返回语音文件绝对路径 //getRecordV2
+function CQ_i_getRecordV2(filename,format:ansistring):ansistring;overload;
+{
+filename 收到消息中的语音文件名(file)
+format 应用所需的语音文件格式，目前支持 mp3,amr,wma,m4a,spx,ogg,wav,flac
+}
+Begin
+	result:=(
+		PtoS(
+			CQ_getRecordV2(AuthCode,StoP(filename),StoP(format))
+		)
+	)
+End;
+function CQ_i_getRecordV2(filename:widestring;format:ansistring):ansistring;overload;
+{
+filename 收到消息中的语音文件名(file)
+format 应用所需的语音文件格式，目前支持 mp3,amr,wma,m4a,spx,ogg,wav,flac
+}
+Begin
+	result:=(
+		PtoS(
+			CQ_getRecordV2(AuthCode,StoP(CoolQ_Tools_UTF8ToANSI(filename)),StoP(format))
+		)
+	)
+End;
+
+//Auth=30 接收消息中的图片(image),返回图片文件绝对路径 //getImage
+function CQ_i_getImage(filename:ansistring):ansistring;overload;
+{
+filename 收到消息中的图片文件名(file)
+}
+Begin
+	result:=(
+		PtoS(
+			CQ_getImage(AuthCode,StoP(filename))
+		)
+	)
+End;
+function CQ_i_getImage(filename:widestring):ansistring;overload;
+{
+filename 收到消息中的语音文件名(file)
+format 应用所需的语音文件格式，目前支持 mp3,amr,wma,m4a,spx,ogg,wav,flac
+}
+Begin
+	result:=(
+		PtoS(
+			CQ_getImage(AuthCode,StoP(CoolQ_Tools_UTF8ToANSI(filename)))
 		)
 	)
 End;
@@ -1291,8 +1386,61 @@ Begin
 	result:=true;
 End;
 
+//其他_转换_ansihex到好友信息
+Function CQ_Tools_TextToFriendInfo(source:ansistring;Var FriendInfo:CQ_Type_Friend):boolean;
+Var
+	i:longint;
+Begin
+	if length(source)<12 then begin
+		result:=false;
+		exit;
+	end;
+	i:=1;
+	FriendInfo.QQID:=CoolQ_Tools_Unpack_GetNum(i,8,source);
+	FriendInfo.nick:=CoolQ_Tools_AnsiToUTF8(CoolQ_Tools_Unpack_GetStr(i,source));
+	FriendInfo.alias:=CoolQ_Tools_AnsiToUTF8(CoolQ_Tools_Unpack_GetStr(i,source));
+
+	result:=true;
+End;
+
+Function CQ_Tools_TextToFriendsListInfo(source:ansistring;Var FriendsList:CQ_Type_FriendsList):boolean;
+Var
+	data:ansistring;
+	i,j:longint;
+Begin
+	if source='' then begin
+		result:=false;
+		exit;
+	end;
+	data:=Base64_Decryption(source);
+	if length(data)<4 then begin
+		result:=false;
+		exit;
+	end;
+	i:=1;
+	FriendsList.l:=CoolQ_Tools_Unpack_GetNum(i,4,data);
+	SetLength(FriendsList.s,FriendsList.l);
+	for j:=0 to FriendsList.l-1 do begin
+		if CoolQ_Tools_Unpack_GetLenRemain(i,data)<=0
+			then
+			begin
+				result:=false;
+				exit;
+			end
+			else
+			begin
+				if CQ_Tools_TextToFriendInfo(CoolQ_Tools_Unpack_GetStr(i,data),FriendsList.s[j])=false then begin
+					result:=false;
+					exit;
+				end;
+			end;
+	end;
+	result:=true;
+End;
+
+
 //获取Cookies Auth=20 慎用,此接口需要严格授权 //getCookies
-Function CQ_i_GetCookies():ansistring;
+Function CQ_i_getCookies():ansistring;
 Begin
 	result:=PtoS(CQ_GetCookies(AuthCode));
 End;
@@ -1313,7 +1461,7 @@ Begin
 End;
 
 //取登陆QQ getLoginQQ
-Function CQ_i_GetLoginQQ():int64;
+Function CQ_i_getLoginQQ():int64;
 Begin
 	result:=(CQ_GetLoginQQ(authcode));
 End;
@@ -1325,14 +1473,14 @@ Begin
 End;
 
 //取陌生人信息 Auth=131 //CQ_getStrangerInfo
-Function CQ_i_GetStrangerInfo(QQ:int64;Var info:CQ_Type_QQ;nocache:boolean):longint;
+Function CQ_i_getStrangerInfo(QQ:int64;Var info:CQ_Type_QQ;nocache:boolean):longint;
 Var
 	data:ansistring;
 	i:longint;
 Begin
-	data:=CQ_GetStrangerInfo(AuthCode,QQ,Nocache);
+	data:=CQ_GetStrangerInfo(AuthCode,QQ,nocache);
 	data:=Base64_Decryption(data);
-	if length(data)<16 then begin
+	if length(data)<18 then begin
 		result:=-1000;
 		exit;
 	end;
@@ -1341,6 +1489,27 @@ Begin
 	info.nick:=CoolQ_Tools_AnsiToUTF8(CoolQ_Tools_Unpack_GetStr(i,data));
 	info.sex:=CoolQ_Tools_Unpack_GetNum(i,4,data);
 	info.age:=CoolQ_Tools_Unpack_GetNum(i,4,data);
+	
+	result:=0;
+End;
+
+// 取群信息 Auth=132 //getGroupInfo
+Function CQ_i_getGroupInfo(groupID:int64;Var info:CQ_Type_Group;nocache:boolean):longint;
+Var
+	data:ansistring;
+	i:longint;
+Begin
+	data:=CQ_getGroupInfo(AuthCode,groupID,nocache);
+	data:=Base64_Decryption(data);
+	if length(data)<18 then begin
+		result:=-1000;
+		exit;
+	end;
+	i:=1;
+	info.groupID:=CoolQ_Tools_Unpack_GetNum(i,8,data);
+	info.name:=CoolQ_Tools_AnsiToUTF8(CoolQ_Tools_Unpack_GetStr(i,data));
+	info.members.current:=CoolQ_Tools_Unpack_GetNum(i,4,data);
+	info.members.max:=CoolQ_Tools_Unpack_GetNum(i,4,data);
 	
 	result:=0;
 End;
@@ -1580,6 +1749,36 @@ End;
 function CQ_i_deleteMsg(msgID:int64):longint;
 Begin
 	result:=(CQ_deleteMsg(AuthCode,msgID));
+End;
+
+//取好友列表 Auth=162  //getFriendList
+function CQ_i_getFriendList(Var GroupList:CQ_Type_FriendsList):longint;
+Var
+	return	:	ansistring;
+Begin
+	return:=PtoS(CQ_getFriendList(AuthCode,false));
+	if return='' then begin
+		result:=-1000;
+		exit;
+	end
+	else
+	if CQ_Tools_TextToFriendsListInfo(return,GroupList)=false then begin
+		result:=-1000;
+		exit;
+	end;
+	result:=0;
+End;
+
+//是否支持发送图片，返回大于 0 为支持，等于 0 为不支持
+function CQ_i_canSendImage():longint;
+Begin
+	result:=CQ_canSendImage(AuthCode);
+End;
+
+//是否支持发送语音，返回大于 0 为支持，等于 0 为不支持
+function CQ_i_canSendRecord(AuthCode:longint):longint;
+Begin
+	result:=CQ_canSendRecord(AuthCode);
 End;
 
 initialization
