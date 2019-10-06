@@ -1,7 +1,11 @@
 // 酷Q 的Json文件支持以 // 开头的注释。
-// 开发模式下，应用的 app.dll, app.json 的文件须放在 dev/[appid]/ 目录下，应用 AppInfo 函数返回的内容须改为 appid
-// 如 appid=com.example.demo, 则dll及json文件需分别放在 dev/com.example.demo/app.dll、dev/com.example.demo/app.json
+// 酷Q 的Json文件以 UTF-8 无 Bom 编码储存
+// 开发模式下
+// 旧版: 应用的 [appid].dll, [appid].json 文件须放在 app 目录下，应用 AppInfo 函数返回的内容须改为 appid
+// 新版: 应用的 app.dll, app.json 文件须放在 dev/[appid]/ 目录下，应用 AppInfo 函数返回的内容须改为 appid
+// 		如 appid=com.example.demo, 则dll及json文件需分别放在 dev/com.example.demo/app.dll、dev/com.example.demo/app.json
 // appid 规则见 https://d.cqp.me/Pro/开发/基础信息
+// 本 SDK 采用的格式是旧版格式，在启动酷Q后酷Q会指引您迁移到新版格式。
 {
     "ret":1,					// 返回码，固定为1
     "apiver":9,					// Api版本，本SDK为9
