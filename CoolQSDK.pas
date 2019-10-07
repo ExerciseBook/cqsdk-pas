@@ -1480,7 +1480,7 @@ Var
 	data:ansistring;
 	i:longint;
 Begin
-	data:=CQ_GetStrangerInfo(AuthCode,QQ,nocache);
+	data:=PtoS(CQ_GetStrangerInfo(AuthCode,QQ,nocache));
 	data:=Base64_Decryption(data);
 	if length(data)<18 then begin
 		result:=-1000;
@@ -1501,7 +1501,7 @@ Var
 	data:ansistring;
 	i:longint;
 Begin
-	data:=CQ_getGroupInfo(AuthCode,groupID,nocache);
+	data:=PtoS(CQ_getGroupInfo(AuthCode,groupID,nocache));
 	data:=Base64_Decryption(data);
 	if length(data)<18 then begin
 		result:=-1000;
@@ -1523,7 +1523,7 @@ function CQ_i_getGroupMemberInfo(groupid,qqid:int64;
 Var
 	return:ansistring;
 Begin
-	return:=CQ_getGroupMemberInfoV2(AuthCode,groupid,QQID,nocache);
+	return:=PtoS(CQ_getGroupMemberInfoV2(AuthCode,groupid,QQID,nocache));
 	if return='' then begin
 		result:=-1000;
 		exit;
