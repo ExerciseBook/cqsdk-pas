@@ -21,6 +21,9 @@ Function code_eventRequest_AddFriend(subType,sendTime:longint;fromQQ:int64;const
 Function code_eventRequest_AddGroup(subType,sendTime:longint;fromGroup,fromQQ:int64;msg:widestring;responseFlag:PAnsichar):longint;
 			
 implementation
+uses plugin_test;
+//测试库 如果你清楚酷Q其实是怎么处理消息的话你可以看一下这个库里的代码是怎么写的
+
 {
 * Type=1001 酷Q启动
 * 无论本应用是否被启用，本函数都会在酷Q启动后执行一次，请在这里执行应用初始化代码。
@@ -115,9 +118,11 @@ Begin
 		CQ_Tools_TextToAnonymous(fromAnonymous,AnonymousMes);
 		//将匿名用户信息存到 AnonymousMes
 	end;
+	
+	/////
+	plugin_test.code_eventGroupMsg(subType,MsgID,fromgroup,fromQQ,fromAnonymous,msg,font);
+	//调用测试库里的函数
 
-	if msg='签到' then CQ_i_sendGroupMsg(fromgroup,widestring(CQCode_Group_At(fromQQ))+' : 签到并没有成功[CQ:image,file=funnyface.png]');
-		
 {$IFDEF FPC}
 	exit(EVENT_IGNORE);
 {$ELSE}

@@ -866,7 +866,9 @@ Var
 Begin
 	str:=@Sstr[1];
 	fillchar(sResult,sizeof(sResult),0);
-	ret := iconvConvert('UTF-16LE//TRANSLIT//IGNORE','GB18030',Str,StrLen(Str),@sResult[0],sizeof(sResult));
+	//ret := iconvConvert('UTF-16LE//TRANSLIT//IGNORE','GB18030',Str,StrLen(Str),@sResult[0],sizeof(sResult));
+	ret := iconvConvert('UTF-16LE//TRANSLIT//IGNORE','GB18030',Str,length(Sstr)*sizeof(widechar),@sResult[0],sizeof(sResult));
+	//ret := iconvConvert('UTF-16LE//TRANSLIT//IGNORE','GB18030',Str,sizeof(Sstr),@sResult[0],sizeof(sResult));
 	if ret<>0
 		then result:=''
 		else result:=sResult;
