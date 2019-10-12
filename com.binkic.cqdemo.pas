@@ -1,11 +1,7 @@
 {
 	CoolQ SDK for Pascal/Delphi
 	API版本	：	9.9
-	编译器	：	FPC 3.0.0
-	
-	注意 Free Pascal
-		里的时间库是以当前系统时间的 1970-1-1 00:00:00 作为Unix时间戳起点
-		然而腾讯传递的信息是以 标准时间的1970-1-1 00:00:00 作为时间戳起点
+	编译器	：	FPC 3.0.4
 }
 {$IFDEF FPC}
 	{$CODEPAGE UTF-8}
