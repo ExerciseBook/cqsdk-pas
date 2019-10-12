@@ -159,14 +159,14 @@ Const
 	
 	// 下面的函数的确切含义请查阅lib文件夹下的文件。
 	// lib\Tools.pas
-	Function PtoS(a:pansichar):ansistring;inline;
-	Function StoP(a:ansistring):pansichar;inline;
-	Function NumToChar(a:int64):ansistring;overload;
-	Function NumToChar(a:int64):widestring;overload;
+	Function PtoS(a:pansichar):ansistring;
+	Function StoP(a:ansistring):pansichar;
+	Function NumToChar(a:int64):ansistring;
+	Function NumToCharW(a:int64):widestring;
 	Function CharToNum(a:ansistring):int64;overload;
 	Function CharToNum(a:widestring):int64;overload;
-	Function RealToChar(a:real):ansistring;overload;
-	Function RealToChar(a:real):widestring;overload;
+	Function RealToChar(a:real):ansistring;
+	Function RealToCharW(a:real):widestring;
 	Function CharToReal(a:ansistring):real;overload;
 	Function CharToReal(a:widestring):real;overload;
 	Function RealToDisplay(a:real;b:longint):ansistring;
@@ -283,7 +283,7 @@ var
 {
 	Char* 转换到 字符串
 }
-Function PtoS(a:pansichar):ansistring;inline;
+Function PtoS(a:pansichar):ansistring;
 Begin
 	result:=strPas(a)
 End;
@@ -291,7 +291,7 @@ End;
 {
 	字符串 转换到 Char*
 }
-Function StoP(a:ansistring):pansichar;inline;
+Function StoP(a:ansistring):pansichar;
 Begin
 	result:=pansichar(@a[1]);
 End;
@@ -301,11 +301,11 @@ End;
 {
 	数字 转换到 字符串
 }
-Function NumToChar(a:int64):ansistring;overload;
+Function NumToChar(a:int64):ansistring;
 Begin
 	str(a,result);
 End;
-Function NumToChar(a:int64):widestring;overload;
+Function NumToCharW(a:int64):widestring;
 Begin
 	str(a,result);
 End;
@@ -329,11 +329,11 @@ End;
 {
 	双精浮点 转换到 字符串
 }
-Function RealToChar(a:real):ansistring;overload;
+Function RealToChar(a:real):ansistring;
 Begin
 	str(a,result)
 End;
-Function RealToChar(a:real):widestring;overload;
+Function RealToCharW(a:real):widestring;
 Begin
 	str(a,result)
 End;
