@@ -1,4 +1,6 @@
-{$CODEPAGE UTF-8}
+{$IFDEF FPC}
+	{$CODEPAGE UTF-8}
+{$ENDIF}
 
 unit plugin_menu;
 

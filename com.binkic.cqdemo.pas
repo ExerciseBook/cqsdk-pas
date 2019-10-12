@@ -7,7 +7,10 @@
 		里的时间库是以当前系统时间的 1970-1-1 00:00:00 作为Unix时间戳起点
 		然而腾讯传递的信息是以 标准时间的1970-1-1 00:00:00 作为时间戳起点
 }
-{$CODEPAGE UTF-8}
+{$IFDEF FPC}
+	{$CODEPAGE UTF-8}
+{$ENDIF}
+
 
 library
 	testdll;

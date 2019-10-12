@@ -2,7 +2,7 @@ unit iconv;
 interface
 
 Type
-  size_t = NativeInt;
+  size_t = word;
   Psize_t  = ^size_t;
   iconv_t = pointer;
 

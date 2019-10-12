@@ -1,6 +1,6 @@
-{$CODEPAGE UTF-8}
 {$IFDEF FPC}
 	{$MODE DELPHI}
+	{$CODEPAGE UTF-8}
 {$ENDIF}
 
 unit plugin_test;

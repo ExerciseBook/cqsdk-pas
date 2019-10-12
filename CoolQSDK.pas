@@ -13,7 +13,9 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
  **********************************************************************}
-{$CODEPAGE UTF-8}
+{$IFDEF FPC}
+	{$CODEPAGE UTF-8}
+{$ENDIF}
 
 {$IFDEF FPC}
 	{$MODE DELPHI}
