@@ -1,3 +1,7 @@
+{$IFDEF FPC}
+	{$CODEPAGE UTF-8}
+{$ENDIF}
+
 unit plugin_menu;
 
 interface
@@ -8,13 +12,13 @@ Function _menuB():longint;stdcall;
 implementation
 
 {
-* ²Ëµ¥£¬¿ÉÔÚ .json ÎÄ¼şÖĞÉèÖÃ²Ëµ¥ÊıÄ¿¡¢º¯ÊıÃû
-* Èç¹û²»Ê¹ÓÃ²Ëµ¥£¬ÇëÔÚ .json ¼°´Ë´¦É¾³ıÎŞÓÃ²Ëµ¥
+* èœå•ï¼Œå¯åœ¨ .json æ–‡ä»¶ä¸­è®¾ç½®èœå•æ•°ç›®ã€å‡½æ•°å
+* å¦‚æœä¸ä½¿ç”¨èœå•ï¼Œè¯·åœ¨ .json åŠæ­¤å¤„åˆ é™¤æ— ç”¨èœå•
 }
 Function _menuA():longint;
 stdcall;
 Begin
-	MessageBox(0,StoP('±¾²å¼şµÄAuthCodeÎª : '+NumToChar(AuthCode)),'ÑùÀı _ AuthCode²éÑ¯',36);
+	MessageBox(0,StoP('AuthCode : '+NumToChar(AuthCode)),'Example _ AuthCode',36);
 {$IFDEF FPC}
 	exit(0);
 {$ELSE}
@@ -25,7 +29,7 @@ End;
 Function _menuB():longint;
 stdcall;
 Begin
-	MessageBox(0,StoP('µ±Ç°Ê±¼ä : '+DateTimeToStr(now)),'ÑùÀı _ µ±Ç°Ê±¼ä',36);
+	MessageBox(0,StoP('Now : '+DateTimeToStr(now)),'Example _ Now',36);
 {$IFDEF FPC}
 	exit(0);
 {$ELSE}
