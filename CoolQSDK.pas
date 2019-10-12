@@ -235,8 +235,8 @@ Const
 	function CQ_i_getAppDirectory:ansistring;
 	function CQ_i_addLog(priority:longint;const category,content:ansistring):longint;overload;
 	function CQ_i_addLog(priority:longint;const category,content:widestring):longint;overload;
-	function CQ_i_setFriendAddRequest(const responseflag:PAnsiChar;responseoperation:longint;const remark:ansistring):longint;overload;
-	function CQ_i_setFriendAddRequest(const responseflag:PAnsiChar;responseoperation:longint;const remark:widestring):longint;overload;
+	function CQ_i_setFriendAddRequest(const responseflag:ansistring;responseoperation:longint;const remark:ansistring):longint;overload;
+	function CQ_i_setFriendAddRequest(const responseflag:ansistring;responseoperation:longint;const remark:widestring):longint;overload;
 	function CQ_i_setGroupAnonymousMute(group:int64;fromAnonymous:ansistring;duration:int64):longint;
 	function CQ_i_setGroupWholeMute(groupid:int64;enableban:boolean):longint;
 	function CQ_i_setGroupCard(group,qq:int64;nick:ansistring):longint;overload;
@@ -1558,17 +1558,17 @@ Begin
 End;
 
 //添加好友请求回复 Auth=150 //setFriendAddRequest
-function CQ_i_setFriendAddRequest(const responseflag:pchar;responseoperation:longint;const remark:ansistring):longint;overload;
+function CQ_i_setFriendAddRequest(const responseflag:ansistring;responseoperation:longint;const remark:ansistring):longint;overload;
 Begin
 	result:=(CQ_setFriendAddRequest(authcode,
-								responseflag,			//通过事件函数传递获得
+								StoP(responseflag),			//通过事件函数传递获得
 								responseoperation,		//通过常量表获得
 								StoP(remark)))			//添加后好友备注
 End;
-function CQ_i_setFriendAddRequest(const responseflag:pchar;responseoperation:longint;const remark:widestring):longint;overload;
+function CQ_i_setFriendAddRequest(const responseflag:ansistring;responseoperation:longint;const remark:widestring):longint;overload;
 Begin
 	result:=(CQ_setFriendAddRequest(authcode,
-								responseflag,			//通过事件函数传递获得
+								StoP(responseflag),			//通过事件函数传递获得
 								responseoperation,		//通过常量表获得
 								StoP(CoolQ_Tools_WideToAnsi(remark))));			//添加后好友备注
 End;

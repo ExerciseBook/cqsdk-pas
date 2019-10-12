@@ -65,21 +65,28 @@
             "priority":30000
         },
         {
-            "id":10,
+            "id":8,
+            "type":104,
+            "name":"群禁言事件处理",
+            "function":"_eventSystem_GroupBan",
+            "priority":30000
+        },
+        {
+            "id":11,
             "type":201,
             "name":"好友已添加事件处理",
             "function":"_eventFriend_Add",
             "priority":30000
         },
         {
-            "id":8,
+            "id":9,
             "type":301,
             "name":"好友添加请求处理",
             "function":"_eventRequest_AddFriend",
             "priority":30000
         },
         {
-            "id":9,
+            "id":10,
             "type":302,
             "name":"群添加请求处理",
             "function":"_eventRequest_AddGroup",

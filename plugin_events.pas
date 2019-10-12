@@ -18,10 +18,11 @@ Function code_eventGroupUpload(subType,sendTime:longint;fromGroup,fromQQ:int64;P
 Function code_eventSystem_GroupAdmin(subType,sendTime:longint;fromGroup,beingOperateQQ:int64):longint;
 Function code_eventSystem_GroupMemberDecrease(subType,sendTime:longint;fromGroup,fromQQ,beingOperateQQ:int64):longint;
 Function code_eventSystem_GroupMemberIncrease(subType,sendTime:longint;fromGroup,fromQQ,beingOperateQQ:int64):longint;
+Function code_eventSystem_GroupBan(subType,sendTime:longint;fromGroup,fromAccount,beingOperateAccount,duration:int64):longint;
 Function code_eventFriend_Add(subType,sendTime:longint;fromQQ:int64):longint;
-Function code_eventRequest_AddFriend(subType,sendTime:longint;fromQQ:int64;const msg:widestring;responseFlag:PAnsichar):longint;
-Function code_eventRequest_AddGroup(subType,sendTime:longint;fromGroup,fromQQ:int64;msg:widestring;responseFlag:PAnsichar):longint;
-			
+Function code_eventRequest_AddFriend(subType,sendTime:longint;fromQQ:int64;const msg:widestring;const responseFlag:ansistring):longint;
+Function code_eventRequest_AddGroup(subType,sendTime:longint;fromGroup,fromQQ:int64;const msg:widestring;const responseFlag:ansistring):longint;
+
 implementation
 uses plugin_test;
 //测试库 如果你清楚酷Q其实是怎么处理消息的话你可以看一下这个库里的代码是怎么写的
@@ -157,57 +158,10 @@ Function code_eventGroupUpload(
 			subType,sendTime	:longint;
 			fromGroup,fromQQ	:int64;
 			Pfileinfo			:ansistring):longint;
-Var
-	FileInfo	:CQ_Type_GroupFile;
-	Back		:widestring;
 Begin
-	//收到文件上传信息 并尝试解析
-	if CQ_Tools_TextToFile(Pfileinfo,FileInfo) then begin
-		//群文件信息解析成功
-		
-		Back:='[CQ:at,qq=%FROMQQ%] 上传了一个文件，信息如下：'+CRLF+
-				'----------------'+CRLF+
-				'文件名    : %FILENAME%'+CRLF+
-				'文件大小  : %SIZE%'+CRLF+
-				'----------------'+CRLF+
-				'文件编号  : %FILEID%'+CRLF+
-				'busID   : %BUSID%';
-		Message_Replace(Back,'%FROMQQ%',widestring(numtochar(fromQQ)));
-		Message_Replace(Back,'%FILEID%',widestring(FileInfo.fileID));
-		Message_Replace(Back,'%FILENAME%',FileInfo.Filename);
-		if FileInfo.Size<10240 then begin
-			Message_Replace(Back,'%SIZE%',widestring(numtochar(FileInfo.Size))+'Byte(s)');
-		end
-		else
-		begin
-			if FileInfo.Size<10485760 then begin
-				Message_Replace(Back,'%SIZE%',widestring(RealToDisplay(FileInfo.Size/1024,2))+'Kb');
-			end
-			else
-			begin
-				if FileInfo.Size<536870912 then begin
-					Message_Replace(Back,'%SIZE%',widestring(RealToDisplay(FileInfo.Size/(1024*1024),2))+'Mb');
-				end
-				else
-				begin
-					Message_Replace(Back,'%SIZE%',widestring(RealToDisplay(FileInfo.Size/(1024*1024*1024),2))+'Gb');
-				end;
-			end;
-		end;
-		Message_Replace(Back,'%SIZE.B%',widestring(numtochar(FileInfo.Size)+'Byte(s)'));
-		Message_Replace(Back,'%SIZE.KB%',widestring(RealToDisplay(FileInfo.Size/1024,2))+'Kb');
-		Message_Replace(Back,'%SIZE.MB%',widestring(RealToDisplay(FileInfo.Size/(1024*1024),2))+'Mb');
-		Message_Replace(Back,'%SIZE.GB%',widestring(RealToDisplay(FileInfo.Size/(1024*1024*1024),2))+'Gb');
-		Message_Replace(Back,'%BUSID%',widestring(NumToChar(FileInfo.busid)));
-		
-		CQ_i_sendGroupMsg(fromGroup,Back);		
-	end
-	else
-	begin
-		CQ_i_addLog(CQLOG_DEBUG,widestring('code_eventGroupUpload'),'解析失败 '+widestring(Pfileinfo));
-		//群文件信息解析失败
-	end;
 	
+	plugin_test.code_eventGroupUpload(subType,sendTime,fromGroup,fromQQ,PFileinfo);
+
 {$IFDEF FPC}
 	exit(EVENT_IGNORE);
 {$ELSE}
@@ -264,7 +218,9 @@ Function code_eventSystem_GroupMemberIncrease(
 			fromGroup,fromQQ,
 			beingOperateQQ			:int64):longint;
 Begin
-	CQ_i_sendGroupMsg(fromgroup,'欢迎新人 [CQ:at,qq='+widestring(NumToChar(beingOperateQQ))+'] 加入本群');
+	
+	plugin_test.code_eventSystem_GroupMemberIncrease(subType,sendTime,fromGroup,fromQQ,beingOperateQQ);
+
 {$IFDEF FPC}
 	exit(EVENT_IGNORE); 
 {$ELSE}
@@ -273,6 +229,30 @@ Begin
 	//关于返回值说明, 见“code_eventPrivateMsg”函数
 End;
 
+{
+* Type=104 群事件-群禁言
+* subType 子类型，1/被解禁 2/被禁言
+* sendTime 发送时间(时间戳)
+* fromGroup 来源群号
+* fromAccount 操作者帐号
+* beingOperateAccount 被操作帐号(若为全群禁言/解禁，则本参数为 0)
+* duration 禁言时长(单位 秒，仅子类型为2时可用)
+}
+Function code_eventSystem_GroupBan(
+			subType,sendTime		:longint;
+			fromGroup,fromAccount,
+			beingOperateAccount,duration			:int64):longint;
+Begin
+
+	plugin_test.code_eventSystem_GroupBan(subType,sendTime,fromGroup,fromAccount,beingOperateAccount,duration);
+
+{$IFDEF FPC}
+	exit(EVENT_IGNORE); 
+{$ELSE}
+	result:=EVENT_IGNORE;
+{$ENDIF}
+	//关于返回值说明, 见“code_eventPrivateMsg”函数
+End;
 
 {
 * Type=201 好友事件-好友已添加
@@ -293,17 +273,16 @@ End;
 {
 * Type=301 请求-好友添加
 * msg 附言
-* responseFlag
-		反馈标识(处理请求用)
-		这个我就不帮你转换成string了，反正你拿来也没什么用
+* responseFlag 反馈标识(处理请求用)
 }
 Function code_eventRequest_AddFriend(
 			subType,sendTime			:longint;
 			fromQQ						:int64;
 			const msg					:widestring;
-			responseFlag				:PAnsichar):longint;
+			const responseFlag			:ansistring):longint;
 Begin
-	CQ_i_setFriendAddRequest(responseFlag, REQUEST_DENY,''); //拒绝好友添加请求
+	
+	plugin_test.code_eventRequest_AddFriend(subType,sendTime,fromQQ,msg,responseFlag);
 	
 {$IFDEF FPC}
 	exit(EVENT_IGNORE); 
@@ -317,15 +296,13 @@ End;
 * Type=302 请求-群添加
 * subType 子类型，1/他人申请入群 2/自己(即登录号)受邀入群
 * msg 附言
-* responseFlag
-		反馈标识(处理请求用)
-		这个我也不帮你转换了
+* responseFlag 反馈标识(处理请求用)
 }
 Function code_eventRequest_AddGroup(
 			subType,sendTime			:longint;
 			fromGroup,fromQQ			:int64;
-			msg							:widestring;
-			responseFlag				:PAnsichar):longint;
+			const msg					:widestring;
+			const responseFlag			:ansistring):longint;
 Begin	
 {$IFDEF FPC}
 	exit(EVENT_IGNORE); 

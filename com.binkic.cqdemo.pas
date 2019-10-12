@@ -268,6 +268,28 @@ Begin
 {$ENDIF}
 End;
 
+Function _eventSystem_GroupBan(
+			subType,sendTime		:longint;
+			fromGroup,fromAccount,
+			beingOperateAccount,duration			:int64):longint;
+stdcall;
+Begin
+{$IFDEF FPC}
+	exit(code_eventSystem_GroupBan(
+			subType,sendTime,
+			fromGroup,fromAccount,
+			beingOperateAccount,duration
+		)
+	); 
+{$ELSE}
+	result:=code_eventSystem_GroupBan(
+			subType,sendTime,
+			fromGroup,fromAccount,
+			beingOperateAccount,duration
+		); 
+{$ENDIF}
+End;
+
 Function _eventFriend_Add(
 			subType,sendTime		:longint;
 			fromQQ					:int64):longint;
@@ -296,7 +318,7 @@ Begin
 			subType,sendTime,
 			fromQQ,
 			CoolQ_Tools_AnsiToWide(PtoS(msg)),
-			responseFlag
+			PtoS(responseFlag)
 		)
 	);
 {$ELSE}
@@ -304,7 +326,7 @@ Begin
 			subType,sendTime,
 			fromQQ,
 			CoolQ_Tools_AnsiToWide(PtoS(msg)),
-			responseFlag
+			PtoS(responseFlag)
 		);
 {$ENDIF}
 End;
@@ -312,7 +334,7 @@ End;
 Function _eventRequest_AddGroup(
 			subType,sendTime			:longint;
 			fromGroup,fromQQ			:int64;
-			msg,responseFlag			:PAnsichar):longint;
+			const msg,responseFlag			:PAnsichar):longint;
 stdcall;
 Begin
 {$IFDEF FPC}
@@ -320,7 +342,7 @@ Begin
 			subType,sendTime,
 			fromGroup,fromQQ,
 			CoolQ_Tools_AnsiToWide(PtoS(msg)),
-			responseFlag
+			PtoS(responseFlag)
 		)
 	);
 {$ELSE}
@@ -328,7 +350,7 @@ Begin
 			subType,sendTime,
 			fromGroup,fromQQ,
 			CoolQ_Tools_AnsiToWide(PtoS(msg)),
-			responseFlag
+			PtoS(responseFlag)
 		);
 {$ENDIF}
 End;
@@ -347,13 +369,14 @@ exports
 	_eventSystem_GroupAdmin index 11,
 	_eventSystem_GroupMemberDecrease index 12,
 	_eventSystem_GroupMemberIncrease index 13,
-	_eventFriend_Add index 14,
-	_eventRequest_AddFriend index 15,
-	_eventRequest_AddGroup index 16,
+	_eventSystem_GroupBan index 14,
+	_eventFriend_Add index 15,
+	_eventRequest_AddFriend index 16,
+	_eventRequest_AddGroup index 17,
 	
 	
-	_menuA index 17,
-	_menuB index 18;
+	_menuA index 18,
+	_menuB index 19;
 	
 Begin
 End.
