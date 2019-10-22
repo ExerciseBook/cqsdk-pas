@@ -1198,8 +1198,7 @@ Begin
 End;
 function CQ_i_getImage(filename:widestring):ansistring;overload;
 {
-filename 收到消息中的语音文件名(file)
-format 应用所需的语音文件格式，目前支持 mp3,amr,wma,m4a,spx,ogg,wav,flac
+filename 收到消息中的图片文件名(file)
 }
 Begin
 	result:=(
