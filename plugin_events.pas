@@ -95,6 +95,8 @@ Function code_eventPrivateMsg(
 			const msg				:widestring;
 			font					:longint):longint;
 Begin
+	plugin_test.code_eventPrivateMsg(subType,MsgID,fromQQ,msg,font);
+
 {$IFDEF FPC}
 	exit(EVENT_IGNORE);
 		//如果要回复消息，请调用酷Q方法发送，并且这里 exit(EVENT_BLOCK) - 截断本条消息，不再继续处理  注意：应用优先级设置为"最高"(10000)时，不得使用本返回值

@@ -7,6 +7,7 @@ unit plugin_test;
 
 interface
 uses CoolQSDK;
+Function code_eventPrivateMsg(subType,MsgID:longint;fromQQ:int64;const msg:widestring;font:longint):longint;
 Function code_eventGroupMsg(subType,MsgID:longint;fromgroup,fromQQ:int64;fromAnonymous:ansistring;msg:widestring;font:longint):longint;
 Function code_eventGroupUpload(subType,sendTime:longint;fromGroup,fromQQ:int64;Pfileinfo:ansistring):longint;
 Function code_eventSystem_GroupMemberIncrease(subType,sendTime:longint;fromGroup,fromQQ,beingOperateQQ:int64):longint;
@@ -14,7 +15,66 @@ Function code_eventRequest_AddFriend(subType,sendTime:longint;fromQQ:int64;msg:w
 Function code_eventSystem_GroupBan(subType,sendTime:longint;fromGroup,fromAccount,beingOperateAccount,duration:int64):longint;
 
 implementation
-uses crt;
+uses
+	crt,RegExpr,sysutils;
+
+{
+* Type=21 私聊消息
+* subType 子类型，11/来自好友 1/来自在线状态 2/来自群 3/来自讨论组
+}
+Function code_eventPrivateMsg(
+			subType,MsgID			:longint;
+			fromQQ					:int64;
+			const msg				:widestring;
+			font					:longint):longint;
+Var
+	AMsgID :	int64;
+	r	:	TRegExpr;
+	s	:	ansistring;
+Begin
+
+	/// 消息发送测试
+	AMsgID := CQ_i_sendPrivateMsg(fromQQ,widestring(CQCode_Group_At(fromQQ))+' 你发送了('+widestring(NumToChar(length(msg)))+') : '+msg);
+	
+	/// 消息撤回测试
+	///delay(1000);
+	///CQ_i_deleteMsg(AMsgID);
+	
+	/// 图片下载测试
+	r := TRegExpr.Create;
+	try
+		r.Expression := '\[CQ:image,file=[0-9A-F]{32}\.[0-9A-Za-z]{3}\]';  // 匹配 [CQ:image,file=XXXXX.jpg]
+		if r.Exec(ansistring(msg)) then
+			repeat
+				s:=r.Match[0];
+				// [CQ:image,file= 
+				delete(s,1,length('[CQ:image,file=')); // 删掉开头 [CQ:image,file=
+				// ]
+				delete(s,length(s),1); // 删掉结尾 ]
+				//CQ_i_addLog(CQLOG_DEBUG,'Download Image',s);
+				CQ_i_getImage(s); // 下载图片
+			until not r.ExecNext;
+	except
+		on e:Exception do begin
+			CQ_i_addLog(CQLOG_DEBUG,'Download Image',e.Message);
+		end;
+	end;
+
+	try
+		r.free;
+	except
+	end;
+
+
+{$IFDEF FPC}
+	exit(EVENT_IGNORE);
+		//如果要回复消息，请调用酷Q方法发送，并且这里 exit(EVENT_BLOCK) - 截断本条消息，不再继续处理  注意：应用优先级设置为"最高"(10000)时，不得使用本返回值
+		//如果不回复消息，交由之后的应用/过滤器处理，这里 exit(return EVENT_IGNORE) - 忽略本条消息
+{$ELSE}
+	result:=EVENT_IGNORE;
+{$ENDIF}
+End;
+
 
 function Test_WhoAmI(fromGroup,fromQQ:int64):widestring;
 label FriendListAPI;
