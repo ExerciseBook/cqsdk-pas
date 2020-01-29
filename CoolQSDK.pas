@@ -705,13 +705,13 @@ begin
   end;
   if (c shr 24)<3 then begin
    inc(l);
-   result[l]:=chr((c shr 16) and $ff);
+   result[l]:=ansichar((c shr 16) and $ff);
    if (c shr 24)<2 then begin
     inc(l);
-    result[l]:=chr((c shr 8) and $ff);
+    result[l]:=ansichar((c shr 8) and $ff);
     if (c shr 24)<1 then begin
      inc(l);
-     result[l]:=chr(c and $ff);
+     result[l]:=ansichar(c and $ff);
     end;
    end;
   end else begin
