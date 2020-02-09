@@ -1,3 +1,7 @@
+{
+	酷Q功能开发参考
+}
+
 {$IFDEF FPC}
 	{$MODE DELPHI}
 	{$CODEPAGE UTF-8}
@@ -15,6 +19,8 @@ Function code_eventRequest_AddFriend(subType,sendTime:longint;fromQQ:int64;msg:w
 Function code_eventSystem_GroupBan(subType,sendTime:longint;fromGroup,fromAccount,beingOperateAccount,duration:int64):longint;
 
 implementation
+/// DELPHI 也许会不能正常编译本文件
+/// 若发生错误，可考虑移除本文件后再试
 uses
 	crt,RegExpr,sysutils;
 

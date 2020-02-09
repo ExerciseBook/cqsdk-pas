@@ -15,10 +15,12 @@ implementation
 * 菜单，可在 .json 文件中设置菜单数目、函数名
 * 如果不使用菜单，请在 .json 及此处删除无用菜单
 }
-Function _menuA():longint;
-stdcall;
+Function _menuA():longint;stdcall;
+var
+	content : widestring;
 Begin
-	MessageBox(0,StoP('AuthCode : '+NumToChar(AuthCode)),'Example _ AuthCode',36);
+	content := 'AuthCode : '+IntToStr(AuthCode);
+	MessageBoxW(0, @(content[1]), 'Example _ AuthCode', 36);
 {$IFDEF FPC}
 	exit(0);
 {$ELSE}
@@ -26,10 +28,12 @@ Begin
 {$ENDIF}
 End;
 
-Function _menuB():longint;
-stdcall;
+Function _menuB():longint;stdcall;
+var
+	content : widestring;
 Begin
-	MessageBox(0,StoP('Now : '+DateTimeToStr(now)),'Example _ Now',36);
+	content := 'Now : '+DateTimeToStr(now);
+	MessageBoxW(0, @(content[1]), 'Example _ Now', 36);
 {$IFDEF FPC}
 	exit(0);
 {$ELSE}
