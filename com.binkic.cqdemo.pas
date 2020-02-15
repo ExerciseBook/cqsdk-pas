@@ -18,17 +18,11 @@ library
 
 Uses
 	iconv,CoolQSDK,		//酷QSDK单元
-	windows,math,dateutils,sysutils,Classes,
 	
 	plugin_events, //插件事件处理单元
 	plugin_menu //插件菜单处理单元
 	;
 	//载入库
-
-
-
-
-
 
 { 
 * 返回应用的ApiVer、Appid，打包后将不会调用

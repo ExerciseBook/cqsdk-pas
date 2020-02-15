@@ -6,7 +6,7 @@ unit Plugin_events;
 
 interface
 
-uses CoolQSDK,iconv;
+uses CoolQSDK;
 Function code_eventStartup:longint;
 Function code_eventExit:longint;
 Function code_eventEnable:longint;

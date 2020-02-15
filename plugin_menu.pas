@@ -5,7 +5,7 @@
 unit plugin_menu;
 
 interface
-uses CoolQSDK,iconv,windows,sysutils,dateutils;
+uses CoolQSDK,windows,sysutils,dateutils;
 Function _menuA():longint;stdcall;
 Function _menuB():longint;stdcall;
 

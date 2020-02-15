@@ -7,6 +7,7 @@
 // appid 规则见 https://d.cqp.me/Pro/开发/基础信息
 // 本 SDK 采用的格式是旧版格式，在启动酷Q后酷Q会指引您迁移到新版格式。
 {
+    "$schema": "https://github.com/cqmoe/awesome-coolq/raw/master/schema/app/v9/app-schema.json",
     "ret":1,					// 返回码，固定为1
     "apiver":9,					// Api版本，本SDK为9
     "name":"应用样例 Pascal",		// 应用名称
