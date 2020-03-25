@@ -597,21 +597,21 @@ function CQ_sendLike(AuthCode:longint;QQID:int64):longint;
 	stdcall; external 'CQP.dll' name 'CQ_sendLike';
 function CQ_sendLikeV2(AuthCode:longint;QQID:int64;times:longint):longint;
 	stdcall; external 'CQP.dll' name 'CQ_sendLikeV2';
-function CQ_setGroupAdmin(AuthCode:longint;groupid,QQID:int64;state:boolean):longint;
+function CQ_setGroupAdmin(AuthCode:longint;groupid,QQID:int64;state:longint):longint;
 	stdcall; external 'CQP.dll' name 'CQ_setGroupAdmin';	
-function CQ_setGroupKick(AuthCode:longint;groupid,QQID:int64;rejectaddrequest:boolean):longint;
+function CQ_setGroupKick(AuthCode:longint;groupid,QQID:int64;rejectaddrequest:longint):longint;
 	stdcall; external 'CQP.dll' name 'CQ_setGroupKick';
 function CQ_setGroupBan(AuthCode:longint;groupid,QQID,duration:int64):longint;
 	stdcall; external 'CQP.dll' name 'CQ_setGroupBan';
-function CQ_setGroupWholeBan(AuthCode:longint;groupid:int64;enableban:boolean):longint;
+function CQ_setGroupWholeBan(AuthCode:longint;groupid:int64;enableban:longint):longint;
 	stdcall; external 'CQP.dll' name 'CQ_setGroupWholeBan';
 function CQ_setGroupAnonymousBan(AuthCode:longint;groupid:int64;const anomymous:PAnsiChar;duration:int64):longint;
 	stdcall; external 'CQP.dll' name 'CQ_setGroupAnonymousBan';
-function CQ_setGroupAnonymous(AuthCode:longint;groupid:int64;enableanomymous:boolean):longint;
+function CQ_setGroupAnonymous(AuthCode:longint;groupid:int64;enableanomymous:longint):longint;
 	stdcall; external 'CQP.dll' name 'CQ_setGroupAnonymous';
 function CQ_setGroupCard(AuthCode:longint;groupid,QQID:int64;newcard:PAnsiChar):longint;
 	stdcall; external 'CQP.dll' name 'CQ_setGroupCard';
-function CQ_setGroupLeave(AuthCode:longint;groupid:int64;isdismiss:boolean):longint;
+function CQ_setGroupLeave(AuthCode:longint;groupid:int64;isdismiss:longint):longint;
 	stdcall; external 'CQP.dll' name 'CQ_setGroupLeave';
 function CQ_setGroupSpecialTitle(AuthCode:longint;groupid,QQID:int64;newspecialtitle:PAnsiChar;duration:int64):longint;
 	stdcall; external 'CQP.dll' name 'CQ_setGroupSpecialTitle';
@@ -621,9 +621,9 @@ function CQ_setFriendAddRequest(AuthCode:longint;const responseflag:PAnsiChar;re
 	stdcall; external 'CQP.dll' name 'CQ_setFriendAddRequest';
 function CQ_setGroupAddRequestV2(AuthCode:longint;const responseflag:PAnsiChar;requesttype,responseoperation:longint;const reason:PAnsiChar):longint;
 	stdcall; external 'CQP.dll' name 'CQ_setGroupAddRequestV2';
-function CQ_getGroupMemberInfoV2(AuthCode:longint;groupid,QQID:int64;nocache:boolean):PAnsiChar;
+function CQ_getGroupMemberInfoV2(AuthCode:longint;groupid,QQID:int64;nocache:longint):PAnsiChar;
 	stdcall; external 'CQP.dll' name 'CQ_getGroupMemberInfoV2';	
-function CQ_getStrangerInfo(AuthCode:longint;QQID:int64;nocache:boolean):PAnsiChar;
+function CQ_getStrangerInfo(AuthCode:longint;QQID:int64;nocache:longint):PAnsiChar;
 	stdcall; external 'CQP.dll' name 'CQ_getStrangerInfo';	
 function CQ_addLog(AuthCode,priority:longint;const category,content:PAnsiChar):longint;
 	stdcall; external 'CQP.dll' name 'CQ_addLog';
@@ -657,9 +657,9 @@ function CQ_canSendImage(AuthCode:longint):longint;				//是否支持发送图�
 	stdcall; external 'CQP.dll' name 'CQ_canSendImage';
 function CQ_canSendRecord(AuthCode:longint):longint;			//是否支持发送语音，返回大于 0 为支持，等于 0 为不支持
 	stdcall; external 'CQP.dll' name 'CQ_canSendRecord';
-function CQ_getFriendList(AuthCode:longint;reserved:boolean):PAnsiChar; //取好友列表 //保留参数，请传入“假”
+function CQ_getFriendList(AuthCode:longint;reserved:longint):PAnsiChar; //取好友列表 //保留参数，请传入“假”
 	stdcall; external 'CQP.dll' name 'CQ_getFriendList';
-function CQ_getGroupInfo(AuthCode:longint;groupid:int64;nocache:boolean):PAnsiChar; //取群信息(支持缓存)
+function CQ_getGroupInfo(AuthCode:longint;groupid:int64;nocache:longint):PAnsiChar; //取群信息(支持缓存)
 	stdcall; external 'CQP.dll' name 'CQ_getGroupInfo';
 
 	
@@ -1481,7 +1481,9 @@ Var
 	data:ansistring;
 	i:longint;
 Begin
-	data:=PtoS(CQ_GetStrangerInfo(AuthCode,QQ,nocache));
+	if nocache
+		then data:=PtoS(CQ_GetStrangerInfo(AuthCode,QQ,1))
+		else data:=PtoS(CQ_GetStrangerInfo(AuthCode,QQ,0));
 	data:=Base64_Decryption(data);
 	if length(data)<18 then begin
 		result:=-1000;
@@ -1502,7 +1504,9 @@ Var
 	data:ansistring;
 	i:longint;
 Begin
-	data:=PtoS(CQ_getGroupInfo(AuthCode,groupID,nocache));
+	if nocache
+		then data:=PtoS(CQ_getGroupInfo(AuthCode,groupID,1))
+		else data:=PtoS(CQ_getGroupInfo(AuthCode,groupID,0));
 	data:=Base64_Decryption(data);
 	if length(data)<18 then begin
 		result:=-1000;
@@ -1524,7 +1528,9 @@ function CQ_i_getGroupMemberInfo(groupid,qqid:int64;
 Var
 	return:ansistring;
 Begin
-	return:=PtoS(CQ_getGroupMemberInfoV2(AuthCode,groupid,QQID,nocache));
+	if nocache
+		then return:=PtoS(CQ_getGroupMemberInfoV2(AuthCode,groupid,QQID,1))
+		else return:=PtoS(CQ_getGroupMemberInfoV2(AuthCode,groupid,QQID,0));
 	if return='' then begin
 		result:=-1000;
 		exit;
@@ -1584,7 +1590,9 @@ End;
 //置全群禁言 Auth=123 //setGroupWholeBan
 function CQ_i_setGroupWholeMute(groupid:int64;enableban:boolean):longint;
 Begin
-	result:=(CQ_setGroupWholeBan(AuthCode,groupid,enableban));
+	if enableban
+		then result:=(CQ_setGroupWholeBan(AuthCode,groupid,1))
+		else result:=(CQ_setGroupWholeBan(AuthCode,groupid,0));
 End;
 
 //置群成员名片 Auth=126 //setGroupCard
@@ -1628,7 +1636,9 @@ End;
 }
 Function CQ_i_setGroupAdmin(group,qq:int64;operation:boolean):longint;
 Begin
-	result:=(CQ_SetGroupAdmin(authcode,group,qq,operation));
+	if operation
+		then result:=(CQ_SetGroupAdmin(authcode,group,qq,1))
+		else result:=(CQ_SetGroupAdmin(authcode,group,qq,0));
 End;
 
 {
@@ -1637,7 +1647,9 @@ End;
 }
 Function CQ_i_setGroupAnonymous(group:int64;operation:boolean):longint;
 Begin
-	result:=(CQ_setGroupAnonymous(AuthCode,group,operation));
+	if operation
+		then result:=(CQ_setGroupAnonymous(AuthCode,group,1))
+		else result:=(CQ_setGroupAnonymous(AuthCode,group,0))
 End;
 
 
@@ -1681,7 +1693,9 @@ Disband true解散本群[群主] false退出本群[群管/群员]
 }
 Function CQ_i_setGroupLeave(group:int64;isdisband:boolean):longint;
 Begin
-	result:=(CQ_setGroupLeave(Authcode,Group,IsDisband));
+	if isdisband
+		then result:=(CQ_setGroupLeave(Authcode,Group,1))
+		else result:=(CQ_setGroupLeave(Authcode,Group,0));
 End;
 
 //置群员禁言 Auth=121 //setGroupBan
@@ -1693,7 +1707,9 @@ End;
 //置群员移除 Auth=120 //setGroupKick
 function CQ_i_setGroupKick(groupid,QQID:int64;rejectaddrequest:boolean):longint;
 Begin
-	result:=(CQ_setGroupKick(AuthCode,Groupid,QQID,rejectaddrequest));
+	if rejectaddrequest
+		then result:=(CQ_setGroupKick(AuthCode,Groupid,QQID,1))
+		else result:=(CQ_setGroupKick(AuthCode,Groupid,QQID,0));
 End;
 
 //置讨论组退出 Auth=140 //setDiscussLeave
@@ -1759,7 +1775,7 @@ function CQ_i_getFriendList(Var friendList:CQ_Type_FriendsList):longint;
 Var
 	return	:	ansistring;
 Begin
-	return:=PtoS(CQ_getFriendList(AuthCode,false));
+	return:=PtoS(CQ_getFriendList(AuthCode,0));
 	if return='' then begin
 		result:=-1000;
 		exit;
