@@ -1,5 +1,5 @@
 {
-	CoolQ SDK for Pascal/Delphi
+	CoolQ SDK for Pascal / Delphi
 	API版本	：	9.9
 	编译器	：	FPC 3.0.4
 }

@@ -25,7 +25,8 @@ Function code_eventRequest_AddGroup(subType,sendTime:longint;fromGroup,fromQQ:in
 
 implementation
 uses plugin_test;
-//测试库 如果你清楚酷Q其实是怎么处理消息的话你可以看一下这个库里的代码是怎么写的
+// 测试库 如果你清楚酷Q其实是怎么处理消息的话你可以看一下这个库里的代码是怎么写的
+// 可能这个测试库不能够被 Delphi 正常编译
 
 {
 * Type=1001 酷Q启动

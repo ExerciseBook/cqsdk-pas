@@ -40,11 +40,11 @@ Var
 Begin
 
 	/// 消息发送测试
-	AMsgID := CQ_i_sendPrivateMsg(fromQQ,widestring(CQCode_Group_At(fromQQ))+' 你发送了('+widestring(NumToChar(length(msg)))+') : '+msg);
+	AMsgID := CQ_i_sendPrivateMsg(fromQQ,'你发送了('+widestring(NumToChar(length(msg)))+') : '+msg);
 	
 	/// 消息撤回测试
-	///delay(1000);
-	///CQ_i_deleteMsg(AMsgID);
+	/// delay(1000);
+	/// CQ_i_deleteMsg(AMsgID);
 	
 	/// 图片下载测试
 	r := TRegExpr.Create;
